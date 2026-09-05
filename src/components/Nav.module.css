@@ -1,0 +1,19 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg);
+  padding-inline: max(var(--page-pad), calc((100% - 1200px) / 2 + var(--page-pad)));
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text);
+}
+.markLight, .markDark { width: 24px; height: 24px; display: block; }
+.markDark { display: none; }
+:global(html[data-theme="dark"]) .markLight { display: none; }
+:global(html[data-theme="dark"]) .markDark { display: block; }
+.brandText { letter-spacing: -0.03em; }
+.brandAccent { color: var(--color-accent); margin-left: 1px; }

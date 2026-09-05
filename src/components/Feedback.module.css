@@ -1,0 +1,27 @@
+.heading { max-width: 22ch; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  margin-top: 56px;
+}
+.grid > * { min-width: 0; }
+.item {
+  margin: 0;
+  padding-top: 28px;
+  border-top: 2px solid var(--color-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.quote {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+  text-indent: -0.496em;
+}
+.caption { margin-top: auto; font-size: 14px; line-height: 20px; color: var(--color-neutral-700); }
+.name { display: block; color: var(--color-text); font-weight: 600; }

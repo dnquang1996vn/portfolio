@@ -1,0 +1,30 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 28px clamp(24px, 5vw, 96px);
+  align-items: end;
+}
+.hero > * { min-width: 0; }
+.title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(42px, 6.2vw, 84px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 0 0 0 -0.058em;
+}
+.line1 { display: block; white-space: nowrap; }
+.line2 { display: block; }
+.typed { color: var(--color-accent); }
+.caret {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.9em;
+  background: var(--color-accent);
+  vertical-align: -0.08em;
+  margin-left: 0.04em;
+}
+.tagline { font-size: 17px; line-height: 28px; max-width: 58ch; margin: 42px 0 0; }
+.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: 28px; }
+.portrait { margin: 0; border: 2px solid var(--color-divider); aspect-ratio: 4 / 5; }
+.portraitImg { width: 100%; height: 100%; object-fit: cover; }
