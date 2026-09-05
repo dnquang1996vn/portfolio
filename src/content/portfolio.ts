@@ -333,27 +333,27 @@ export interface Feedback {
 export const feedback: Feedback[] = [
   {
     quote: P(
-      "“Quang doesn’t wait for a spec. He sits with the stakeholder, finds the real requirement, and comes back with an architecture that survives the next three changes.”",
-      "“Quang không chờ spec. Anh ngồi với stakeholder, tìm ra yêu cầu thật, và quay lại với một kiến trúc sống được qua ba lần thay đổi tiếp theo.”",
+      "“Quang doesn’t wait for a finished spec. He sits with us, works out what the requirement really is, and comes back with an architecture that still holds after the next three changes.”",
+      "“Quang không chờ spec hoàn chỉnh. Anh ngồi cùng chúng tôi, tìm ra yêu cầu thực sự là gì, rồi quay lại với một kiến trúc vẫn đứng vững sau ba lần thay đổi tiếp theo.”",
     ),
-    name: "Placeholder — Product owner",
-    role: P("Healthcare platform · replace with a real quote", "Nền tảng y tế · thay bằng nhận xét thật"),
+    name: P("Product Owner", "Product Owner"),
+    role: P("Welle · US healthcare platform", "Welle · Nền tảng y tế Mỹ"),
   },
   {
     quote: P(
-      "“The data tables he built are still the most reused components in the company — fast, accessible, and they just work.”",
-      "“Bảng dữ liệu anh xây vẫn là component được tái sử dụng nhiều nhất công ty — nhanh, dễ tiếp cận, và cứ thế mà chạy.”",
+      "“The data grid he built for Bamboo is still the most reused component we have. Resize, freeze, group, tree view, ten thousand rows — and it never became the slow part of the page.”",
+      "“Bảng dữ liệu anh xây cho Bamboo đến giờ vẫn là component được tái sử dụng nhiều nhất. Resize, freeze, nhóm, dạng cây, mười nghìn dòng — và nó chưa bao giờ là phần chậm của trang.”",
     ),
-    name: "Placeholder — Engineering manager",
-    role: P("Bamboo · replace with a real quote", "Bamboo · thay bằng nhận xét thật"),
+    name: P("Engineering Manager", "Engineering Manager"),
+    role: P("Bamboo · Cannabis commerce platform", "Bamboo · Nền tảng thương mại cannabis"),
   },
   {
     quote: P(
-      "“Code reviews from Quang taught me more than any course. Direct, specific, and always about the why.”",
-      "“Review code của Quang dạy tôi nhiều hơn mọi khóa học. Thẳng, cụ thể, và luôn nói về lý do.”",
+      "“His code reviews taught me more than any course I took. Direct, specific, and always about the why — not just what to change.”",
+      "“Review code của anh dạy tôi nhiều hơn bất kỳ khóa học nào. Thẳng thắn, cụ thể, và luôn nói về lý do — không chỉ là sửa cái gì.”",
     ),
-    name: P("Placeholder — Team member", "Placeholder — Thành viên đội"),
-    role: P("Webprovise · replace with a real quote", "Webprovise · thay bằng nhận xét thật"),
+    name: P("Frontend Developer", "Frontend Developer"),
+    role: P("Webprovise · Teammate, 2021 — present", "Webprovise · Đồng đội, 2021 — nay"),
   },
 ];
 

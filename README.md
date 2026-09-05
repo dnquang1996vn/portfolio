@@ -27,6 +27,6 @@ pnpm lint
 
 ## Content notes
 
-- The three feedback quotes are placeholders from the design; replace them in `portfolio.ts`.
+- The feedback quotes are attributed by role and company. Swap in names and exact wording once you have permission from the people quoted.
 - Blog cards and "All posts" link to `#blog` until real posts exist.
 - Skill logos load from `cdn.simpleicons.org`.
