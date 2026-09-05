@@ -41,3 +41,8 @@ yarn-error.log*
 next-env.d.ts
 .idea
 /design-source
+
+# Agent skills installed by the Vercel CLI integration step
+.agents
+.claude
+skills-lock.json
