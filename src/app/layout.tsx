@@ -29,7 +29,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
-      <body>
+      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) add attributes to <body> before React hydrates. */}
+      <body suppressHydrationWarning>
         <SiteProvider>{children}</SiteProvider>
       </body>
     </html>

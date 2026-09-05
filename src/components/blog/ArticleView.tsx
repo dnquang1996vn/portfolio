@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSite } from "@/components/providers/SiteProvider";
 import { pick, type Post } from "@/content/portfolio";
 import type { Article, Block } from "@/content/articles";
+import { ArticleActions } from "./ArticleActions";
 import styles from "./ArticleView.module.css";
 
 function BlockView({ block }: { block: Block }) {
@@ -45,8 +46,11 @@ interface Props {
 
 export function ArticleView({ post, article, prev, next }: Props) {
   const { t, lang } = useSite();
+  const content = article[lang];
+  const title = pick(post.title, lang);
+
   return (
-    <article className={styles.article} lang="en">
+    <article className={styles.article}>
       <header className={styles.header}>
         <Link href="/blog" className={styles.back}>← {t.backToPosts}</Link>
         <div className={styles.meta}>
@@ -56,9 +60,9 @@ export function ArticleView({ post, article, prev, next }: Props) {
           <span>·</span>
           <span>{t.published} {post.date}</span>
         </div>
-        <h1 className={styles.title}>{pick(post.title, lang)}</h1>
-        <p className={styles.lede}>{article.lede}</p>
-        {lang === "vi" && <p className={styles.notice} lang="vi">{t.articleEnglishOnly}</p>}
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.lede}>{content.lede}</p>
+        <ArticleActions slug={post.slug} title={title} />
       </header>
 
       <figure className={`grayscale ${styles.cover}`} data-media="">
@@ -66,10 +70,10 @@ export function ArticleView({ post, article, prev, next }: Props) {
       </figure>
 
       <div className={styles.body}>
-        {article.body.map((block, i) => <BlockView key={i} block={block} />)}
+        {content.body.map((block, i) => <BlockView key={`${lang}-${i}`} block={block} />)}
       </div>
 
-      <nav className={styles.pager} aria-label="Other posts">
+      <nav className={styles.pager} aria-label={t.otherPosts}>
         {prev ? (
           <Link href={`/blog/${prev.slug}`} className={styles.pagerLink}>
             <span className={styles.pagerLabel}>← {t.prevArticle}</span>

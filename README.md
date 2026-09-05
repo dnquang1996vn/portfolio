@@ -28,5 +28,6 @@ pnpm lint
 ## Content notes
 
 - The feedback quotes are attributed by role and company. Swap in names and exact wording once you have permission from the people quoted.
-- Blog posts live in `src/content/portfolio.ts` (card metadata) and `src/content/articles.ts` (article bodies, keyed by slug). Routes: `/blog` and `/blog/[slug]`. Articles are English only; the UI chrome stays bilingual.
+- Blog posts live in `src/content/portfolio.ts` (card metadata) and `src/content/articles.ts` (article bodies, keyed by slug). Routes: `/blog` and `/blog/[slug]`. Articles are bilingual (`en` / `vi` per slug).
+- Article views and likes are counted by `/api/articles/[slug]` in memory (`src/lib/engagement.ts`, seeded at 323 views / 36 likes). They reset when the server restarts; swap the store for a database or KV when you deploy for real.
 - Skill logos load from `cdn.simpleicons.org`.

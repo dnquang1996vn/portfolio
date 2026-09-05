@@ -1,0 +1,32 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 2px solid var(--color-divider);
+}
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 4px;
+  margin-right: 6px;
+  font-size: 14px;
+  color: var(--color-neutral-700);
+}
+.stat svg { width: 18px; height: 18px; }
+.action { gap: 8px; padding-inline: 14px; }
+.action svg { width: 18px; height: 18px; }
+.num {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-feature-settings: 'tnum' 1;
+  color: var(--color-text);
+}
+.label { font-size: 13px; }
+.liked { color: var(--color-accent); border-color: var(--color-accent); }
+.liked .num { color: var(--color-accent); }
+.liked:hover { color: var(--color-accent); border-color: var(--color-accent-600); }

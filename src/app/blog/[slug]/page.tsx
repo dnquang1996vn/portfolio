@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: `${title} — Quinn Do`,
     description: pick(post.summary, "en"),
-    openGraph: { title, description: article.lede, type: "article", images: [{ url: post.image }] },
+    openGraph: { title, description: article.en.lede, type: "article", images: [{ url: post.image }] },
   };
 }
 
