@@ -13,7 +13,7 @@ export function Hero() {
 
   return (
     <section id="about" data-screen-label="About" className={styles.hero}>
-      <div>
+      <div className={styles.text}>
         <p className="kicker">{t.kicker}</p>
         <h1 className={styles.title}>
           <span className={styles.line1}>

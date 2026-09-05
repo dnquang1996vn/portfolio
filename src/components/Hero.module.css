@@ -1,19 +1,21 @@
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   gap: 28px clamp(24px, 5vw, 96px);
   align-items: end;
 }
 .hero > * { min-width: 0; }
+/* The heading is sized from this column so the longest typed phrase (~8.8em incl. caret) stays on one line. */
+.text { container-type: inline-size; }
 .title {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(42px, 6.2vw, 84px);
+  font-size: clamp(38px, 11.2cqi, 84px);
   line-height: 1.06;
   letter-spacing: -0.02em;
   margin: 0 0 0 -0.058em;
 }
-.line1 { display: block; }
+.line1 { display: block; white-space: nowrap; }
 .typedGroup { white-space: nowrap; }
 .line2 { display: block; }
 .typed { color: var(--color-accent); }
