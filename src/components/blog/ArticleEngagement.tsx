@@ -6,7 +6,7 @@ import styles from "./ArticleActions.module.css";
 
 /**
  * Server component: the only dynamic part of an article page.
- * Reads (and bumps) the in-memory counters at request time and hands the
+ * Reads (and bumps) the Redis-backed counters at request time and hands the
  * numbers to the client bar, so they are in the HTML instead of loading in.
  */
 export async function ArticleEngagement({ post }: { post: Post }) {
