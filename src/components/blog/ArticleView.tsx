@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useSite } from "@/components/providers/SiteProvider";
 import { pick, type Post } from "@/content/portfolio";
 import type { Article, Block } from "@/content/articles";
-import { ArticleActions } from "./ArticleActions";
 import styles from "./ArticleView.module.css";
 
 function BlockView({ block }: { block: Block }) {
@@ -42,9 +41,11 @@ interface Props {
   article: Article;
   prev: Post | null;
   next: Post | null;
+  /** Server-rendered engagement bar (views / like / share), streamed in via Suspense. */
+  engagement: React.ReactNode;
 }
 
-export function ArticleView({ post, article, prev, next }: Props) {
+export function ArticleView({ post, article, prev, next, engagement }: Props) {
   const { t, lang } = useSite();
   const content = article[lang];
   const title = pick(post.title, lang);
@@ -62,7 +63,7 @@ export function ArticleView({ post, article, prev, next }: Props) {
         </div>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.lede}>{content.lede}</p>
-        <ArticleActions slug={post.slug} title={title} />
+        {engagement}
       </header>
 
       <figure className={`grayscale ${styles.cover}`} data-media="">

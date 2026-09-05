@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ArticleView } from "@/components/blog/ArticleView";
+import { ArticleEngagement, ArticleEngagementFallback } from "@/components/blog/ArticleEngagement";
 import { articles } from "@/content/articles";
 import { pick, posts } from "@/content/portfolio";
 
@@ -39,7 +41,17 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
     <>
       <Nav />
       <div className="page">
-        <ArticleView post={post} article={article} prev={prev} next={next} />
+        <ArticleView
+          post={post}
+          article={article}
+          prev={prev}
+          next={next}
+          engagement={
+            <Suspense fallback={<ArticleEngagementFallback />}>
+              <ArticleEngagement post={post} />
+            </Suspense>
+          }
+        />
       </div>
       <Footer />
     </>

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSite } from "@/components/providers/SiteProvider";
+import { pick, type Post } from "@/content/portfolio";
 import type { Engagement } from "@/lib/engagement";
 import styles from "./ArticleActions.module.css";
 
@@ -43,24 +44,25 @@ function ShareIcon() {
 
 const fmt = (n: number) => new Intl.NumberFormat("en-US").format(n);
 
-export function ArticleActions({ slug, title }: { slug: string; title: string }) {
-  const { t } = useSite();
-  const [counts, setCounts] = useState<Engagement | null>(null);
+interface Props {
+  post: Post;
+  /** Counters rendered on the server for this request. */
+  initial: Engagement;
+}
+
+export function ArticleActions({ post, initial }: Props) {
+  const { t, lang } = useSite();
+  const slug = post.slug;
+  const title = pick(post.title, lang);
+  const [counts, setCounts] = useState<Engagement>(initial);
   const [liked, setLiked] = useState(false);
   const [busy, setBusy] = useState(false);
   const [shared, setShared] = useState<"idle" | "copied" | "failed">("idle");
 
-  // Register the view once per mount and load counters + liked state.
+  // Liked state lives in this browser's localStorage; read it after hydration.
   useEffect(() => {
     let cancelled = false;
-    fetch(`/api/articles/${slug}`, { method: "POST", body: JSON.stringify({ action: "view" }), headers: { "Content-Type": "application/json" } })
-      .then((r) => (r.ok ? (r.json() as Promise<Engagement>) : null))
-      .then((data) => {
-        if (cancelled) return;
-        setLiked(readLiked().has(slug));
-        if (data) setCounts(data);
-      })
-      .catch(() => { /* counters are best-effort */ });
+    Promise.resolve().then(() => { if (!cancelled) setLiked(readLiked().has(slug)); });
     return () => { cancelled = true; };
   }, [slug]);
 
@@ -70,7 +72,7 @@ export function ArticleActions({ slug, title }: { slug: string; title: string })
     const next = !liked;
     // Optimistic update.
     setLiked(next);
-    setCounts((c) => (c ? { ...c, likes: Math.max(0, c.likes + (next ? 1 : -1)) } : c));
+    setCounts((c) => ({ ...c, likes: Math.max(0, c.likes + (next ? 1 : -1)) }));
     const set = readLiked();
     if (next) set.add(slug); else set.delete(slug);
     writeLiked(set);
@@ -108,7 +110,7 @@ export function ArticleActions({ slug, title }: { slug: string; title: string })
     <div className={styles.bar}>
       <span className={styles.stat} title={t.views}>
         <EyeIcon />
-        <span className={styles.num}>{counts ? fmt(counts.views) : "—"}</span>
+        <span className={styles.num}>{fmt(counts.views)}</span>
         <span className={styles.label}>{t.views}</span>
       </span>
       <button
@@ -120,7 +122,7 @@ export function ArticleActions({ slug, title }: { slug: string; title: string })
         disabled={busy}
       >
         <HeartIcon filled={liked} />
-        <span className={styles.num}>{counts ? fmt(counts.likes) : "—"}</span>
+        <span className={styles.num}>{fmt(counts.likes)}</span>
         <span className={styles.label}>{liked ? t.liked : t.like}</span>
       </button>
       <button type="button" className={`btn btn-secondary ${styles.action}`} onClick={share} aria-label={t.share}>
