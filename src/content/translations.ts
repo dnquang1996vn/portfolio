@@ -2,7 +2,7 @@ export type Lang = "en" | "vi";
 
 export const typedWords: Record<Lang, string[]> = {
   en: ["products", "platforms", "with AI", "teams"],
-  vi: ["sản phẩm", "nền tảng", "với AI", "đội ngũ"],
+  vi: ["products", "platforms", "với AI", "teams"],
 };
 
 const en = {

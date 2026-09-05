@@ -17,8 +17,11 @@ export function Hero() {
         <p className="kicker">{t.kicker}</p>
         <h1 className={styles.title}>
           <span className={styles.line1}>
-            {t.heroPrefix} <span className={styles.typed}>{typed}</span>
-            <span data-caret="" className={styles.caret} aria-hidden="true" />,
+            {t.heroPrefix}{" "}
+            <span className={styles.typedGroup}>
+              <span className={styles.typed}>{typed}</span>
+              <span data-caret="" className={styles.caret} aria-hidden="true" />,
+            </span>
           </span>
           <span className={styles.line2}>{t.heroLine2}</span>
         </h1>
