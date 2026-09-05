@@ -47,7 +47,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           prev={prev}
           next={next}
           engagement={
-            <Suspense fallback={<ArticleEngagementFallback />}>
+            <Suspense key="engagement" fallback={<ArticleEngagementFallback />}>
               <ArticleEngagement post={post} />
             </Suspense>
           }
