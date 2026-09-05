@@ -38,6 +38,13 @@ const en = {
   nextPosts: "Next posts",
   toggleTheme: "Toggle dark mode",
   switchLang: "Switch language",
+  blogIndexTitle: "Notes from the codebase.",
+  blogIndexIntro: "Architecture, compliance, performance and the occasional opinion about estimates. Written from production, not from theory.",
+  backToPosts: "All posts",
+  articleEnglishOnly: "Bài viết hiện có bằng tiếng Anh.",
+  prevArticle: "Previous",
+  nextArticle: "Next",
+  published: "Published",
 };
 
 const vi: typeof en = {
@@ -73,6 +80,13 @@ const vi: typeof en = {
   nextPosts: "Bài tiếp",
   toggleTheme: "Đổi giao diện tối",
   switchLang: "Đổi ngôn ngữ",
+  blogIndexTitle: "Ghi chép từ codebase.",
+  blogIndexIntro: "Kiến trúc, tuân thủ, hiệu năng và đôi khi là quan điểm về ước lượng. Viết từ production, không phải từ lý thuyết.",
+  backToPosts: "Tất cả bài viết",
+  articleEnglishOnly: "Bài viết hiện có bằng tiếng Anh.",
+  prevArticle: "Bài trước",
+  nextArticle: "Bài tiếp",
+  published: "Đăng",
 };
 
 export const translations: Record<Lang, typeof en> = { en, vi };

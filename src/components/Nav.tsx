@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSite } from "@/components/providers/SiteProvider";
 import { contact } from "@/content/portfolio";
 import styles from "./Nav.module.css";
@@ -29,18 +30,18 @@ export function Nav() {
 
   return (
     <nav className={`nav ${styles.nav}`}>
-      <a className={`nav-brand ${styles.brand}`} href="#about">
+      <Link className={`nav-brand ${styles.brand}`} href="/#about">
         <Image className={styles.markLight} src="/images/quinndev-mark-v2.png" alt="" width={24} height={24} priority />
         <Image className={styles.markDark} src="/images/quinndev-mark-dark-v2.png" alt="" width={24} height={24} priority />
         <span className={styles.brandText}>
           Quinn<span className={styles.brandAccent}>Dev</span>
         </span>
-      </a>
-      <a href="#about">{t.navAbout}</a>
-      <a href="#skills">{t.navSkills}</a>
-      <a href="#projects">{t.navProjects}</a>
-      <a href="#feedback">{t.navFeedback}</a>
-      <a href="#blog">{t.navBlog}</a>
+      </Link>
+      <Link href="/#about">{t.navAbout}</Link>
+      <Link href="/#skills">{t.navSkills}</Link>
+      <Link href="/#projects">{t.navProjects}</Link>
+      <Link href="/#feedback">{t.navFeedback}</Link>
+      <Link href="/blog">{t.navBlog}</Link>
       <a className="btn btn-primary" href={`mailto:${contact.email}`}>{t.hire}</a>
       <button
         type="button"

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSite } from "@/components/providers/SiteProvider";
 import { pick, posts } from "@/content/portfolio";
@@ -46,7 +47,7 @@ export function Blog() {
           <h2 className="section-title">{t.blogTitle}</h2>
         </div>
         <div className={styles.controls}>
-          <a className="btn btn-secondary" href="#blog">{t.allPosts}</a>
+          <Link className="btn btn-secondary" href="/blog">{t.allPosts}</Link>
           <button
             type="button"
             className="btn btn-secondary btn-icon"
@@ -72,7 +73,7 @@ export function Blog() {
         <div className={`${styles.fade} ${styles.fadeR}`} style={{ opacity: canNext ? 1 : 0 }} aria-hidden="true" />
         <div data-blog-grid="" ref={gridRef} onScroll={sync} className={styles.grid}>
           {posts.map((post) => (
-            <a key={post.slug} data-post="" href="#blog" className={styles.post}>
+            <Link key={post.slug} data-post="" href={`/blog/${post.slug}`} className={styles.post}>
               <figure className={`grayscale ${styles.media}`} data-media="">
                 <Image
                   src={post.image}
@@ -90,7 +91,7 @@ export function Blog() {
               </div>
               <h3 className={styles.title}>{pick(post.title, lang)}</h3>
               <p className={styles.summary}>{pick(post.summary, lang)}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

@@ -28,5 +28,5 @@ pnpm lint
 ## Content notes
 
 - The feedback quotes are attributed by role and company. Swap in names and exact wording once you have permission from the people quoted.
-- Blog cards and "All posts" link to `#blog` until real posts exist.
+- Blog posts live in `src/content/portfolio.ts` (card metadata) and `src/content/articles.ts` (article bodies, keyed by slug). Routes: `/blog` and `/blog/[slug]`. Articles are English only; the UI chrome stays bilingual.
 - Skill logos load from `cdn.simpleicons.org`.

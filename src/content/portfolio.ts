@@ -369,19 +369,19 @@ export interface Post {
 
 export const posts: Post[] = [
   {
-    slug: "blog-1", image: "/images/blog-1.png", date: "2026",
+    slug: "multi-tenant-white-label-one-codebase", image: "/images/blog-1.png", date: "2026",
     title: P("Multi-tenant, white-label, and still one codebase", "Multi-tenant, white-label, và vẫn một codebase"),
     summary: P("How Welle serves SaaS customers and per-client custom logic without forking.", "Cách Welle phục vụ khách SaaS và logic riêng từng khách mà không fork."),
     topic: P("Architecture", "Kiến trúc"), read: P("8 min", "8 phút"),
   },
   {
-    slug: "blog-2", image: "/images/blog-2.png", date: "2026",
+    slug: "ai-soap-notes-under-hipaa", image: "/images/blog-2.png", date: "2026",
     title: P("Shipping AI-assisted SOAP notes under HIPAA", "Đưa SOAP notes có AI hỗ trợ lên production dưới HIPAA"),
     summary: P("Where PHI can and cannot go when an LLM is in the loop.", "PHI được và không được đi đâu khi có LLM trong vòng lặp."),
     topic: P("AI · Compliance", "AI · Tuân thủ"), read: P("6 min", "6 phút"),
   },
   {
-    slug: "blog-3", image: "/images/blog-3.png", date: "2025",
+    slug: "agentic-workflows-small-team", image: "/images/blog-3.png", date: "2025",
     title: P("Agentic workflows for a small team: what actually stuck", "Quy trình agentic cho đội nhỏ: điều gì thực sự ở lại"),
     summary: P(
       "Custom skills, usage policies and the review habits that kept quality up with Claude Code and Cursor.",
@@ -390,19 +390,19 @@ export const posts: Post[] = [
     topic: P("AI-assisted dev", "Lập trình với AI"), read: P("7 min", "7 phút"),
   },
   {
-    slug: "blog-5", image: "/images/blog-5.png", date: "2025",
+    slug: "data-tables-that-survive-10k-rows", image: "/images/blog-5.png", date: "2025",
     title: P("Data tables that survive 10k rows", "Bảng dữ liệu sống được qua 10k dòng"),
     summary: P("Resize, freeze, group, tree — and still 60fps. What we learned building Bamboo’s grid.", "Resize, freeze, nhóm, cây — vẫn 60fps. Bài học từ grid của Bamboo."),
     topic: P("Performance", "Hiệu năng"), read: P("9 min", "9 phút"),
   },
   {
-    slug: "blog-6", image: "/images/blog-6.png", date: "2024",
+    slug: "estimating-work-you-have-never-done", image: "/images/blog-6.png", date: "2024",
     title: P("Estimating work you have never done before", "Ước lượng việc chưa từng làm"),
     summary: P("A tech lead’s honest method for sizing unknowns without padding everything 3×.", "Cách một tech lead ước lượng điều chưa biết mà không nhân ba mọi thứ."),
     topic: P("Leadership", "Lãnh đạo"), read: P("5 min", "5 phút"),
   },
   {
-    slug: "blog-4", image: "/images/blog-4.png", date: "2025",
+    slug: "one-react-app-25-regulators", image: "/images/blog-4.png", date: "2025",
     title: P("One React app, 25 regulators", "Một app React, 25 cơ quan quản lý"),
     summary: P("Per-state polymorphism in Bamboo’s frontend without a 25-way switch.", "Đa hình theo bang trong frontend Bamboo mà không cần switch 25 nhánh."),
     topic: "Frontend", read: P("5 min", "5 phút"),
