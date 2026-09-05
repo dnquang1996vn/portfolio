@@ -29,5 +29,5 @@ pnpm lint
 
 - The feedback quotes are attributed by role and company. Swap in names and exact wording once you have permission from the people quoted.
 - Blog posts live in `src/content/portfolio.ts` (card metadata) and `src/content/articles.ts` (article bodies, keyed by slug). Routes: `/blog` and `/blog/[slug]`. Articles are bilingual (`en` / `vi` per slug).
-- Article views and likes are counted by `/api/articles/[slug]` in memory (`src/lib/engagement.ts`, seeded at 323 views / 36 likes). They reset when the server restarts; swap the store for a database or KV when you deploy for real.
+- Article views and likes are stored in Upstash Redis (Vercel KV) via `src/lib/engagement.ts`, one hash per slug seeded at 323 views / 36 likes. Locally, run `vercel env pull .env.local` to use the same store, or leave the env vars unset to fall back to an in-memory map.
 - Skill logos load from `cdn.simpleicons.org`.

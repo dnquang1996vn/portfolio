@@ -11,7 +11,7 @@ import styles from "./ArticleActions.module.css";
  */
 export async function ArticleEngagement({ post }: { post: Post }) {
   await connection(); // opt this subtree out of the static prerender
-  const initial = addView(post.slug);
+  const initial = await addView(post.slug);
   return <ArticleActions post={post} initial={initial} />;
 }
 
