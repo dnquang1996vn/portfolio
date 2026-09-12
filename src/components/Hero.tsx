@@ -37,14 +37,14 @@ export function Hero() {
           </a>
         </div>
       </div>
-      <figure data-media="" className={styles.portrait}>
+      <figure className={styles.portrait}>
         <Image
-          src="/images/portrait.png"
-          alt="Portrait of Quinn Do"
-          width={960}
-          height={1200}
+          src="/images/hero-desk.png"
+          alt="Isometric diorama of Quinn Do at his desk workstation"
+          width={1624}
+          height={1637}
           priority
-          sizes="(max-width: 720px) 100vw, 40vw"
+          sizes="(max-width: 720px) 92vw, 46vw"
           className={styles.portraitImg}
         />
       </figure>
