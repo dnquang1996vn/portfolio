@@ -54,6 +54,66 @@ export const useRegulator = () => strategies[useTenant().regulator];`;
 
 /** Keyed by post slug. The type makes `tsc` fail when a post in portfolio.ts has no body here. */
 export const articles: Record<PostSlug, Article> = {
+  "making-sure-a-feature-works": {
+    en: {
+      lede:
+        "Coverage numbers never told me whether a feature worked. What did was asking where each piece of knowledge lives, then testing it at the lowest level that can answer. Here is the split I use on the backend, on the frontend, and across the whole thing.",
+      body: [
+        { type: "h2", text: "The question that decides everything" },
+        { type: "p", text: "Every test is a trade: confidence that the feature works, against the cost of writing, running and fixing it. The confidence side has a simple rule. The more a test resembles how the software is used, the more it tells me. The cost side has one too: a red test helps nobody until it leads to a fix, so I judge a test by how fast it points at the cause." },
+        { type: "p", text: "So before writing a test I ask where the knowledge lives. If a type or a lint rule can prove it, it is not a test. If it is a rule that holds on its own, it is a unit test. If it only exists when several things are wired together, it goes higher, and higher is rarer." },
+        { type: "h2", text: "Backend: the knowledge is isolated" },
+        { type: "p", text: "Most backend logic is a rule with clean inputs and outputs. Pricing, eligibility, date arithmetic, which clinician a visit is routed to. The dependencies are injected, so the function runs alone in milliseconds with no database and no network. That is where the weight of the backend suite sits." },
+        { type: "p", text: "The service boundary gets one more layer. HTTP in, database out, against a real database in a container, because faking my own persistence only tests the fake. Anything that talks to another team’s system is a contract check, not a test that depends on their uptime." },
+        { type: "p", text: "This is the classic pyramid, and it fits because backend units carry logic. When something fails, the test names the rule that broke." },
+        { type: "h2", text: "Frontend: the component is the unit" },
+        { type: "p", text: "A frontend unit is a different animal. A component is a function of its props and of its context, the route, the viewport, the locale and whatever the server cache holds. Isolate it from all of that and the test proves very little. Most frontend bugs are two of those sources of state disagreeing." },
+        { type: "p", text: "So on the frontend I test the component with its real providers and real router, and fake only the network. Given this data, what does the screen show, and what happens when the user clicks. That is enough interaction to catch the bugs that actually ship." },
+        { type: "p", text: "Unit tests still exist, but only for functions I pulled out on purpose: a formatter, a reducer, a date helper. The rest of the suite is component tests, so the shape is a trophy rather than a pyramid. Same trade, different system." },
+        { type: "h2", text: "End to end: expensive, so one happy path" },
+        { type: "p", text: "End-to-end tests are slow, flaky, and vague when they fail. I keep them anyway, because some claims only exist when everything is wired together: login, routing, the proxy, a checkout that crosses two services. I just keep the list short." },
+        { type: "p", text: "Each feature gets one end-to-end test on its main path. It creates its own data through the API, unique per run, and cleans up on success. That is the test that proves the real database, the real auth and the real screen agree with each other." },
+        { type: "ul", items: [
+          "Not the edge cases. Those are already covered a level below, where they are cheap.",
+          "When it catches a bug that no lower test caught, I add the lower test. Otherwise the pyramid inverts one bug at a time.",
+          "Never a blind retry to turn red into green. Retries are for surviving infrastructure, not for hiding a race.",
+        ] },
+        { type: "h2", text: "What it bought me" },
+        { type: "p", text: "The backend suite is a pyramid, the frontend suite is a trophy, and a thin line of happy paths runs across both. Nothing proves at a higher level what a lower one already proved. The run is fast enough that people actually read a red build." },
+        { type: "p", text: "The question I keep coming back to is the simplest one. If this breaks in three months, who notices? If the answer is a customer, it gets an automated test at the lowest level that can see it. If the answer is everyone, right away, a quick manual check is enough." },
+      ],
+    },
+    vi: {
+      lede:
+        "Coverage bao nhiêu phần trăm chưa bao giờ cho tôi biết feature có chạy đúng không. Cái giúp tôi trả lời được là một câu hỏi khác: logic này nằm ở đâu, và tầng test nào thấp nhất mà vẫn kiểm tra được nó? Bài này là cách tôi chia test ở backend, ở frontend, và cho cả luồng từ đầu đến cuối.",
+      body: [
+        { type: "h2", text: "Câu hỏi quyết định mọi thứ" },
+        { type: "p", text: "Viết test luôn là một bài toán đánh đổi. Một bên là mức tin cậy: test này cho tôi biết feature chạy đúng đến đâu. Bên kia là chi phí: viết, chạy, bảo trì, và sửa mỗi khi nó đỏ." },
+        { type: "p", text: "Tôi dùng hai quy tắc để cân. Test càng giống cách người dùng thật dùng sản phẩm thì càng đáng tin. Và test đỏ chỉ có giá trị khi nó chỉ thẳng ra lỗi nằm ở đâu, nên test nào báo lỗi càng rõ, tôi càng quý." },
+        { type: "p", text: "Nên trước khi viết test, tôi hỏi một câu: logic này nằm ở đâu? Nếu type hay lint rule đã bắt được thì khỏi cần test. Nếu là một quy tắc đứng độc lập thì unit test là đủ. Nếu chỉ xuất hiện khi nhiều phần ghép lại với nhau thì mới cần test ở tầng cao hơn, và tầng càng cao thì test càng ít." },
+        { type: "h2", text: "Backend: logic tách riêng được, nên unit test gánh phần lớn" },
+        { type: "p", text: "Phần lớn logic backend là những quy tắc có đầu vào và đầu ra rõ ràng: tính giá, xét điều kiện, cộng trừ ngày tháng, chọn bác sĩ cho một lượt khám. Dependency được inject vào, nên mỗi hàm chạy riêng lẻ được trong vài mili giây, không cần database hay network. Đây là nơi tôi đặt phần lớn test của backend." },
+        { type: "p", text: "Ở biên của service, tôi thêm một tầng nữa: gửi HTTP request vào, rồi kiểm tra dữ liệu ghi xuống database. Database này là database thật chạy trong container, vì nếu fake chính tầng lưu trữ của mình thì rốt cuộc chỉ đang test cái fake. Còn những chỗ gọi sang hệ thống của team khác, tôi dùng contract check, chứ không viết test mà kết quả phụ thuộc vào việc hệ thống của họ có đang chạy hay không." },
+        { type: "p", text: "Đây chính là mô hình kim tự tháp quen thuộc. Nó hợp với backend vì ở đây mỗi unit thật sự chứa logic. Khi có gì hỏng, test gọi đúng tên quy tắc bị hỏng." },
+        { type: "h2", text: "Frontend: đơn vị để test là component" },
+        { type: "p", text: "Ở frontend, khái niệm unit khác hẳn. Một component không chỉ phụ thuộc vào props, mà còn vào context, route, kích thước màn hình, ngôn ngữ, và dữ liệu đang nằm trong cache. Tách nó ra khỏi tất cả những thứ đó rồi test thì chẳng chứng minh được gì nhiều. Phần lớn bug frontend đến từ việc hai nguồn state đó không khớp nhau." },
+        { type: "p", text: "Vì vậy tôi test component cùng với provider thật, router thật, và chỉ fake mỗi phần gọi network. Câu hỏi rất đơn giản: với dữ liệu này, màn hình hiện gì, và khi người dùng bấm thì chuyện gì xảy ra? Mức tương tác đó là đủ để bắt được những bug thật sự lọt ra production." },
+        { type: "p", text: "Unit test vẫn có chỗ, nhưng chỉ cho những hàm tôi chủ động tách ra: một hàm format, một reducer, một helper xử lý ngày tháng. Phần còn lại là component test. Nên bộ test frontend có hình chiếc cúp chứ không phải kim tự tháp: cùng một cách đánh đổi, nhưng áp vào một hệ thống khác." },
+        { type: "h2", text: "End to end: đắt, nên mỗi feature chỉ một happy path" },
+        { type: "p", text: "Test end to end chậm, dễ flaky, và khi fail thì khó biết lỗi nằm ở đâu. Tôi vẫn giữ, vì có những thứ chỉ kiểm tra được khi mọi phần ghép lại với nhau: đăng nhập, routing, proxy, hay một luồng thanh toán đi qua hai service. Chỉ là tôi giữ danh sách này thật ngắn." },
+        { type: "p", text: "Mỗi feature có đúng một test end to end, chạy theo luồng chính mà người dùng hay đi. Test tự tạo dữ liệu của mình qua API, mỗi lần chạy một bộ riêng, và tự dọn khi pass. Đây là test duy nhất chứng minh database thật, auth thật và màn hình thật khớp với nhau." },
+        { type: "ul", items: [
+          "Không kiểm tra edge case ở tầng này. Chúng đã có test ở tầng dưới, nơi rẻ hơn nhiều.",
+          "Nếu test end to end bắt được một bug mà không test nào ở tầng dưới bắt được, tôi viết thêm test ở tầng dưới. Không thì kim tự tháp sẽ lộn ngược dần, mỗi lần một bug.",
+          "Không bao giờ bật retry để ép test đỏ thành xanh. Retry chỉ để vượt qua lỗi hạ tầng, không phải để giấu race condition.",
+        ] },
+        { type: "h2", text: "Kết quả" },
+        { type: "p", text: "Bộ test backend là kim tự tháp, bộ test frontend là chiếc cúp, và một lớp mỏng happy path phủ lên cả hai. Không tầng nào kiểm tra lại điều tầng dưới đã kiểm tra. Cả bộ chạy đủ nhanh để khi build đỏ, mọi người thật sự mở ra đọc." },
+        { type: "p", text: "Còn câu hỏi tôi hay quay lại nhất thì rất đơn giản: nếu ba tháng nữa chỗ này hỏng, ai sẽ nhận ra? Nếu là khách hàng, phải có test tự động, ở tầng thấp nhất nhìn thấy được lỗi đó. Nếu là cả team, ngay lập tức, thì kiểm tra tay là đủ." },
+      ],
+    },
+  },
+
   "multi-tenant-white-label-one-codebase": {
     en: {
       lede:
