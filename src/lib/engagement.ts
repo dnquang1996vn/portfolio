@@ -27,6 +27,9 @@ function redisFromEnv(): Redis | null {
 const g = globalThis as unknown as { __redis?: Redis | null; __engagementStore?: Map<string, Engagement> };
 const redis: Redis | null = g.__redis === undefined ? (g.__redis = redisFromEnv()) : g.__redis;
 
+/** The shared Upstash client, or null when no REST credentials are configured. */
+export const sharedRedis = redis;
+
 async function seedIfMissing(r: Redis, slug: string) {
   const p = r.pipeline();
   p.hsetnx(key(slug), "views", SEED.views);
