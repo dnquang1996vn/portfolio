@@ -398,6 +398,7 @@ export const tags = {
   frontend: "Frontend",
   leadership: P("Leadership", "Lãnh đạo"),
   tooling: P("Dev tooling", "Công cụ dev"),
+  testing: P("Testing", "Kiểm thử"),
 } as const satisfies Record<string, Bi>;
 
 export type TagId = keyof typeof tags;
@@ -422,6 +423,16 @@ export interface Post {
  * and the prev/next links on an article, so a new post goes at the top.
  */
 const postList = [
+  {
+    slug: "making-sure-a-feature-works", image: "/images/cover-feature-tests.png", date: "2026",
+    title: P("How I make sure a feature works", "Cách tôi chắc một feature chạy đúng"),
+    summary: P(
+      "Unit tests where the knowledge is isolated, component tests where it interacts, one happy path end to end.",
+      "Unit test cho logic tách riêng được, component test cho phần có tương tác, và một happy path end to end.",
+    ),
+    topic: P("Testing", "Kiểm thử"), read: P("3 min", "3 phút"),
+    tags: ["testing", "frontend"],
+  },
   {
     slug: "multi-tenant-white-label-one-codebase", image: "/images/cover-multi-tenant.png", date: "2026",
     title: P("Multi-tenant, white-label, and still one codebase", "Multi-tenant, white-label, và vẫn một codebase"),
@@ -492,7 +503,6 @@ export const principles: Principle[] = [
     ),
   },
   {
-  testing: P("Testing", "Kiểm thử"),
     title: P("Ship AI where it earns its place.", "Đưa AI vào đúng chỗ nó xứng đáng."),
     body: P(
       "Patient chatbots, AI-drafted SOAP notes, care recommendations, in production, under HIPAA, with the PHI boundaries drawn first.",
@@ -517,16 +527,6 @@ export const explorations: Exploration[] = [
     body: P(
       "Custom skills, usage policies and review habits that keep quality up with Claude Code and Cursor.",
       "Skill tùy biến, chính sách sử dụng và thói quen review giữ chất lượng với Claude Code và Cursor.",
-  {
-    slug: "making-sure-a-feature-works", image: "/images/cover-feature-tests.png", date: "2026",
-    title: P("How I make sure a feature works", "Cách tôi chắc một feature chạy đúng"),
-    summary: P(
-      "Unit tests where the knowledge is isolated, component tests where it interacts, one happy path end to end.",
-      "Unit test cho logic tách riêng được, component test cho phần có tương tác, và một happy path end to end.",
-    ),
-    topic: P("Testing", "Kiểm thử"), read: P("3 min", "3 phút"),
-    tags: ["testing", "frontend"],
-  },
     ),
     href: "/blog/agentic-workflows-small-team",
   },
