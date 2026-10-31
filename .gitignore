@@ -45,5 +45,10 @@ next-env.d.ts
 
 # Agent skills installed by the Vercel CLI integration step
 .agents
-.claude
 skills-lock.json
+
+# Claude Code: keep local settings and vendored skills out, commit our own skills
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/blog-writer/

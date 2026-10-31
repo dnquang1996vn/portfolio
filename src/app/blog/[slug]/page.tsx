@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { ArticleView } from "@/components/blog/ArticleView";
 import { ArticleEngagement, ArticleEngagementFallback } from "@/components/blog/ArticleEngagement";
-import { articles } from "@/content/articles";
+import { getArticle } from "@/content/articles";
 import { pick, posts } from "@/content/portfolio";
 
 type Params = { slug: string };
@@ -15,7 +15,7 @@ export function generateStaticParams(): Params[] {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const post = posts.find((p) => p.slug === slug);
-  const article = articles[slug];
+  const article = getArticle(slug);
   if (!post || !article) return {};
   const title = pick(post.title, "en");
   return {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const index = posts.findIndex((p) => p.slug === slug);
-  const article = articles[slug];
+  const article = getArticle(slug);
   if (index === -1 || !article) notFound();
 
   const post = posts[index];

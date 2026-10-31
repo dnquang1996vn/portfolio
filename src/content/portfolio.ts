@@ -384,6 +384,28 @@ export const feedback: Feedback[] = [
   },
 ];
 
+/* — blog — */
+
+/**
+ * Tag registry. Keys are the stable ids used in `Post.tags` and in `/blog?tag=<id>`;
+ * values are the labels. Add a line here before using a new tag on a post.
+ */
+export const tags = {
+  architecture: P("Architecture", "Kiến trúc"),
+  ai: "AI",
+  compliance: P("Compliance", "Tuân thủ"),
+  performance: P("Performance", "Hiệu năng"),
+  frontend: "Frontend",
+  leadership: P("Leadership", "Lãnh đạo"),
+  tooling: P("Dev tooling", "Công cụ dev"),
+} as const satisfies Record<string, Bi>;
+
+export type TagId = keyof typeof tags;
+
+export function isTagId(value: string): value is TagId {
+  return Object.hasOwn(tags, value);
+}
+
 export interface Post {
   slug: string;
   image: string;
@@ -392,20 +414,27 @@ export interface Post {
   summary: Bi;
   topic: Bi;
   read: Bi;
+  tags: readonly TagId[];
 }
 
-export const posts: Post[] = [
+/**
+ * Newest first. Array order is the display order on /blog, the home page, the footer,
+ * and the prev/next links on an article, so a new post goes at the top.
+ */
+const postList = [
   {
     slug: "multi-tenant-white-label-one-codebase", image: "/images/cover-multi-tenant.png", date: "2026",
     title: P("Multi-tenant, white-label, and still one codebase", "Multi-tenant, white-label, và vẫn một codebase"),
     summary: P("How Welle serves SaaS customers and per-client custom logic without forking.", "Cách Welle phục vụ khách SaaS và logic riêng từng khách mà không fork."),
     topic: P("Architecture", "Kiến trúc"), read: P("8 min", "8 phút"),
+    tags: ["architecture"],
   },
   {
     slug: "ai-soap-notes-under-hipaa", image: "/images/cover-soap-hipaa.png", date: "2026",
     title: P("Shipping AI-assisted SOAP notes under HIPAA", "Đưa SOAP notes có AI hỗ trợ lên production dưới HIPAA"),
     summary: P("Where PHI can and cannot go when an LLM is in the loop.", "PHI được và không được đi đâu khi có LLM trong vòng lặp."),
     topic: P("AI and compliance", "AI và tuân thủ"), read: P("6 min", "6 phút"),
+    tags: ["ai", "compliance"],
   },
   {
     slug: "agentic-workflows-small-team", image: "/images/cover-agentic-workflows.png", date: "2025",
@@ -415,26 +444,35 @@ export const posts: Post[] = [
       "Skill tùy biến, chính sách sử dụng và thói quen review giữ chất lượng với Claude Code và Cursor.",
     ),
     topic: P("AI-assisted dev", "Lập trình với AI"), read: P("7 min", "7 phút"),
+    tags: ["ai", "tooling"],
   },
   {
     slug: "data-tables-that-survive-10k-rows", image: "/images/cover-data-tables.png", date: "2025",
     title: P("Data tables that survive 10k rows", "Bảng dữ liệu sống được qua 10k dòng"),
     summary: P("Resize, freeze, group, tree, and still 60fps. What we learned building Bamboo’s grid.", "Resize, freeze, nhóm, cây, vẫn 60fps. Bài học từ grid của Bamboo."),
     topic: P("Performance", "Hiệu năng"), read: P("9 min", "9 phút"),
+    tags: ["performance", "frontend"],
   },
   {
     slug: "estimating-work-you-have-never-done", image: "/images/cover-estimating.png", date: "2024",
     title: P("Estimating work you have never done before", "Ước lượng việc chưa từng làm"),
     summary: P("A tech lead’s honest method for sizing unknowns without padding everything 3×.", "Cách một tech lead ước lượng điều chưa biết mà không nhân ba mọi thứ."),
     topic: P("Leadership", "Lãnh đạo"), read: P("5 min", "5 phút"),
+    tags: ["leadership"],
   },
   {
     slug: "one-react-app-25-regulators", image: "/images/cover-25-regulators.png", date: "2025",
     title: P("One React app, 25 regulators", "Một app React, 25 cơ quan quản lý"),
     summary: P("Per-state polymorphism in Bamboo’s frontend without a 25-way switch.", "Đa hình theo bang trong frontend Bamboo mà không cần switch 25 nhánh."),
     topic: "Frontend", read: P("5 min", "5 phút"),
+    tags: ["frontend", "architecture"],
   },
-];
+] as const satisfies readonly Post[];
+
+export const posts: readonly Post[] = postList;
+
+/** Union of every post slug, so `articles` in articles.ts must cover each one. */
+export type PostSlug = (typeof postList)[number]["slug"];
 
 /* — home: how I lead — */
 export interface Principle { title: Bi; body: Bi }

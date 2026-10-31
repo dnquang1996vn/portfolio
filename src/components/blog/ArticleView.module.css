@@ -62,9 +62,12 @@
   color: var(--color-accent-700);
 }
 html[data-rounded] .code { border-radius: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 40px 0 0; padding: 0; list-style: none; }
+.tag { transition: border-color .2s, color .2s; }
+.tag:hover { border-color: var(--color-divider-strong); color: var(--color-text); }
 .pager {
   display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-  margin-top: 72px; padding-top: 28px;
+  margin-top: 56px; padding-top: 28px;
   border-top: 2px solid var(--color-divider);
 }
 .pagerLink { display: flex; flex-direction: column; gap: 8px; color: var(--color-text); min-width: 0; }

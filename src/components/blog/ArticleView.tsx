@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSite } from "@/components/providers/SiteProvider";
-import { pick, type Post } from "@/content/portfolio";
+import { pick, tags, type Post } from "@/content/portfolio";
 import type { Article, Block } from "@/content/articles";
 import styles from "./ArticleView.module.css";
 
@@ -64,13 +64,21 @@ export function ArticleView({ post, article, prev, next, engagement }: Props) {
         {engagement}
       </header>
 
-      <figure className={`grayscale ${styles.cover}`} data-media="">
+      <figure className={styles.cover} data-media="">
         <Image src={post.image} alt="" width={1800} height={1200} priority sizes="(max-width: 1200px) 100vw, 1200px" className={styles.coverImg} />
       </figure>
 
       <div className={styles.body}>
         {content.body.map((block, i) => <BlockView key={`${lang}-${i}`} block={block} />)}
       </div>
+
+      <ul className={styles.tags} aria-label={t.tagsLabel}>
+        {post.tags.map((id) => (
+          <li key={id}>
+            <Link href={`/blog?tag=${id}`} className={`tag tag-neutral ${styles.tag}`}>{pick(tags[id], lang)}</Link>
+          </li>
+        ))}
+      </ul>
 
       <nav className={styles.pager} aria-label={t.otherPosts}>
         {prev ? (

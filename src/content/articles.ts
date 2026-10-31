@@ -1,4 +1,5 @@
 import type { Lang } from "./translations";
+import type { PostSlug } from "./portfolio";
 
 /**
  * Long-form article bodies, keyed by post slug (see posts in portfolio.ts).
@@ -18,6 +19,11 @@ export interface ArticleBody {
 }
 
 export type Article = Record<Lang, ArticleBody>;
+
+/** Article body for a slug, or undefined for a slug that is not a post. */
+export function getArticle(slug: string): Article | undefined {
+  return Object.hasOwn(articles, slug) ? articles[slug as PostSlug] : undefined;
+}
 
 const tenantCode = `// Resolved once per request, then injected everywhere.
 export interface TenantContext {
@@ -46,7 +52,8 @@ const regulatorCode = `export interface RegulatorStrategy {
 const strategies: Record<RegulatorId, RegulatorStrategy> = { metrc, biotrack, ccrs };
 export const useRegulator = () => strategies[useTenant().regulator];`;
 
-export const articles: Record<string, Article> = {
+/** Keyed by post slug. The type makes `tsc` fail when a post in portfolio.ts has no body here. */
+export const articles: Record<PostSlug, Article> = {
   "multi-tenant-white-label-one-codebase": {
     en: {
       lede:

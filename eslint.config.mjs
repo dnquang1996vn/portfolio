@@ -13,6 +13,9 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "design-source/**",
+    // Agent skills (vendored by the Vercel CLI, plus our own) are not app code.
+    ".claude/**",
+    ".agents/**",
   ]),
 ]);
 
