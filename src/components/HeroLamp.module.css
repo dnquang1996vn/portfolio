@@ -1,0 +1,40 @@
+/* The lamp overlays the photo box (.imgWrap) and is laid out in percentages of it, so the
+   clamp stays on the wall trim at every viewport. --aim is written by HeroLamp on fine
+   pointers; the default is the resting pose, so touch, no-JS and reduced motion all show
+   the same still lamp. */
+.lamp { --aim: 8deg; --lamp-ink: #2d2b2b; position: absolute; inset: 0; pointer-events: none; }
+:global(html[data-theme="dark"]) .lamp { --lamp-ink: #3f3b3b; }
+
+/* Light cone: screen-blended so it only brightens, clipped to the photo. */
+.light {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 3px;
+  mix-blend-mode: screen; opacity: 0;
+  transition: opacity .35s ease-out;
+}
+.lamp[data-on] .light { opacity: .85; }
+:global(html[data-theme="dark"]) .lamp[data-on] .light { opacity: 1; }
+.cone { display: block; width: 100%; height: 100%; }
+
+/* Lamp body doubles as the on/off switch. Its box is the top-left 45% x 24% of the photo. */
+.toggle {
+  position: absolute; top: 0; left: 0; width: 45%; height: 24%;
+  pointer-events: auto; cursor: pointer;
+  margin: 0; padding: 0; border: 0; background: none; border-radius: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.body { display: block; width: 100%; height: 100%; overflow: visible; fill: var(--lamp-ink); stroke: var(--color-paper); stroke-width: .75; stroke-linejoin: round; }
+.arm { fill: none; stroke: var(--lamp-ink); stroke-width: 3.5; stroke-linecap: round; }
+.rod { fill: none; stroke: var(--lamp-ink); stroke-width: 1.5; stroke-linecap: round; }
+.screw { fill: #8d8787; stroke: none; }
+.bulb { fill: #6b6666; stroke: none; transition: fill .35s ease-out; }
+.lamp[data-on] .bulb { fill: #ffd58a; }
+
+.head {
+  transform: rotate(var(--aim));
+  transform-box: view-box; transform-origin: 92px 36px;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .head, .light, .bulb { transition: none; }
+}

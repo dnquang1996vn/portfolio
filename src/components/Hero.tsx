@@ -7,6 +7,7 @@ import { useTypewriter } from "@/hooks/useTypewriter";
 import { contact } from "@/content/portfolio";
 import { typedWords } from "@/content/translations";
 import { ArrowUpRight } from "./Icons";
+import { HeroLamp } from "./HeroLamp";
 import styles from "./Hero.module.css";
 
 export function Hero() {
@@ -41,15 +42,18 @@ export function Hero() {
 
         <figure className={styles.figure} data-hero-figure="">
           <div className={styles.polaroid}>
-            <Image
-              src="/images/hero-desk.png"
-              alt="Isometric diorama of Quinn Do at his desk workstation"
-              width={1624}
-              height={1637}
-              priority
-              sizes="(max-width: 860px) 80vw, 340px"
-              className={styles.polaroidImg}
-            />
+            <div className={styles.imgWrap}>
+              <Image
+                src="/images/hero-desk.png"
+                alt="Isometric diorama of Quinn Do at his desk workstation"
+                width={1624}
+                height={1637}
+                priority
+                sizes="(max-width: 860px) 80vw, 340px"
+                className={styles.polaroidImg}
+              />
+              <HeroLamp />
+            </div>
             <p className={styles.name}>{t.heroName}</p>
             <p className={`mono ${styles.role}`}>{t.heroRole}</p>
           </div>
