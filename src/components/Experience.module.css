@@ -1,63 +1,69 @@
 .timeline {
   position: relative;
-  margin-top: 42px;
+  margin-top: 40px;
   padding-left: 40px;
-  border-left: 2px solid var(--color-divider);
+  border-left: 1px solid var(--color-divider-strong);
 }
 .row {
   position: relative;
   display: grid;
   grid-template-columns: minmax(140px, 180px) minmax(0, 1fr);
   gap: 14px clamp(24px, 3vw, 56px);
-  padding: 0 0 64px;
+  padding: 0 0 56px;
 }
+.row:last-child { padding-bottom: 8px; }
 .row > * { min-width: 0; }
 .dot {
   position: absolute;
-  left: -47px;
-  top: 4px;
-  width: 12px;
-  height: 12px;
+  left: -45px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
   background: var(--color-accent);
   box-shadow: 0 0 0 4px var(--color-bg);
 }
 .period {
   margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 28px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.06em;
   font-feature-settings: 'tnum' 1;
 }
-.length { margin: 4px 0 0; font-size: 13px; line-height: 20px; color: var(--color-neutral-700); }
-.head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.length { margin: 2px 0 0; font-size: 13px; line-height: 20px; color: var(--color-neutral-700); }
+.head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: none;
 }
-.logo img { width: 36px; height: 36px; display: block; }
+.logo img { width: 28px; height: 28px; display: block; }
 .company {
   margin: 0;
   font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 24px;
-  line-height: 28px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
   letter-spacing: -0.01em;
 }
-.about { margin: 6px 0 0; font-size: 14px; line-height: 20px; color: var(--color-neutral-700); }
+.about {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 8px 0 0; font-size: 14px; line-height: 20px; color: var(--color-neutral-700);
+}
 .site { border-bottom: 1px solid currentColor; }
 .headline {
-  margin: 20px 0 0;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 26px;
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.35;
   letter-spacing: -0.01em;
-  max-width: 56ch;
+  max-width: 50ch;
 }
-.points { margin-top: 20px; max-width: 62ch; }
+.points { margin-top: 16px; max-width: 62ch; }

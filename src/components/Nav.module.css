@@ -1,19 +1,68 @@
+.header {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--color-bg) 86%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-divider);
+  transition: background-color .25s, border-color .25s;
+}
 .nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--color-bg);
-  padding-inline: max(var(--page-pad), calc((100% - 1200px) / 2 + var(--page-pad)));
+  max-width: var(--page-max); margin: 0 auto;
+  padding: 10px var(--page-pad);
+  display: flex; align-items: center; gap: 16px;
 }
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--color-text);
+
+/* Keyboard users land here first; it stays out of the layout until focused. */
+.skip {
+  position: absolute; left: var(--page-pad); top: 8px; z-index: 2;
+  padding: 8px 12px; border-radius: var(--radius-pill);
+  background: var(--ink); color: var(--on-ink); font-weight: 600; font-size: 13px;
+  transform: translateY(-200%); transition: transform .18s;
 }
-.markLight, .markDark { width: 24px; height: 24px; display: block; }
+.skip:focus-visible { transform: none; color: var(--on-ink); }
+
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--color-text); margin-right: auto; }
+.brand:hover { color: var(--color-text); }
+.markLight, .markDark { width: 28px; height: 28px; display: block; }
 .markDark { display: none; }
 :global(html[data-theme="dark"]) .markLight { display: none; }
 :global(html[data-theme="dark"]) .markDark { display: block; }
-.brandText { letter-spacing: -0.03em; }
+.brandText { display: grid; gap: 4px; }
+.brandName { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1; letter-spacing: -0.03em; }
 .brandAccent { color: var(--color-accent); margin-left: 1px; }
+.brandTagline {
+  font-family: var(--font-mono); font-weight: 500; font-size: 9.5px; line-height: 1;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-700);
+}
+
+/* Section links sit in one pill; the current page is filled. */
+.pill {
+  display: flex; align-items: center; gap: 2px; padding: 4px;
+  border: 1px solid var(--color-divider); border-radius: var(--radius-pill);
+  background: var(--color-paper);
+}
+.pill a {
+  display: inline-flex; align-items: center; min-height: 30px; padding: 0 13px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading); font-weight: 500; font-size: 13px; line-height: 1;
+  color: var(--color-text); white-space: nowrap;
+  transition: background-color .2s, color .2s;
+}
+.pill a:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); color: var(--color-text); }
+.pill a[aria-current="page"] { background: var(--ink); color: var(--on-ink); }
+
+.right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+
+@media (max-width: 860px) {
+  .nav { flex-wrap: wrap; row-gap: 10px; }
+  .right { margin-left: 0; }
+  /* Second row on phones: the pill takes the full width and scrolls sideways. */
+  .pill {
+    order: 3; flex: 1 1 100%;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .pill::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 720px) {
+  .cta, .brandTagline { display: none; }
+}

@@ -2,13 +2,14 @@
 
 import { useEffect } from "react";
 
-const SELECTOR =
-  "section[data-screen-label] > *, [data-timeline] > [data-job-row], [data-skill-grid] > *, [data-feedback-grid] > *, [data-blog-grid] > *, [data-stats] > *";
-const CONTAINERS = "[data-timeline], [data-skill-grid], [data-feedback-grid], [data-blog-grid], [data-stats]";
+// One orchestrated entrance on the hero only. Section-by-section fades read as
+// decoration, so the rest of the page simply is there.
+const SELECTOR = "[data-hero-text] > *, [data-hero-figure]";
+const CONTAINERS = "[data-timeline]";
 
 /**
- * Scroll-reveal, ported from the design: marks eligible elements inside `rootSelector`
- * with `data-reveal`, staggers siblings by 70ms and flips `is-in` when they intersect.
+ * Entrance reveal: marks eligible elements inside `rootSelector` with `data-reveal`,
+ * staggers siblings by 70ms and flips `is-in` when they intersect.
  * Scoped to a root so client-side navigation to other pages is never affected, and
  * anything still hidden when the hook unmounts is revealed so no page is left blank.
  */

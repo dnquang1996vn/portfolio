@@ -8,7 +8,7 @@ export function Feedback() {
   const { t, lang } = useSite();
   return (
     <section id="feedback" data-band="" data-screen-label="Feedback">
-      <p className="kicker">{t.secFeedback}</p>
+      <p className="kicker">04 / {t.secFeedback}</p>
       <h2 className={`section-title ${styles.heading}`}>{t.feedbackTitle}</h2>
       <div data-feedback-grid="" className={styles.grid}>
         {feedback.map((f, i) => (

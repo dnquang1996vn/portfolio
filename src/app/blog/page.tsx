@@ -12,9 +12,9 @@ export default function BlogPage() {
   return (
     <>
       <Nav />
-      <div className="page">
+      <main id="main" className="page">
         <BlogIndex />
-      </div>
+      </main>
       <Footer />
     </>
   );

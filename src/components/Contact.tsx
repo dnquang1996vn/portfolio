@@ -7,16 +7,20 @@ import styles from "./Contact.module.css";
 export function Contact() {
   const { t } = useSite();
   return (
-    <section id="contact" data-screen-label="Contact" className={styles.band}>
+    <section id="contact" data-band="" data-screen-label="Contact">
       <div className={styles.inner}>
+        <p className="kicker">{t.ctaKicker}</p>
         <h2 className={styles.title}>
-          <span className={styles.line}>{t.ctaLine1}</span>
-          <span className={styles.line}>{t.ctaLine2}</span>
+          {t.ctaLine1}
+          <br />
+          {t.ctaLine2}
         </h2>
-        <div className={styles.actions}>
-          <a className="btn btn-inverse" href={`mailto:${contact.email}`}>{contact.email}</a>
-          <a className="btn btn-inverse" href={contact.phoneHref}>{contact.phone}</a>
-        </div>
+        <a className={`btn btn-primary ${styles.cta}`} href={`mailto:${contact.email}`}>{t.letsTalk}</a>
+        <p className={styles.note}>{t.ctaBody}</p>
+        <ul className={styles.details}>
+          <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+          <li><a href={contact.phoneHref}>{contact.phone}</a></li>
+        </ul>
       </div>
     </section>
   );

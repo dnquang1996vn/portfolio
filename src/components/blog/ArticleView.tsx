@@ -56,9 +56,7 @@ export function ArticleView({ post, article, prev, next, engagement }: Props) {
         <Link href="/blog" className={styles.back}>← {t.backToPosts}</Link>
         <div className={styles.meta}>
           <span className={styles.topic}>{pick(post.topic, lang)}</span>
-          <span>·</span>
           <span>{pick(post.read, lang)}</span>
-          <span>·</span>
           <span>{t.published} {post.date}</span>
         </div>
         <h1 className={styles.title}>{title}</h1>

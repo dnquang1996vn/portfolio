@@ -1,27 +1,40 @@
 .heading { max-width: 22ch; }
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 3vw, 48px);
-  margin-top: 56px;
+  /* One lead quote, two supporting. */
+  grid-template-columns: minmax(0, 5fr) minmax(0, 3.5fr) minmax(0, 3.5fr);
+  gap: 16px;
+  margin-top: 36px;
 }
 .grid > * { min-width: 0; }
 .item {
   margin: 0;
-  padding-top: 28px;
-  border-top: 2px solid var(--color-divider);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-divider);
+  border-top: 2px solid var(--color-divider-strong);
+  border-radius: var(--radius-lg);
 }
+.item:first-child { border-top-color: var(--color-accent); }
 .quote {
   margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.01em;
-  text-indent: -0.496em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  text-indent: -0.42em;
 }
-.caption { margin-top: auto; font-size: 14px; line-height: 20px; color: var(--color-neutral-700); }
+.item:first-child .quote { font-size: 23px; line-height: 1.35; }
+.caption { margin-top: auto; font-size: 13px; line-height: 20px; color: var(--color-neutral-700); }
 .name { display: block; color: var(--color-text); font-weight: 600; }
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .item:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .item:first-child .quote { font-size: 20px; }
+}

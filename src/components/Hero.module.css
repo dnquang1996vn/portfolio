@@ -1,36 +1,59 @@
+:global(.page) > section.section { padding-block: 0 64px; }
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 28px clamp(24px, 5vw, 96px);
-  align-items: end;
+  gap: 48px clamp(32px, 6vw, 96px);
+  align-items: center;
+  padding-top: 56px;
 }
 .hero > * { min-width: 0; }
-/* The heading is sized from this column so the longest typed phrase (~8.8em incl. caret) stays on one line. */
-.text { container-type: inline-size; }
 .title {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(38px, 11.2cqi, 84px);
+  font-size: clamp(38px, 5.2vw, 60px);
   line-height: 1.06;
   letter-spacing: -0.02em;
-  margin: 0 0 0 -0.058em;
+  text-wrap: balance;
 }
-.line1 { display: block; white-space: nowrap; }
 .typedGroup { white-space: nowrap; }
-.line2 { display: block; }
-.typed { color: var(--color-accent); }
 .caret {
   display: inline-block;
-  width: 0.06em;
-  height: 0.9em;
+  width: 0.05em;
+  height: 0.82em;
   background: var(--color-accent);
-  vertical-align: -0.08em;
-  margin-left: 0.04em;
+  vertical-align: -0.06em;
+  margin: 0 0.01em 0 0.04em;
 }
-.tagline { font-size: 17px; line-height: 28px; max-width: 58ch; margin: 42px 0 0; }
-.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: 28px; }
-.portrait { margin: 0; display: flex; justify-content: flex-end; }
-/* The art has no backdrop, so it can bleed past its column and still read as balanced. */
-.portraitImg { width: 118%; max-width: none; height: auto; object-fit: contain; }
-@media (max-width: 1000px) { .portraitImg { width: 100%; } }
-@media (max-width: 720px) { .portrait { justify-content: center; justify-self: center; max-width: 520px; width: 100%; } }
+.intro { margin: 28px 0 0; font-size: 17px; line-height: 27px; font-weight: 500; max-width: 44ch; }
+.body { margin: 14px 0 0; font-size: 15px; line-height: 25px; color: var(--color-neutral-700); max-width: 52ch; }
+.actions { display: flex; align-items: center; gap: 8px 20px; flex-wrap: wrap; margin-top: 32px; }
+.links {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin: 28px 0 0; padding: 0; list-style: none;
+  font-family: var(--font-heading); font-size: 13px; font-weight: 600;
+  color: var(--color-neutral-700);
+}
+.links li + li::before { content: "/"; margin-right: 12px; font-weight: 400; color: var(--color-divider-strong); }
+.links a { display: inline-flex; align-items: center; gap: 5px; min-height: 24px; color: var(--color-text); }
+.links a svg { width: 12px; height: 12px; }
+.links a:hover { color: var(--color-accent); }
+
+/* The portrait sits in a tilted paper frame, like a photo pinned to a notebook. */
+.figure { display: grid; justify-items: center; gap: 16px; margin: 0; }
+.polaroid {
+  width: min(100%, 340px);
+  padding: 12px 12px 18px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-divider);
+  border-radius: 6px;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(2.5deg);
+  margin-bottom: 8px;
+}
+.polaroidImg { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 45%; border-radius: 3px; }
+.name { margin: 16px 0 0; font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: 24px; line-height: 1; }
+.role { margin: 8px 0 0; font-size: 10px; letter-spacing: 0.12em; }
+.caption { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 16px; line-height: 1.4; color: var(--color-neutral-700); text-align: center; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-top: 48px; gap: 40px; }
+  .polaroid { transform: rotate(1.5deg); }
+}

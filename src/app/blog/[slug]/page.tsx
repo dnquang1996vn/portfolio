@@ -40,7 +40,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
   return (
     <>
       <Nav />
-      <div className="page">
+      <main id="main" className="page">
         <ArticleView
           post={post}
           article={article}
@@ -52,7 +52,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
             </Suspense>
           }
         />
-      </div>
+      </main>
       <Footer />
     </>
   );

@@ -8,7 +8,6 @@ function SkillCard({ skill }: { skill: Skill }) {
   return (
     <div className={`card ${styles.card}`} data-skill-card="">
       <div className={styles.top}>
-        <p className={styles.num}>{skill.num}</p>
         <div className={styles.logos}>
           {skill.logos.map((lg) => (
             // Simple Icons serves SVG; a plain <img> matches the design and avoids next/image SVG config.
@@ -38,7 +37,7 @@ export function Skills() {
   const { t } = useSite();
   return (
     <section id="skills" data-band="" data-screen-label="Skills">
-      <p className="kicker">{t.secSkills}</p>
+      <p className="kicker">02 / {t.secSkills}</p>
       <h2 className={`section-title ${styles.heading}`}>{t.skillsTitle}</h2>
       <div data-skill-grid="" className={styles.grid}>
         {skills.map((s) => <SkillCard key={s.num} skill={s} />)}

@@ -26,11 +26,11 @@ function JobRow({ job }: { job: Job }) {
               style={{ objectFit: job.logoFit }}
             />
           </div>
-          <h2 className={styles.company} style={{ color: job.brand }}>{job.company}</h2>
+          <h3 className={styles.company} style={{ color: job.brand }}>{job.company}</h3>
           <span className="tag tag-accent">{job.role}</span>
         </div>
         <p className={styles.about}>
-          {pick(job.about, lang)} ·{" "}
+          {pick(job.about, lang)}
           <a href={job.href} target="_blank" rel="noreferrer" className={styles.site}>{job.site}</a>
         </p>
         <p className={styles.headline}>{pick(job.headline, lang)}</p>
@@ -43,8 +43,9 @@ function JobRow({ job }: { job: Job }) {
 export function Experience() {
   const { t } = useSite();
   return (
-    <section data-screen-label="Experience">
-      <p className="kicker">{t.secExperience}</p>
+    <section id="experience" data-screen-label="Experience">
+      <p className="kicker">03 / {t.secJourney}</p>
+      <h2 className="section-title">{t.journeyTitle}</h2>
       <div data-timeline="" className={styles.timeline}>
         {jobs.map((job) => <JobRow key={job.company} job={job} />)}
       </div>

@@ -21,9 +21,7 @@ export function BlogIndex() {
             </figure>
             <div className={styles.meta}>
               <span className={styles.topic}>{pick(post.topic, lang)}</span>
-              <span>·</span>
               <span>{pick(post.read, lang)}</span>
-              <span>·</span>
               <span>{post.date}</span>
             </div>
             <h2 className={styles.postTitle}>{pick(post.title, lang)}</h2>

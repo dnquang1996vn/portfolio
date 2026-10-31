@@ -1,12 +1,10 @@
-.band { background: var(--color-accent); color: var(--color-bg); }
-.inner { max-width: 1200px; margin: 0 auto; padding: 84px var(--page-pad); }
+.inner { display: grid; justify-items: center; text-align: center; }
 .title {
-  margin: 0 0 0 -0.058em;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(34px, 4.2vw, 56px);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
+  font-size: clamp(30px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -0.015em;
+  max-width: 22ch;
 }
-.line { display: block; }
-.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: 42px; }
+.cta { margin-top: 32px; }
+.note { margin: 18px 0 0; font-size: 13.5px; line-height: 20px; color: var(--color-neutral-700); max-width: 44ch; }
+.details { display: flex; gap: 8px 24px; flex-wrap: wrap; justify-content: center; margin: 14px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--color-neutral-700); }
+.details a { display: inline-flex; min-height: 24px; align-items: center; color: var(--color-text); }
+.details a:hover { color: var(--color-accent); }

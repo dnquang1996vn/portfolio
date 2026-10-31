@@ -17,6 +17,11 @@ export function useTypewriter(words: string[]) {
   }
 
   useEffect(() => {
+    // Reduced motion: show the first word in full, no loop.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const once = setTimeout(() => setState({ words, text: words[0] }), 0);
+      return () => clearTimeout(once);
+    }
     let w = 0;
     let i = 0;
     let del = false;
