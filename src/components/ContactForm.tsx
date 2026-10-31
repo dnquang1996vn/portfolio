@@ -7,16 +7,27 @@ import { ArrowUpRight } from "./Icons";
 import styles from "./ContactForm.module.css";
 
 type Field = "name" | "email" | "message";
-type Status = "idle" | "sending" | "sent";
+type Status = "idle" | "sending" | "sent" | "error";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Delivery is not wired yet: this resolves after a short pause so the UI can be judged end to
- * end. Swap the body for a fetch to the mail endpoint when it exists; the form does not change.
- */
-function simulateSend(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 900));
+/** Posts to the Resend-backed route; resolves to false on any failure so the form can say so. */
+async function send(data: FormData): Promise<boolean> {
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: data.get("name"),
+        email: data.get("email"),
+        message: data.get("message"),
+        website: data.get("website"),
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 export function ContactForm() {
@@ -41,7 +52,8 @@ export function ContactForm() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const { next, name } = validate(new FormData(form));
+    const data = new FormData(form);
+    const { next, name } = validate(data);
     setErrors(next);
     const firstError = (["name", "email", "message"] as Field[]).find((f) => next[f]);
     if (firstError) {
@@ -49,7 +61,11 @@ export function ContactForm() {
       return;
     }
     setStatus("sending");
-    await simulateSend();
+    const ok = await send(data);
+    if (!ok) {
+      setStatus("error");
+      return;
+    }
     setSentName(name);
     setStatus("sent");
     form.reset();
@@ -98,6 +114,11 @@ export function ContactForm() {
             </div>
           ) : (
             <form className={styles.form} onSubmit={onSubmit} noValidate aria-busy={status === "sending"}>
+              {/* Honeypot: hidden from people, filled by bots; the API drops anything that sets it. */}
+              <div className={styles.trap} aria-hidden="true">
+                <label htmlFor={`${id}-website`}>Website</label>
+                <input id={`${id}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
               <div className={styles.row}>
                 {field("name", t.formName, (p) => <input {...p} type="text" autoComplete="name" />)}
                 {field("email", t.formEmail, (p) => <input {...p} type="email" autoComplete="email" inputMode="email" />)}
@@ -108,6 +129,11 @@ export function ContactForm() {
                 <button type="submit" className="btn btn-primary" disabled={status === "sending"}>
                   {status === "sending" ? t.sending : t.sendMessage}
                 </button>
+                {status === "error" && (
+                  <p className={styles.error} role="alert">
+                    {t.formError} <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                  </p>
+                )}
               </div>
             </form>
           )}

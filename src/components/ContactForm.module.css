@@ -26,7 +26,9 @@
 .field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--color-accent-700); }
 .error { margin: 0; font-size: 13px; line-height: 18px; color: var(--color-accent-700); }
 .helper { margin: -6px 0 0; font-size: 13px; line-height: 19px; color: var(--color-neutral-700); }
-.actions { display: flex; justify-content: flex-start; }
+.actions { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
+.actions .error a { color: var(--color-text); text-decoration: underline; text-underline-offset: 3px; }
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 .sent { display: grid; gap: 14px; justify-items: start; padding: 12px 0; }
 .sentTitle { font-size: clamp(26px, 3vw, 32px); line-height: 1.15; }
