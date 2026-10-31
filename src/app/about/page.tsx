@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/Nav";
 import { PageHead } from "@/components/PageHead";
 import { AboutProfile } from "@/components/AboutProfile";
 import { Skills } from "@/components/Skills";
@@ -7,7 +6,6 @@ import { Experience } from "@/components/Experience";
 import { Feedback } from "@/components/Feedback";
 import { Credentials } from "@/components/Credentials";
 import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
 import { PageEffects } from "@/components/PageEffects";
 
 export const metadata: Metadata = {
@@ -19,7 +17,6 @@ export default function AboutPage() {
   return (
     <>
       <PageEffects />
-      <Nav />
       <main id="main" className="page" data-page="">
         <PageHead kicker="aboutKicker" title="aboutTitle" intro="aboutIntro" />
         <AboutProfile />
@@ -29,7 +26,6 @@ export default function AboutPage() {
         <Credentials />
         <Contact />
       </main>
-      <Footer />
     </>
   );
 }

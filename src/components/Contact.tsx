@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSite } from "@/components/providers/SiteProvider";
 import { contact } from "@/content/portfolio";
 import styles from "./Contact.module.css";
@@ -15,7 +16,7 @@ export function Contact() {
           <br />
           {t.ctaLine2}
         </h2>
-        <a className={`btn btn-primary ${styles.cta}`} href={`mailto:${contact.email}`}>{t.letsTalk}</a>
+        <Link className={`btn btn-primary ${styles.cta}`} href="/contact">{t.letsTalk}</Link>
         <p className={styles.note}>{t.ctaBody}</p>
         <ul className={styles.details}>
           <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>

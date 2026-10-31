@@ -37,11 +37,20 @@
 
 /* Section links sit in one pill; the current page is filled. */
 .pill {
+  position: relative;
   display: flex; align-items: center; gap: 2px; padding: 4px;
   border: 1px solid var(--color-divider); border-radius: var(--radius-pill);
   background: var(--color-paper);
 }
+/* One filled pill slides from the old tab to the new one; links above it only change colour. */
+.indicator {
+  position: absolute; top: 4px; bottom: 4px; left: 0; width: 0;
+  border-radius: var(--radius-pill); background: var(--ink);
+  transition: transform .32s cubic-bezier(.2,.7,.2,1), width .32s cubic-bezier(.2,.7,.2,1), opacity .2s;
+  pointer-events: none;
+}
 .pill a {
+  position: relative; z-index: 1;
   display: inline-flex; align-items: center; min-height: 30px; padding: 0 13px;
   border-radius: var(--radius-pill);
   font-family: var(--font-heading); font-weight: 500; font-size: 13px; line-height: 1;
@@ -49,7 +58,12 @@
   transition: background-color .2s, color .2s;
 }
 .pill a:hover { background: color-mix(in srgb, var(--color-text) 6%, transparent); color: var(--color-text); }
-.pill a[aria-current="page"] { background: var(--ink); color: var(--on-ink); }
+.pill a[aria-current="page"] { color: var(--on-ink); }
+.pill a[aria-current="page"]:hover { background: transparent; color: var(--on-ink); }
+/* Before the first measurement (and without JS) the current link carries the fill itself. */
+.pill:not([data-ready]) a[aria-current="page"] { background: var(--ink); }
+.pill:not([data-ready]) .indicator { display: none; }
+@media (prefers-reduced-motion: reduce) { .indicator { transition: none; } }
 
 .right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 
