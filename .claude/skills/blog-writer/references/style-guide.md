@@ -37,6 +37,13 @@ Both languages are written from the same outline and the same facts. Neither is 
 
 - Write EN first in full, then write VI from the outline as if explaining to a Vietnamese
   colleague. Match paragraph for paragraph, not word for word.
+- Before writing a VI paragraph, close the EN one and say the idea out loud in Vietnamese
+  first. If a sentence only makes sense to someone who has read the EN, rewrite it. Signs of
+  mirroring to remove: "Phía X có một quy tắc", "Thứ nói được là", "kiến thức" for logic,
+  "đồng ý với nhau" for agree, "con vật khác" for a different animal.
+- Vietnamese prefers a short lead-in and a colon before the list or the example:
+  "Tôi hỏi một câu: logic này nằm ở đâu?" A question mark is fine where a Vietnamese speaker
+  would ask.
 - VI keeps the tech words in English: tenant, feature flag, code review, PR, build, deploy, hook,
   registry, state. Translate everyday words, not jargon.
 - VI sentences are usually shorter than EN ones. Drop subject pronouns where Vietnamese would.
