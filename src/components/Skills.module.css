@@ -6,14 +6,184 @@
   margin-top: 36px;
 }
 .grid > * { min-width: 0; }
+
+/* Rotating angle for the prismatic ring. */
+@property --facet {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .card {
+  /* Diamond light: cold white-blue, warm gold, a hint of rose; alpha tuned per theme. */
+  --ice: #bfe3ff;
+  --gold: #f1c76a;
+  --rose: #ffc4d6;
+  --holo-a: 0.85;
+  --spark-a: 1;
+  --rx: 0deg;
+  --ry: 0deg;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex; flex-direction: column; gap: 14px;
   padding: 24px;
-  transition: border-color .2s, transform .2s;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: border-color .35s var(--ease), transform .25s var(--ease), box-shadow .45s var(--ease);
 }
-.card:hover { border-color: var(--color-accent); }
-.top { display: flex; align-items: center; gap: 14px; min-height: 24px; }
+.card:hover {
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-divider));
+}
+:global(html[data-theme="dark"]) .card { --holo-a: 0.45; }
+
+/* Ring: a conic sweep of ice, gold and accent, masked to the 1px border, spinning slowly on hover. */
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--facet),
+    transparent 0deg,
+    var(--ice) 60deg,
+    transparent 110deg,
+    var(--gold) 170deg,
+    transparent 220deg,
+    var(--color-accent-400) 280deg,
+    transparent 330deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+  pointer-events: none;
+  z-index: 3;
+}
+.card:hover .ring { opacity: 1; animation: facet 5s linear infinite; }
+@keyframes facet { to { --facet: 360deg; } }
+
+/* Sheen: a banded prismatic streak that crosses the card, ambiently every few seconds and on hover. */
+.sheen {
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(
+    115deg,
+    transparent 36%,
+    color-mix(in srgb, var(--gold) calc(var(--holo-a) * 100%), transparent) 41%,
+    transparent 43.5%,
+    color-mix(in srgb, var(--ice) calc(var(--holo-a) * 100%), transparent) 46%,
+    color-mix(in srgb, #fff calc(var(--holo-a) * 100%), transparent) 48.5%,
+    color-mix(in srgb, var(--ice) calc(var(--holo-a) * 100%), transparent) 51%,
+    transparent 54%,
+    color-mix(in srgb, var(--rose) calc(var(--holo-a) * 100%), transparent) 57%,
+    transparent 62%
+  );
+  transform: translateX(-60%);
+  animation: sheen 9s var(--ease) infinite;
+  animation-delay: calc(var(--i) * 1.3s);
+  pointer-events: none;
+  z-index: 1;
+}
+.card:hover .sheen { animation: sheen-hover 1.4s var(--ease) infinite; }
+@keyframes sheen {
+  0%, 78% { transform: translateX(-60%); }
+  100% { transform: translateX(60%); }
+}
+@keyframes sheen-hover {
+  from { transform: translateX(-60%); }
+  to { transform: translateX(60%); }
+}
+
+/* Glow: a soft spot of light that follows the cursor. */
+.glow {
+  position: absolute;
+  left: 0; top: 0;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-accent) 16%, transparent) 0%,
+    color-mix(in srgb, var(--gold) 10%, transparent) 35%,
+    transparent 70%
+  );
+  transform: translate(calc(var(--mx) - 130px), calc(var(--my) - 130px));
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  will-change: transform;
+  pointer-events: none;
+  z-index: 0;
+}
+.card:hover .glow { opacity: 1; }
+
+/* Sparks: four-point stars that twinkle, slowly at rest and eagerly on hover. */
+.spark {
+  position: absolute;
+  width: 10px; height: 10px;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  background: radial-gradient(circle, #fff 0 22%, var(--c) 60%, var(--c) 100%);
+  opacity: 0;
+  transform: scale(0);
+  animation: twinkle 7s var(--ease) infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.spark:nth-of-type(1) { top: 16px; right: 22px; --c: var(--ice); animation-delay: calc(var(--i) * 1.3s + 0.4s); }
+.spark:nth-of-type(2) { top: 50%; left: 10px; width: 8px; height: 8px; --c: var(--gold); animation-delay: calc(var(--i) * 1.3s + 2.1s); }
+.spark:nth-of-type(3) { bottom: 18px; right: 34%; width: 9px; height: 9px; --c: var(--color-accent-400); animation-delay: calc(var(--i) * 1.3s + 3.6s); }
+.card:hover .spark { animation: twinkle-hover 1.6s var(--ease) infinite; }
+.card:hover .spark:nth-of-type(2) { animation-delay: .35s; }
+.card:hover .spark:nth-of-type(3) { animation-delay: .8s; }
+@keyframes twinkle {
+  0%, 86%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  93% { opacity: var(--spark-a); transform: scale(1) rotate(45deg); }
+}
+@keyframes twinkle-hover {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: var(--spark-a); transform: scale(1.7) rotate(90deg); }
+}
+
+.top { position: relative; z-index: 4; display: flex; align-items: center; gap: 14px; min-height: 24px; }
 .logos { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.logo { width: 24px; height: 24px; display: block; }
-.title { margin: 4px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.logo { width: 24px; height: 24px; display: block; transition: transform .45s var(--ease), filter .45s var(--ease); }
+.card:hover .logo { transform: translateY(-2px); filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--color-accent) 22%, transparent)); }
+.card:hover .logo:nth-child(2) { transition-delay: 40ms; }
+.card:hover .logo:nth-child(3) { transition-delay: 80ms; }
+.card:hover .logo:nth-child(4) { transition-delay: 120ms; }
+.title { position: relative; z-index: 4; margin: 4px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; }
+.tags { position: relative; z-index: 4; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.details {
+  position: relative; z-index: 4;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0 10px 0 6px;
+  min-height: 36px;
+  color: var(--color-neutral-800);
+  transition: color .2s, transform .35s var(--ease);
+}
+.details svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+.details:hover { color: var(--color-accent); }
+.details:hover svg { transform: rotate(90deg); }
+
+/* Inside the About column three cards get cramped; two is the natural fit. */
+@container about-content (max-width: 760px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (hover: none) {
+  .card, .card:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .card:hover { transform: none; }
+  .card, .logo { transition: none; }
+  .card:hover { transform: none; }
+  .sheen, .spark { animation: none !important; }
+  .card:hover .ring { animation: none; }
+  .glow { transition: none; }
+}

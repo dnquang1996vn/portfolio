@@ -84,6 +84,8 @@ html[data-theme="dark"] {
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 80px; }
+/* A modal sheet owns the scroll while it is open. */
+html:has(dialog[open]) { overflow: hidden; }
 body {
   margin: 0; overflow-x: clip;
   background: var(--color-bg); color: var(--color-text);

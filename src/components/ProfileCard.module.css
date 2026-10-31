@@ -1,0 +1,64 @@
+.card {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.identity { display: grid; justify-items: center; gap: 16px; text-align: center; }
+.avatarRing {
+  width: 152px; height: 152px; border-radius: 50%; overflow: hidden;
+  background: var(--color-surface);
+  /* Paper gap then a hairline: the same frame language as the rest of the site. */
+  box-shadow: 0 0 0 4px var(--color-paper), 0 0 0 5px var(--color-divider-strong);
+}
+.avatar { width: 100%; height: 100%; object-fit: cover; }
+.names { display: grid; gap: 2px; }
+.name {
+  margin: 0;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 26px; line-height: 1.15; letter-spacing: -0.012em;
+}
+.native { margin: 0; font-size: 14px; line-height: 20px; color: var(--color-neutral-700); }
+.kicker {
+  margin: 8px 0 0;
+  font-family: var(--font-mono); font-size: 10.5px; line-height: 1.4; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--color-accent-700);
+}
+.facts { margin: 0; display: grid; }
+.fact {
+  display: grid; gap: 3px;
+  padding: 10px 0;
+  border-top: 1px solid var(--color-divider);
+}
+.fact:last-child { border-bottom: 1px solid var(--color-divider); }
+.fact dt { font-size: 10px; }
+.fact dd { margin: 0; font-size: 14px; line-height: 21px; }
+.actions { display: flex; gap: 8px; }
+.primary { flex: 1; min-width: 0; }
+
+@media (max-width: 960px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "identity actions" "facts facts";
+    align-items: center;
+    gap: 16px 20px;
+  }
+  .identity { grid-area: identity; grid-template-columns: 96px minmax(0, 1fr); justify-items: start; text-align: left; align-items: center; }
+  .avatarRing { width: 96px; height: 96px; }
+  .name { font-size: 24px; }
+  .kicker { margin-top: 6px; }
+  .facts { grid-area: facts; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+  .fact:nth-last-child(2) { border-bottom: 1px solid var(--color-divider); }
+  .actions { grid-area: actions; flex-wrap: wrap; justify-content: flex-end; }
+  .primary { flex: none; }
+}
+@media (max-width: 600px) {
+  .card { grid-template-columns: 1fr; grid-template-areas: "identity" "facts" "actions"; }
+  .actions { justify-content: flex-start; }
+  .primary { flex: 1; }
+  .facts { grid-template-columns: 1fr; }
+  .fact:nth-last-child(2) { border-bottom: 0; }
+}

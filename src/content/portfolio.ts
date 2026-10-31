@@ -13,7 +13,7 @@ export const contact = {
   email: "dnquang1996vn@gmail.com",
   phone: "(+84) 359 785 001",
   phoneHref: "tel:+84359785001",
-  linkedin: "https://linkedin.com/in/quang-do-nhat",
+  linkedin: "https://www.linkedin.com/in/nh%E1%BA%ADt-quang-%C4%91%E1%BB%97-b11ab014a/",
 };
 
 export interface Stat {
@@ -160,6 +160,12 @@ export interface Skill {
   title: string;
   logos: { name: string; slug: string }[];
   tags: string[];
+  /** Year the skill entered daily work; the detail dialog turns it into years of practice. */
+  since: number;
+  summary: Bi;
+  /** Short notes for the detail dialog: what was built, how it is applied. */
+  built: Bi[];
+  apply: Bi[];
 }
 
 export const skills: Skill[] = [
@@ -170,6 +176,21 @@ export const skills: Skill[] = [
       { name: "TypeScript", slug: "typescript" }, { name: "Vue.js", slug: "vuedotjs" },
     ],
     tags: ["React", "Next.js", "TypeScript", "Redux", "Vue.js", "SCSS", "Responsive", "Web performance"],
+    since: 2017,
+    summary: P(
+      "Where everything started. From the first React component in 2017 to leading the frontend of two platforms.",
+      "Nơi mọi thứ bắt đầu. Từ component React đầu tiên năm 2017 đến dẫn frontend cho hai nền tảng.",
+    ),
+    built: [
+      P("Bamboo: one React app serving regulators in 25+ US states, Redux Observable and MUI.", "Bamboo: một app React phục vụ cơ quan quản lý ở 25+ bang Mỹ, Redux Observable và MUI."),
+      P("Welle care portal and storefront in React + TypeScript, themed per tenant, white-label ready.", "Care portal và storefront của Welle bằng React + TypeScript, theme theo tenant, sẵn sàng white-label."),
+      P("A data grid that stays fast at 10k rows: resize, freeze, group, tree view.", "Bảng dữ liệu vẫn nhanh ở 10k dòng: resize, freeze, nhóm, dạng cây."),
+    ],
+    apply: [
+      P("Component tests with real providers and router; unit tests only for logic pulled out on purpose.", "Test component với provider và router thật; unit test chỉ cho logic được tách ra có chủ đích."),
+      P("Split stores and virtualization, measured before optimized.", "Tách store và virtualization, đo trước khi tối ưu."),
+      P("Responsive, keyboard-friendly and reduced-motion aware by default.", "Responsive, dùng được bằng bàn phím và tôn trọng reduced-motion mặc định."),
+    ],
   },
   {
     num: "02", title: "Backend",
@@ -178,6 +199,21 @@ export const skills: Skill[] = [
       { name: "Express", slug: "express" }, { name: "Laravel", slug: "laravel" },
     ],
     tags: ["Node.js", "NestJS", "Express", "REST APIs", "PHP / Laravel", "Multi-tenant", "White-label"],
+    since: 2019,
+    summary: P(
+      "Started with Laravel for a London proptech, then Node and NestJS for the Welle platform.",
+      "Bắt đầu với Laravel cho một proptech ở London, rồi Node và NestJS cho nền tảng Welle.",
+    ),
+    built: [
+      P("Welle API on NestJS and Express: tenant context resolved once per request, injected everywhere.", "Welle API trên NestJS và Express: tenant context resolve một lần mỗi request, inject khắp nơi."),
+      P("A Laravel + Vue property marketplace, from requirements to release with the London team.", "Marketplace bất động sản Laravel + Vue, từ yêu cầu đến release cùng đội London."),
+      P("Multi-tenant, white-label architecture that serves SaaS customers and per-client logic from one codebase.", "Kiến trúc multi-tenant, white-label phục vụ khách SaaS lẫn logic riêng từng khách từ một codebase."),
+    ],
+    apply: [
+      P("Business rules as injectable units that run in milliseconds; the HTTP boundary tested against a real database.", "Nghiệp vụ là các unit inject được, chạy trong mili giây; biên HTTP test với database thật."),
+      P("Contract checks for other teams' systems instead of tests that depend on their uptime.", "Kiểm tra contract với hệ thống của đội khác thay vì test phụ thuộc uptime của họ."),
+      P("Schemas and feature flags designed so requirement churn lands as config, not rewrites.", "Schema và feature flag thiết kế để thay đổi yêu cầu rơi vào config, không phải viết lại."),
+    ],
   },
   {
     num: "03", title: "AI integration",
@@ -186,6 +222,21 @@ export const skills: Skill[] = [
       { name: "Hugging Face", slug: "huggingface" },
     ],
     tags: ["Patient chatbots", "AI-assisted SOAP notes", "Recommendation systems"],
+    since: 2023,
+    summary: P(
+      "AI in a HIPAA product, where the PHI boundary is drawn before the first prompt is written.",
+      "AI trong sản phẩm chuẩn HIPAA, nơi ranh giới PHI được vẽ trước khi viết prompt đầu tiên.",
+    ),
+    built: [
+      P("A patient chatbot grounded on the member's own records and care plan.", "Chatbot bệnh nhân dựa trên hồ sơ và kế hoạch chăm sóc của chính họ."),
+      P("AI-drafted SOAP notes: PHI redacted before the model, rehydrated inside our boundary.", "SOAP notes do AI soạn: PHI được ẩn trước khi vào model, khôi phục trong ranh giới của chúng tôi."),
+      P("Personalized care recommendations from 180+ biomarkers.", "Gợi ý chăm sóc cá nhân hóa từ 180+ chỉ số sinh học."),
+    ],
+    apply: [
+      P("The model proposes, the clinician signs. Every clinical draft gets human review.", "Model đề xuất, bác sĩ ký. Mọi bản nháp lâm sàng đều qua người duyệt."),
+      P("Prompt changes are evaluated against real transcripts before they ship.", "Thay đổi prompt được đánh giá trên transcript thật trước khi lên production."),
+      P("Cost and latency tracked per feature, so AI earns its place or gets removed.", "Chi phí và độ trễ theo dõi theo từng tính năng, AI phải xứng đáng chỗ đứng hoặc bị gỡ."),
+    ],
   },
   {
     num: "04", title: "AI-assisted development",
@@ -194,6 +245,20 @@ export const skills: Skill[] = [
       { name: "GitHub", slug: "github" },
     ],
     tags: ["Claude Code", "Cursor", "Agentic workflows", "Custom skills", "Team usage policies"],
+    since: 2024,
+    summary: P(
+      "Claude Code and Cursor as part of the team's daily workflow, with rules on what they may see and do.",
+      "Claude Code và Cursor là một phần quy trình hằng ngày của đội, với quy tắc về những gì chúng được thấy và làm."),
+    built: [
+      P("Team usage policy: which repos and data an agent may touch, and what must stay out.", "Chính sách dùng cho đội: agent được chạm repo và dữ liệu nào, cái gì phải đứng ngoài."),
+      P("Custom skills for tickets, reviews and release notes, so output stays consistent across people.", "Custom skill cho ticket, review và release note, để output nhất quán giữa mọi người."),
+      P("Review habits for AI-written diffs: provenance, sandbox, CI backstops.", "Thói quen review diff do AI viết: nguồn gốc, sandbox, CI chặn hậu."),
+    ],
+    apply: [
+      P("AI writes the first draft; the reviewer owns the merge.", "AI viết bản nháp đầu; người review chịu trách nhiệm merge."),
+      P("Conventions live in skills, not in people's heads.", "Quy ước sống trong skill, không nằm trong đầu từng người."),
+      P("Measure what stuck after a month; drop what did not.", "Đo lại sau một tháng xem gì ở lại; bỏ những gì không."),
+    ],
   },
   {
     num: "05", title: "Integrations & compliance",
@@ -202,6 +267,21 @@ export const skills: Skill[] = [
       { name: "Redis", slug: "redis" },
     ],
     tags: ["Labs", "Telehealth", "Email / SMS", "HIPAA & PHI", "State pricing & legal (US)"],
+    since: 2020,
+    summary: P(
+      "Healthcare and cannabis commerce, two industries where the rules are the product.",
+      "Y tế và thương mại cannabis, hai ngành mà luật lệ chính là sản phẩm.",
+    ),
+    built: [
+      P("HIPAA and PHI protection end to end on Welle: at rest, in transit, in logs.", "Bảo vệ HIPAA và PHI xuyên suốt trên Welle: lưu trữ, truyền tải, log."),
+      P("Lab orders and results, telehealth sessions, transactional email and SMS, Stripe payments.", "Đặt và nhận kết quả xét nghiệm, khám từ xa, email và SMS giao dịch, thanh toán Stripe."),
+      P("State pricing and legal rules for cannabis commerce in 25+ US states.", "Giá và quy định pháp lý theo bang cho thương mại cannabis ở 25+ bang Mỹ."),
+    ],
+    apply: [
+      P("Compliance as architecture: the boundary is in code, not in a checklist.", "Tuân thủ là kiến trúc: ranh giới nằm trong code, không phải trong checklist."),
+      P("Each regulator or vendor behind a strategy interface, so a new state is a file, not a rewrite.", "Mỗi cơ quan quản lý hay vendor đứng sau một strategy interface, thêm bang mới là thêm file, không viết lại."),
+      P("Least-privilege access and an audit trail by default.", "Quyền tối thiểu và audit trail mặc định."),
+    ],
   },
   {
     num: "06", title: "DevOps & tools",
@@ -210,6 +290,20 @@ export const skills: Skill[] = [
       { name: "Linux", slug: "linux" }, { name: "Git", slug: "git" },
     ],
     tags: ["Docker", "Linux", "AWS", "Git", "CI/CD", "TDD"],
+    since: 2019,
+    summary: P(
+      "Enough infrastructure to keep deploys boring: containers, pipelines and the tests that gate them.",
+      "Đủ hạ tầng để deploy luôn nhàm chán: container, pipeline và những test gác cổng."),
+    built: [
+      P("Docker environments for Welle services, the same locally and in CI.", "Môi trường Docker cho các service Welle, giống nhau ở local và CI."),
+      P("CI/CD pipelines with tests, lint and type checks as merge gates.", "Pipeline CI/CD với test, lint và type check làm cổng merge."),
+      P("AWS-hosted services on Linux, with PostgreSQL and Redis in containers.", "Service chạy trên AWS và Linux, PostgreSQL và Redis trong container."),
+    ],
+    apply: [
+      P("One happy-path end-to-end test per feature; everything else lower and cheaper.", "Mỗi tính năng một test end-to-end đường chính; phần còn lại test ở tầng thấp hơn, rẻ hơn."),
+      P("Reproducible first: if it only works on one laptop, it does not work.", "Tái tạo được là trên hết: chỉ chạy trên một laptop nghĩa là chưa chạy."),
+      P("Automate the boring parts, keep a human on the release button.", "Tự động hóa phần nhàm chán, giữ người ở nút release."),
+    ],
   },
 ];
 
@@ -243,14 +337,14 @@ export const projects: Project[] = [
     kicker: P("Healthcare, multi-tenant SaaS", "Y tế, SaaS đa tenant"),
     subtitle: P("Preventive care for US patients.\nOne HIPAA-compliant platform.", "Chăm sóc dự phòng cho bệnh nhân Mỹ.\nMột nền tảng chuẩn HIPAA."),
     period: P("Tech lead, Webprovise", "Tech lead, Webprovise"),
-    frameLabel: "WELLE / CARE PORTAL",
+    frameLabel: "WELLE / WELLEHEALTH.COM",
     frameCaption: P("One codebase. Many tenants.", "Một codebase. Nhiều tenant."),
     name: P("Welle: US Healthcare Platform", "Welle: Nền tảng y tế Mỹ"),
     role: "Tech Lead",
     url: "wellehealth.com",
     href: "https://wellehealth.com",
     image: "/images/proj-welle.jpg",
-    imagePos: "50% 30%",
+    imagePos: "50% 0%",
     tagline: P(
       "Lab panels covering 180+ biomarkers, telehealth visits and an AI health coach, served to SaaS customers and per-client logic from one multi-tenant codebase.",
       "Xét nghiệm 180+ chỉ số sinh học, khám từ xa và AI health coach, phục vụ khách SaaS lẫn logic riêng từng khách từ một codebase multi-tenant.",
@@ -282,14 +376,14 @@ export const projects: Project[] = [
     kicker: P("Cannabis commerce, 25+ US states", "Thương mại cannabis, 25+ bang Mỹ"),
     subtitle: P("Seed-to-sale commerce.\nOne frontend, every regulator.", "Thương mại seed-to-sale.\nMột frontend, mọi cơ quan quản lý."),
     period: P("Frontend lead, Webprovise", "Frontend lead, Webprovise"),
-    frameLabel: "BAMBOO / PORTAL, TRACE, SALES",
+    frameLabel: "BAMBOO / GETBAMBOO.COM",
     frameCaption: P("Per-state rules without a 25-way switch.", "Luật từng bang mà không cần switch 25 nhánh."),
     name: P("Bamboo: Cannabis Commerce Platform", "Bamboo: Nền tảng thương mại cannabis"),
     role: "FE Tech Lead",
     url: "getbamboo.com",
     href: "https://getbamboo.com",
     image: "/images/proj-bamboo.jpg",
-    imagePos: "50% 20%",
+    imagePos: "50% 0%",
     tagline: P(
       "Traceability, sales CRM, inventory and fulfillment for legal cannabis, kept in sync with Metrc, BioTrack and CCRS across 25+ US states.",
       "Truy xuất nguồn gốc, CRM bán hàng, kho và giao hàng cho cannabis hợp pháp, đồng bộ với Metrc, BioTrack và CCRS trên 25+ bang của Mỹ.",
@@ -321,14 +415,14 @@ export const projects: Project[] = [
     kicker: P("Proptech, UK marketplace", "Proptech, sàn giao dịch Anh"),
     subtitle: P("Raw property data,\nturned into services people book.", "Dữ liệu bất động sản thô,\nthành dịch vụ người dùng đặt thật."),
     period: P("Developer, TwentyTech, 2019–2020", "Developer, TwentyTech, 2019–2020"),
-    frameLabel: "TWENTYTECH / MARKETPLACE",
+    frameLabel: "TWENTYCI GROUP / UK PROPERTY DATA",
     frameCaption: P("Excel export, map views, filtered search.", "Xuất Excel, bản đồ, tìm kiếm có bộ lọc."),
     name: P("Property Data Platform", "Nền tảng dữ liệu bất động sản"),
     role: "Developer at TwentyTech",
     url: "",
     href: "#",
     image: "/images/proj-property.jpg",
-    imagePos: "50% 50%",
+    imagePos: "50% 0%",
     tagline: P(
       "Booking, property data lookup, subscriptions and an admin portal for the sales team, a Laravel and Vue marketplace built with the London team.",
       "Đặt lịch, tra cứu dữ liệu bất động sản, gói thuê bao và cổng quản trị cho đội bán hàng, một marketplace Laravel và Vue xây cùng đội London.",
