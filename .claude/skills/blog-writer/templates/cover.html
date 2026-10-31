@@ -1,0 +1,36 @@
+<!doctype html>
+<!--
+  Shell for blog covers, same vocabulary as design/blog-covers.html (the source of the first six).
+  scripts/make-cover.mjs replaces the INNER placeholder comment below with SVG markup drawn on a 1800x1200 canvas and
+  screenshots the page with headless Chrome. Keep the main content between y=214 and y=986 so it
+  survives the 21:9 crop on article pages; the kicker sits at (120, 290) and the footer at (120, 972).
+
+  Classes: mono | mono sm | mono ink | mono acc | serif | serif i | ln | ln soft | ln acc | ln dash
+           box | box paper | box dim | accf
+-->
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#1a1b1e}
+  svg{display:block;width:1800px;height:1200px}
+  .mono{font-family:"JetBrains Mono",monospace;font-size:22px;letter-spacing:.14em;fill:#9b9797}
+  .mono.sm{font-size:18px}
+  .mono.ink{fill:#eeecea}
+  .mono.acc{fill:#ff6a4f}
+  .serif{font-family:Newsreader,serif;font-size:44px;fill:#eeecea}
+  .serif.i{font-style:italic;fill:#bab6b6}
+  .ln{stroke:#5b5856;stroke-width:2;fill:none}
+  .ln.soft{stroke:#3a3a3d}
+  .box{fill:#232427;stroke:#5b5856;stroke-width:2}
+  .box.paper{fill:#2b2c30}
+  .box.dim{fill:#1f2023;stroke:#3a3a3d}
+  .acc{stroke:#ec3013}
+  .accf{fill:#ec3013}
+  .dash{stroke-dasharray:10 10}
+</style></head><body>
+<svg viewBox="0 0 1800 1200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1800" height="1200" fill="#1a1b1e"/>
+  <!--INNER-->
+</svg>
+</body></html>

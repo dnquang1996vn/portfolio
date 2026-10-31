@@ -123,6 +123,8 @@ const en = {
   blogIndexIntro:
     "Architecture, compliance, performance and the occasional opinion about estimates. Written from production, not from theory.",
   backToPosts: "All posts",
+  filterAll: "All",
+  tagsLabel: "Tags",
   prevArticle: "Previous",
   nextArticle: "Next",
   published: "Published",
@@ -252,6 +254,8 @@ const vi: typeof en = {
   blogIndexIntro:
     "Kiến trúc, tuân thủ, hiệu năng và đôi khi là quan điểm về ước lượng. Viết từ production, không phải từ lý thuyết.",
   backToPosts: "Tất cả bài viết",
+  filterAll: "Tất cả",
+  tagsLabel: "Thẻ",
   prevArticle: "Bài trước",
   nextArticle: "Bài tiếp",
   published: "Đăng",

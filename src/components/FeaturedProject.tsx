@@ -39,7 +39,7 @@ export function FeaturedProject({ project, detailed = false }: Props) {
 
       <figure className={`frame ${styles.media}`}>
         <div className="frame-bar"><span>{project.frameLabel}</span></div>
-        <div className={`grayscale ${styles.img}`}>
+        <div className={styles.img}>
           <Image
             src={project.image}
             alt=""
