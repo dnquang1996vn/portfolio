@@ -22,7 +22,7 @@ Input: `$ARGUMENTS` holds URLs and flags; the user's message holds the note (VI 
    user's and are never staged by this skill.
 2. ToolSearch `notion-fetch`. If no Notion URL was given, skip. If a Notion URL was given and
    no tool matches, show the steps in `references/connect-notion.md` and stop.
-3. Split `$ARGUMENTS`: `notion.so` / `notion.site` URLs → Notion; other URLs → web;
+3. Split `$ARGUMENTS`: `notion.so` / `notion.site` / `app.notion.com` URLs → Notion; other URLs → web;
    `--tags a,b`; `--topic "..."`. Everything in the message that is not a URL or flag is the
    note. The note sets the angle of the post.
 

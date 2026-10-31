@@ -1,0 +1,4 @@
+.stars { display: inline-flex; gap: 2px; vertical-align: middle; }
+.stars svg { width: 13px; height: 13px; display: block; }
+.on { fill: var(--color-accent); }
+.off { fill: none; stroke: var(--color-neutral-400); stroke-width: 1.4; }

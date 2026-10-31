@@ -1,9 +1,24 @@
 .timeline {
+  --progress: 0;
+  --ease: cubic-bezier(.2, .7, .2, 1);
   position: relative;
   margin-top: 40px;
   padding-left: 40px;
   border-left: 1px solid var(--color-divider-strong);
 }
+/* The spine fills from the top as the reader moves down. scaleY keeps it off the layout thread. */
+.progress {
+  position: absolute;
+  left: -2px; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--color-accent), var(--color-accent-2));
+  transform-origin: top;
+  transform: scaleY(var(--progress));
+  will-change: transform;
+  pointer-events: none;
+}
+
 .row {
   position: relative;
   display: grid;
@@ -13,6 +28,16 @@
 }
 .row:last-child { padding-bottom: 8px; }
 .row > * { min-width: 0; }
+
+/* Rows below the reading line wait, slightly settled back; they rise as the spine reaches them. */
+.when, .body {
+  opacity: .55;
+  transform: translateY(8px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.row[data-active] .when, .row[data-active] .body { opacity: 1; transform: none; }
+.row[data-active] .body { transition-delay: 60ms; }
+
 .dot {
   position: absolute;
   left: -45px;
@@ -20,9 +45,18 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-divider-strong);
   box-shadow: 0 0 0 4px var(--color-bg);
+  transition: background-color .35s var(--ease), border-color .35s var(--ease), box-shadow .45s var(--ease), transform .35s var(--ease);
 }
+.row[data-active] .dot {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--color-bg), 0 0 0 6px color-mix(in srgb, var(--color-accent) 28%, transparent);
+}
+
 .period {
   margin: 0;
   font-family: var(--font-mono);
@@ -31,7 +65,10 @@
   line-height: 24px;
   letter-spacing: 0.06em;
   font-feature-settings: 'tnum' 1;
+  color: var(--color-neutral-700);
+  transition: color .35s var(--ease);
 }
+.row[data-active] .period { color: var(--color-text); }
 .length { margin: 2px 0 0; font-size: 13px; line-height: 20px; color: var(--color-neutral-700); }
 .head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .logo {
@@ -67,3 +104,15 @@
   max-width: 50ch;
 }
 .points { margin-top: 16px; max-width: 62ch; }
+
+/* Inside the About column there is less room: tighter spine and a narrower date column. */
+@container about-content (max-width: 760px) {
+  .timeline { padding-left: 32px; }
+  .dot { left: -37px; }
+  .row { grid-template-columns: minmax(104px, 124px) minmax(0, 1fr); gap: 14px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .when, .body { opacity: 1; transform: none; transition: none; }
+  .dot, .period { transition: none; }
+}

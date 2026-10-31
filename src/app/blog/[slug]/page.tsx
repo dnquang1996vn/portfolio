@@ -33,7 +33,8 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
 
   const post = posts[index];
   const prev = index > 0 ? posts[index - 1] : null;
-  const next = index < posts.length - 1 ? posts[index + 1] : null;
+  // The three posts after this one, wrapping around, so every article suggests more reading.
+  const more = Array.from({ length: Math.min(3, posts.length - 1) }, (_, i) => posts[(index + 1 + i) % posts.length]);
 
   return (
     <>
@@ -42,7 +43,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           post={post}
           article={article}
           prev={prev}
-          next={next}
+          more={more}
           engagement={
             <Suspense key="engagement" fallback={<ArticleEngagementFallback />}>
               <ArticleEngagement post={post} />

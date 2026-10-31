@@ -20,6 +20,7 @@ export function Nav() {
     { href: "/about", label: t.navAbout, active: pathname === "/about" },
     { href: "/projects", label: t.navProjects, active: pathname === "/projects" },
     { href: "/blog", label: t.navBlog, active: pathname.startsWith("/blog") },
+    { href: "/reading", label: t.navReading, active: pathname.startsWith("/reading") },
     { href: "/contact", label: t.navContact, active: pathname === "/contact" },
   ];
 

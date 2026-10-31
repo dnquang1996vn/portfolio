@@ -60,3 +60,18 @@ export const Cpu = (p: SVGProps<SVGSVGElement>) => (
 export const Layers = (p: SVGProps<SVGSVGElement>) => (
   <Svg {...p}><path d="m12 3 9 5-9 5-9-5 9-5Z" /><path d="m3 13 9 5 9-5" /><path d="m3 17 9 5 9-5" /></Svg>
 );
+export const XLogo = (p: SVGProps<SVGSVGElement>) => (
+  <Svg {...p}><path d="M4 4l16 16" /><path d="M20 4 4 20" /></Svg>
+);
+export const Facebook = (p: SVGProps<SVGSVGElement>) => (
+  <Svg {...p}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></Svg>
+);
+export const Rss = (p: SVGProps<SVGSVGElement>) => (
+  <Svg {...p}><path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" /></Svg>
+);
+export const Close = (p: SVGProps<SVGSVGElement>) => (
+  <Svg {...p}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></Svg>
+);
+export const Plus = (p: SVGProps<SVGSVGElement>) => (
+  <Svg {...p}><path d="M12 5v14" /><path d="M5 12h14" /></Svg>
+);
