@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
 import { BlogIndex } from "@/components/blog/BlogIndex";
 
 export const metadata: Metadata = {
@@ -11,11 +9,9 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
-      <Nav />
       <main id="main" className="page">
         <BlogIndex />
       </main>
-      <Footer />
     </>
   );
 }

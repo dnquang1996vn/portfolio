@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
 import { ArticleView } from "@/components/blog/ArticleView";
 import { ArticleEngagement, ArticleEngagementFallback } from "@/components/blog/ArticleEngagement";
 import { articles } from "@/content/articles";
@@ -39,7 +37,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
 
   return (
     <>
-      <Nav />
       <main id="main" className="page">
         <ArticleView
           post={post}
@@ -53,7 +50,6 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
           }
         />
       </main>
-      <Footer />
     </>
   );
 }

@@ -35,7 +35,7 @@ export function Hero() {
           </div>
           <ul className={styles.links}>
             <li><a href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a></li>
-            <li><a href="#contact">{t.buildTogether}</a></li>
+            <li><Link href="/contact">{t.buildTogether}</Link></li>
           </ul>
         </div>
 

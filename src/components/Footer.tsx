@@ -39,7 +39,7 @@ export function Footer() {
               <li><Link href="/">{t.navHome}</Link></li>
               <li><Link href="/about">{t.navAbout}</Link></li>
               <li><Link href="/projects">{t.navProjects}</Link></li>
-              <li><Link href="/#contact">{t.navContact}</Link></li>
+              <li><Link href="/contact">{t.navContact}</Link></li>
             </ul>
           </nav>
 

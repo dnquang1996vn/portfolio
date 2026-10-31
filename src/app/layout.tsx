@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Archivo, JetBrains_Mono, Newsreader } from "next/font/google";
 import { SiteProvider } from "@/components/providers/SiteProvider";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 import "./globals.css";
 
 // Archivo carries the brand and UI; Newsreader sets the editorial headings; the mono
@@ -52,7 +55,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) add attributes to <body> before React hydrates. */}
       <body suppressHydrationWarning>
-        <SiteProvider>{children}</SiteProvider>
+        <SiteProvider>
+          {/* Header and footer sit outside the page segment on purpose: Next scrolls a navigation to the
+              segment's first DOM node and skips it when that node is already on screen. With the sticky
+              header inside each page, that node was always visible and pages kept the old scroll offset. */}
+          <Nav />
+          <PageTransition>{children}</PageTransition>
+          <Footer />
+        </SiteProvider>
       </body>
     </html>
   );
