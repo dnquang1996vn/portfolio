@@ -32,6 +32,7 @@ const en = {
   heroName: "Quinn Do",
   heroRole: "Engineer. Tech lead. Still shipping.",
   heroCaption: "Frontend roots. Full-stack ownership.",
+  lampToggle: "Toggle the desk lamp",
 
   // home sections
   secWork: "Selected work",
@@ -202,6 +203,7 @@ const vi: typeof en = {
   heroName: "Quinn Do",
   heroRole: "Kỹ sư. Tech lead. Vẫn đang ship.",
   heroCaption: "Gốc frontend. Làm chủ full-stack.",
+  lampToggle: "Bật tắt đèn bàn",
 
   secWork: "Dự án tiêu biểu",
   workTitle: "Từ một bản yêu cầu đến nền tảng người ta tin dùng.",
