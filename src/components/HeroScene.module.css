@@ -30,9 +30,9 @@
 
 /* Power button: red base, the hue spins through the whole RGB wheel. */
 .power { animation: hue 8s linear infinite; }
-.powerHalo { fill: #ff2d2d; transform-box: fill-box; transform-origin: center; animation: pulseHalo 1.6s ease-in-out infinite; }
-.powerRing { fill: none; stroke: #ff2d2d; stroke-width: 1.2; animation: pulseRing 1.6s ease-in-out infinite; }
-.powerDot { fill: #ffd6d6; animation: pulseRing 1.6s ease-in-out infinite; }
+.powerHalo { fill: #ff2d2d; transform-box: fill-box; transform-origin: center; animation: pulseHalo 3s ease-in-out infinite; }
+.powerRing { fill: none; stroke: #ff2d2d; stroke-width: 1.2; animation: pulseRing 3s ease-in-out infinite; }
+.powerDot { fill: #ffd6d6; animation: pulseRing 3s ease-in-out infinite; }
 @keyframes hue { to { filter: hue-rotate(360deg); } }
 @keyframes pulseHalo { 0%, 100% { opacity: .2; transform: scale(.75); } 50% { opacity: .75; transform: scale(1.2); } }
 @keyframes pulseRing { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }

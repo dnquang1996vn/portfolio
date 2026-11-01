@@ -83,7 +83,9 @@ html[data-theme="dark"] {
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 80px; }
+/* scrollbar-gutter keeps the scrollbar's space reserved while a dialog locks scrolling,
+   so the page does not shift sideways on browsers with classic scrollbars. */
+html { scroll-behavior: smooth; overflow-x: clip; scroll-padding-top: 80px; scrollbar-gutter: stable; }
 /* A modal sheet owns the scroll while it is open. */
 html:has(dialog[open]) { overflow: hidden; }
 body {
