@@ -1,0 +1,24 @@
+/* The sun travels straight up the middle of the page for sunrise and straight down for
+   sunset, 0.9s, the same length as the page's colour fade. */
+.flight {
+  position: fixed; top: 0; left: 50%; z-index: 1000; pointer-events: none;
+}
+.flight[data-dir="sunrise"] { animation: rise .9s cubic-bezier(.3, .7, .3, 1) both; }
+.flight[data-dir="sunset"] { animation: set .9s cubic-bezier(.7, 0, .7, .3) both; }
+@keyframes rise { from { transform: translate(-50%, 112vh); } to { transform: translate(-50%, -14vh); } }
+@keyframes set { from { transform: translate(-50%, -14vh); } to { transform: translate(-50%, 112vh); } }
+
+.climb { will-change: transform; }
+
+.sun {
+  display: block; width: 120px; height: 120px; margin: -60px 0 0 -60px;
+  filter: drop-shadow(0 0 16px rgb(255 200 90 / 85%)) drop-shadow(0 0 48px rgb(255 160 60 / 55%));
+}
+[data-dir="sunset"] .sun { filter: drop-shadow(0 0 16px rgb(255 150 70 / 85%)) drop-shadow(0 0 50px rgb(255 110 50 / 55%)); }
+.rays { stroke: #ffc43d; stroke-width: 4; stroke-linecap: round; animation: spin 6s linear infinite; }
+[data-dir="sunset"] .rays { stroke: #ff9f45; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .flight { display: none; }
+}

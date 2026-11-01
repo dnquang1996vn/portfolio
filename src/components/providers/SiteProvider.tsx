@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { translations, type Lang, type T } from "@/content/translations";
+import { ThemeSun, type SunDirection } from "@/components/ThemeSun";
 
 type Theme = "light" | "dark";
 
@@ -50,6 +51,9 @@ function writeStored(key: string, value: string) {
 const getLang = () => readStored<Lang>(LANG_KEY, ["en", "vi"], "en");
 const getTheme = () => readStored<Theme>(THEME_KEY, ["light", "dark"], "light");
 
+// While the sun crosses the page, html[data-sun] makes every colour on the page fade over
+// the same duration (globals.css), so the theme change reads as daylight arriving or leaving.
+
 export function SiteProvider({ children }: { children: React.ReactNode }) {
   const lang = useSyncExternalStore(subscribe, getLang, () => "en" as Lang);
   const theme = useSyncExternalStore(subscribe, getTheme, () => "light" as Theme);
@@ -62,14 +66,39 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
   }, [theme, lang]);
 
   const toggleLang = useCallback(() => writeStored(LANG_KEY, getLang() === "vi" ? "en" : "vi"), []);
-  const toggleTheme = useCallback(() => writeStored(THEME_KEY, getTheme() === "dark" ? "light" : "dark"), []);
+
+  // Theme flips send a sun across the page; a flip in progress ignores new clicks.
+  const [sun, setSun] = useState<{ dir: SunDirection; id: number } | null>(null);
+  const sunBusy = useRef(false);
+  const toggleTheme = useCallback(() => {
+    const next: Theme = getTheme() === "dark" ? "light" : "dark";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      writeStored(THEME_KEY, next);
+      return;
+    }
+    if (sunBusy.current) return;
+    sunBusy.current = true;
+    document.documentElement.setAttribute("data-sun", "");
+    setSun({ dir: next === "dark" ? "sunset" : "sunrise", id: Date.now() });
+    writeStored(THEME_KEY, next);
+  }, []);
+  const endSun = useCallback(() => {
+    sunBusy.current = false;
+    document.documentElement.removeAttribute("data-sun");
+    setSun(null);
+  }, []);
 
   const value = useMemo<SiteContextValue>(
     () => ({ lang, theme, t: translations[lang], toggleLang, toggleTheme }),
     [lang, theme, toggleLang, toggleTheme],
   );
 
-  return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;
+  return (
+    <SiteContext.Provider value={value}>
+      {children}
+      {sun && <ThemeSun key={sun.id} dir={sun.dir} onDone={endSun} />}
+    </SiteContext.Provider>
+  );
 }
 
 export function useSite(): SiteContextValue {
