@@ -1,0 +1,66 @@
+/* Overlays on the hero photo box (.imgWrap), in photo units via a 320 x 400 viewBox. */
+.scene, .glow {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.glow { mix-blend-mode: screen; opacity: .55; }
+
+/* Code lines drift up the screens; two stacked copies make the loop seamless. */
+.scroll {
+  animation: scroll var(--dur, 10s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes scroll { to { transform: translateY(calc(var(--cycle) * -1px)); } }
+
+/* LED strip: holds one colour, then steps to the next with a short blend. */
+.led { fill: #ffd23f; animation: ledCycle 6s linear infinite; }
+@keyframes ledCycle {
+  0%, 14.5% { fill: #ffd23f; }
+  16.7%, 31.2% { fill: #3ddc6a; }
+  33.3%, 47.8% { fill: #2ee6e6; }
+  50%, 64.5% { fill: #3b7bff; }
+  66.7%, 81.2% { fill: #e24cff; }
+  83.3%, 97.8% { fill: #ff3b3b; }
+  100% { fill: #ffd23f; }
+}
+
+/* Halo behind the name plate: a warm wash that breathes slowly. */
+.halo { fill: none; stroke: #ffc14d; stroke-width: 22; stroke-linejoin: round; animation: breathe 3.6s ease-in-out infinite; }
+@keyframes breathe { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
+
+/* Power button: red base, the hue spins through the whole RGB wheel. */
+.power { animation: hue 8s linear infinite; }
+.powerHalo { fill: #ff2d2d; transform-box: fill-box; transform-origin: center; animation: pulseHalo 1.6s ease-in-out infinite; }
+.powerRing { fill: none; stroke: #ff2d2d; stroke-width: 1.2; animation: pulseRing 1.6s ease-in-out infinite; }
+.powerDot { fill: #ffd6d6; animation: pulseRing 1.6s ease-in-out infinite; }
+@keyframes hue { to { filter: hue-rotate(360deg); } }
+@keyframes pulseHalo { 0%, 100% { opacity: .2; transform: scale(.75); } 50% { opacity: .75; transform: scale(1.2); } }
+@keyframes pulseRing { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+
+/* Name plate ring: faint accent border, a bright streak sweeps around it (like the feedback cards). */
+.ring { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.ringBase { stroke: color-mix(in srgb, var(--color-accent) 45%, transparent); stroke-width: 1.2; }
+.ringGlow { stroke: var(--color-accent); stroke-width: 4; opacity: .55; }
+.ringSweep { stroke: #ffb3a5; stroke-width: 1.6; }
+.ringGlow, .ringSweep {
+  stroke-dasharray: 18 82;
+  animation: sweep 4.5s linear infinite;
+}
+@keyframes sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* Notes bob above the speaker, each on its own phase. */
+.noteHead { fill: #2d2b2b; }
+.noteStem { fill: none; stroke: #2d2b2b; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
+.noteBeam { fill: none; stroke: #2d2b2b; stroke-width: 2.2; stroke-linecap: butt; }
+.note {
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-7px) rotate(5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll, .led, .halo, .power, .powerHalo, .powerRing, .powerDot, .ringGlow, .ringSweep, .note { animation: none; }
+}

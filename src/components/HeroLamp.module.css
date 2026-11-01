@@ -2,7 +2,7 @@
    clamp stays on the wall trim at every viewport. --aim is written by HeroLamp on fine
    pointers; the default is the resting pose, so touch, no-JS and reduced motion all show
    the same still lamp. */
-.lamp { --aim: 8deg; --lamp-ink: #2d2b2b; position: absolute; inset: 0; pointer-events: none; }
+.lamp { --aim: -17deg; --lamp-ink: #2d2b2b; position: absolute; inset: 0; pointer-events: none; }
 :global(html[data-theme="dark"]) .lamp { --lamp-ink: #3f3b3b; }
 
 /* Light cone: screen-blended so it only brightens, clipped to the photo. */
@@ -15,13 +15,15 @@
 :global(html[data-theme="dark"]) .lamp[data-on] .light { opacity: 1; }
 .cone { display: block; width: 100%; height: 100%; }
 
-/* Lamp body doubles as the on/off switch. Its box is the top-left 45% x 24% of the photo. */
+/* Lamp body doubles as the on/off switch and the drag handle. Its box is the top-left
+   45% x 30% of the photo; touch-action none so a finger drag moves the lamp, not the page. */
 .toggle {
-  position: absolute; top: 0; left: 0; width: 45%; height: 24%;
-  pointer-events: auto; cursor: pointer;
+  position: absolute; top: 0; left: 0; width: 45%; height: 30%;
+  pointer-events: auto; cursor: grab; touch-action: none;
   margin: 0; padding: 0; border: 0; background: none; border-radius: 8px;
   -webkit-tap-highlight-color: transparent;
 }
+.lamp[data-dragging] .toggle { cursor: grabbing; }
 .body { display: block; width: 100%; height: 100%; overflow: visible; fill: var(--lamp-ink); stroke: var(--color-paper); stroke-width: .75; stroke-linejoin: round; }
 .arm { fill: none; stroke: var(--lamp-ink); stroke-width: 3.5; stroke-linecap: round; }
 .rod { fill: none; stroke: var(--lamp-ink); stroke-width: 1.5; stroke-linecap: round; }
@@ -35,6 +37,33 @@
   transition: transform .35s cubic-bezier(.2,.7,.2,1);
 }
 
+/* Owl face on the shade */
+.sclera { fill: #f3e9d2; stroke: none; }
+.glint { fill: #fff; stroke: none; }
+.beak { fill: #e4a04a; stroke: none; }
+.eye {
+  transform-box: fill-box; transform-origin: center;
+  animation: blink 5.2s ease-in-out infinite;
+  transition: transform .25s ease-out;
+}
+.eye:nth-of-type(2) { animation-delay: .08s; }
+.pupil {
+  transform-box: fill-box; transform-origin: center;
+  animation: glance 7s ease-in-out infinite;
+}
+.lamp:not([data-on]) .eye { animation: none; transform: scaleY(.12); }
+.lamp:not([data-on]) .pupil { animation: none; }
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93%, 96% { transform: scaleY(.1); }
+}
+@keyframes glance {
+  0%, 28%, 72%, 100% { transform: translateX(0); }
+  36%, 48% { transform: translateX(-1.6px); }
+  56%, 66% { transform: translateX(1.6px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .head, .light, .bulb { transition: none; }
+  .head, .light, .bulb, .eye { transition: none; }
+  .eye, .pupil { animation: none; }
 }
