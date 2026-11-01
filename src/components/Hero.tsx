@@ -8,6 +8,8 @@ import { contact } from "@/content/portfolio";
 import { typedWords } from "@/content/translations";
 import { ArrowUpRight } from "./Icons";
 import { HeroLamp } from "./HeroLamp";
+import { HeroScene } from "./HeroScene";
+import { HeroClock } from "./HeroClock";
 import styles from "./Hero.module.css";
 
 export function Hero() {
@@ -52,6 +54,8 @@ export function Hero() {
                 sizes="(max-width: 860px) 80vw, 340px"
                 className={styles.polaroidImg}
               />
+              <HeroScene />
+              <HeroClock />
               <HeroLamp />
             </div>
             <p className={styles.name}>{t.heroName}</p>
