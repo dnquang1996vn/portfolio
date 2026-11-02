@@ -1,12 +1,11 @@
-"use client";
-
-import { useSyncExternalStore } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { useSite } from "@/components/providers/SiteProvider";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/Link";
 import { contact, pick, tags, type Post } from "@/content/portfolio";
 import type { Article, Block } from "@/content/articles";
-import { ArrowUpRight, Facebook, Mail, Rss, XLogo } from "@/components/Icons";
+import { ArrowUpRight, Rss } from "@/components/Icons";
+import { getLabels } from "@/i18n/labels";
+import { ShareRow } from "./ShareRow";
 import styles from "./ArticleView.module.css";
 
 function BlockView({ block }: { block: Block }) {
@@ -38,40 +37,6 @@ function BlockView({ block }: { block: Block }) {
   }
 }
 
-const noop = () => () => {};
-/** The page URL on the client, an empty string during SSR so the markup matches. */
-const useHref = () => useSyncExternalStore(noop, () => window.location.href, () => "");
-
-/** X, Facebook and email share links for the current page. */
-function ShareRow({ title }: { title: string }) {
-  const { t } = useSite();
-  const url = useHref();
-  const u = encodeURIComponent(url);
-  const text = encodeURIComponent(title);
-  const links = [
-    { href: `https://x.com/intent/tweet?text=${text}&url=${u}`, label: t.shareOnX, Icon: XLogo },
-    { href: `https://www.facebook.com/sharer/sharer.php?u=${u}`, label: t.shareOnFacebook, Icon: Facebook },
-    { href: `mailto:?subject=${text}&body=${u}`, label: t.shareByEmail, Icon: Mail },
-  ];
-  return (
-    <div className={styles.share} aria-label={t.share}>
-      {links.map(({ href, label, Icon }) => (
-        <a
-          key={label}
-          href={url ? href : undefined}
-          target={href.startsWith("mailto:") ? undefined : "_blank"}
-          rel="noreferrer"
-          className={`btn btn-secondary btn-icon ${styles.shareBtn}`}
-          aria-label={label}
-          title={label}
-        >
-          <Icon />
-        </a>
-      ))}
-    </div>
-  );
-}
-
 interface Props {
   post: Post;
   article: Article;
@@ -82,8 +47,9 @@ interface Props {
   engagement: React.ReactNode;
 }
 
-export function ArticleView({ post, article, prev, more, engagement }: Props) {
-  const { t, lang } = useSite();
+export async function ArticleView({ post, article, prev, more, engagement }: Props) {
+  const t = await getTranslations();
+  const lang = await getLocale();
   const content = article[lang];
   const title = pick(post.title, lang);
   // "@nhật-quang-đỗ": the LinkedIn slug, decoded, without the trailing id LinkedIn appends.
@@ -95,11 +61,11 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
   return (
     <article className={styles.article}>
       <header className={styles.header}>
-        <Link href="/blog" className={styles.back}>← {t.backToPosts}</Link>
+        <Link href="/blog" className={styles.back}>← {t("backToPosts")}</Link>
         <div className={styles.meta}>
           <span className={styles.topic}>{pick(post.topic, lang)}</span>
           <span>{pick(post.read, lang)}</span>
-          <span>{t.published} {post.date}</span>
+          <span>{t("published")} {post.date}</span>
         </div>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.lede}>{content.lede}</p>
@@ -115,15 +81,15 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
           <div className={styles.author}>
             <Image src="/images/portrait.jpg" alt="" width={800} height={800} sizes="56px" className={styles.avatar} />
             <div className={styles.authorText}>
-              <span className={styles.authorName}>{t.heroName}</span>
-              <a href={contact.linkedin} target="_blank" rel="noreferrer" className={styles.handle} title={t.authorHandle}>
+              <span className={styles.authorName}>{t("heroName")}</span>
+              <a href={contact.linkedin} target="_blank" rel="noreferrer" className={styles.handle} title={t("authorHandle")}>
                 {handle} <ArrowUpRight />
               </a>
             </div>
           </div>
 
           <div className={styles.asideBlock}>
-            <p className={styles.asideLabel}>{t.tagsLabel}</p>
+            <p className={styles.asideLabel}>{t("tagsLabel")}</p>
             <ul className={styles.tags}>
               {post.tags.map((id) => (
                 <li key={id}>
@@ -135,12 +101,12 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
 
           {prev && (
             <div className={styles.asideBlock}>
-              <p className={styles.asideLabel}>{t.prevArticle}</p>
+              <p className={styles.asideLabel}>{t("prevArticle")}</p>
               <Link href={`/blog/${prev.slug}`} className={styles.prevLink}>{pick(prev.title, lang)}</Link>
             </div>
           )}
 
-          <Link href="/blog" className={`link-arrow ${styles.asideBack}`}>← {t.backToBlog}</Link>
+          <Link href="/blog" className={`link-arrow ${styles.asideBack}`}>← {t("backToBlog")}</Link>
         </aside>
 
         <div className={styles.body}>
@@ -149,11 +115,11 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
       </div>
 
       <footer className={styles.footer}>
-        <ShareRow title={title} />
+        <ShareRow title={title} t={await getLabels(["share", "shareByEmail", "shareOnFacebook", "shareOnX"])} />
 
         {more.length > 0 && (
           <section className={styles.more} aria-labelledby="keep-reading">
-            <h2 id="keep-reading" className={styles.moreTitle}>{t.keepReading}</h2>
+            <h2 id="keep-reading" className={styles.moreTitle}>{t("keepReading")}</h2>
             <ul className={styles.moreList}>
               {more.map((p) => (
                 <li key={p.slug} className={styles.moreItem}>
@@ -167,11 +133,11 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
 
         <div className={styles.follow}>
           <div>
-            <p className={styles.followTitle}>{t.followTitle}</p>
-            <p className={styles.followIntro}>{t.followIntro}</p>
+            <p className={styles.followTitle}>{t("followTitle")}</p>
+            <p className={styles.followIntro}>{t("followIntro")}</p>
           </div>
           <a href="/feed.xml" className={`btn btn-secondary ${styles.followBtn}`}>
-            <Rss /> {t.subscribeRss}
+            <Rss /> {t("subscribeRss")}
           </a>
         </div>
       </footer>

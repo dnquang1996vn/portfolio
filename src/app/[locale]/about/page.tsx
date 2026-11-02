@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alternates } from "@/i18n/metadata";
 import { PageHead } from "@/components/PageHead";
 import { ProfileCard } from "@/components/ProfileCard";
 import { AboutProfile } from "@/components/AboutProfile";
@@ -13,6 +14,7 @@ import styles from "./about.module.css";
 export const metadata: Metadata = {
   title: "About — Quinn Do",
   description: "Senior full-stack developer and tech lead in Hanoi: profile, skills, career journey and credentials.",
+  alternates: alternates("/about"),
 };
 
 export default function AboutPage() {

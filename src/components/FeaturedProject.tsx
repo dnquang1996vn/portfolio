@@ -1,7 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { useSite } from "@/components/providers/SiteProvider";
+import { getLocale, getTranslations } from "next-intl/server";
 import { pick, type Project } from "@/content/portfolio";
 import { ArrowUpRight } from "./Icons";
 import { BulletList } from "./BulletList";
@@ -13,8 +11,9 @@ interface Props {
   detailed?: boolean;
 }
 
-export function FeaturedProject({ project, detailed = false }: Props) {
-  const { t, lang } = useSite();
+export async function FeaturedProject({ project, detailed = false }: Props) {
+  const t = await getTranslations();
+  const lang = await getLocale();
   const name = pick(project.short, lang);
   return (
     <article className={`card ${styles.card}`}>
@@ -30,7 +29,7 @@ export function FeaturedProject({ project, detailed = false }: Props) {
         <div className={styles.foot}>
           {project.url ? (
             <a className="link-arrow" href={project.href} target="_blank" rel="noreferrer">
-              {t.explore} {name.replace(/\.$/, "")} <ArrowUpRight />
+              {t("explore")} {name.replace(/\.$/, "")} <ArrowUpRight />
             </a>
           ) : null}
           <span className="mono">{pick(project.period, lang)}</span>

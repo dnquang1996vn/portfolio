@@ -1,15 +1,12 @@
-"use client";
-
-import { useRef } from "react";
 import Image from "next/image";
-import { useSite } from "@/components/providers/SiteProvider";
-import { useTimelineProgress } from "@/hooks/useTimelineProgress";
+import { getLocale, getTranslations } from "next-intl/server";
 import { jobs, pick, type Job } from "@/content/portfolio";
+import type { Lang } from "@/content/translations";
 import { BulletList } from "./BulletList";
+import { Timeline } from "./Timeline";
 import styles from "./Experience.module.css";
 
-function JobRow({ job }: { job: Job }) {
-  const { lang } = useSite();
+function JobRow({ job, lang }: { job: Job; lang: Lang }) {
   return (
     <div data-job-row="" className={styles.row}>
       <span data-dot="" className={styles.dot} aria-hidden="true" />
@@ -42,19 +39,18 @@ function JobRow({ job }: { job: Job }) {
   );
 }
 
-export function Experience() {
-  const { t } = useSite();
-  const timeline = useRef<HTMLDivElement>(null);
-  useTimelineProgress(timeline);
+export async function Experience() {
+  const t = await getTranslations();
+  const lang = await getLocale();
   return (
     <section id="experience" data-screen-label="Experience">
-      <p className="kicker">03 / {t.secJourney}</p>
-      <h2 className="section-title">{t.journeyTitle}</h2>
-      <div ref={timeline} data-timeline="" className={styles.timeline}>
+      <p className="kicker">03 / {t("secJourney")}</p>
+      <h2 className="section-title">{t("journeyTitle")}</h2>
+      <Timeline className={styles.timeline}>
         {/* Scroll-linked fill over the spine. */}
         <span className={styles.progress} aria-hidden="true" />
-        {jobs.map((job) => <JobRow key={job.company} job={job} />)}
-      </div>
+        {jobs.map((job) => <JobRow key={job.company} job={job} lang={lang} />)}
+      </Timeline>
     </section>
   );
 }

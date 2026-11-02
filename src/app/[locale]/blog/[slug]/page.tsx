@@ -5,6 +5,7 @@ import { ArticleView } from "@/components/blog/ArticleView";
 import { ArticleEngagement, ArticleEngagementFallback } from "@/components/blog/ArticleEngagement";
 import { getArticle } from "@/content/articles";
 import { pick, posts } from "@/content/portfolio";
+import { alternates } from "@/i18n/metadata";
 
 type Params = { slug: string };
 
@@ -12,20 +13,22 @@ export function generateStaticParams(): Params[] {
   return posts.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: PageProps<"/[locale]/blog/[slug]">): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const lang = locale === "vi" ? "vi" : "en";
   const post = posts.find((p) => p.slug === slug);
   const article = getArticle(slug);
   if (!post || !article) return {};
-  const title = pick(post.title, "en");
+  const title = pick(post.title, lang);
   return {
     title: `${title} — Quinn Do`,
-    description: pick(post.summary, "en"),
-    openGraph: { title, description: article.en.lede, type: "article", images: [{ url: post.image }] },
+    description: pick(post.summary, lang),
+    alternates: alternates(`/blog/${slug}`),
+    openGraph: { title, description: article[lang].lede, type: "article", images: [{ url: post.image }] },
   };
 }
 
-export default async function ArticlePage({ params }: { params: Promise<Params> }) {
+export default async function ArticlePage({ params }: PageProps<"/[locale]/blog/[slug]">) {
   const { slug } = await params;
   const index = posts.findIndex((p) => p.slug === slug);
   const article = getArticle(slug);

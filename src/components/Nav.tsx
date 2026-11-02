@@ -1,17 +1,25 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useRef } from "react";
 import { useSite } from "@/components/providers/SiteProvider";
+import { localePath, splitLocale } from "@/i18n/navigation";
+import { LOCALE_COOKIE, routing, type Locale } from "@/i18n/routing";
 import { Moon, Sun } from "./Icons";
 import styles from "./Nav.module.css";
 
-export function Nav() {
-  const { t, theme, toggleTheme, toggleLang, lang } = useSite();
+export type NavLabels = Labels<"brandTagline" | "langLabel" | "langTitle" | "letsTalk" | "navAbout" | "navBlog" | "navContact" | "navHome" | "navProjects" | "navReading" | "skipToContent" | "switchLang" | "themeToDark" | "themeToLight" | "toggleTheme">;
+
+export function Nav({ t, locale }: { t: NavLabels; locale: Locale }) {
+  const other: Locale = locale === "vi" ? "en" : "vi";
+  const to = (href: string) => localePath(locale, href);
+  const { theme, toggleTheme } = useSite();
   const isDark = theme === "dark";
-  const pathname = usePathname();
+  // The path without its locale prefix ("/blog/x"), so the tabs and the language switch work in both.
+  const pathname = splitLocale(usePathname(), routing.locales).path;
   const pillRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
 
@@ -50,13 +58,13 @@ export function Nav() {
     const ro = new ResizeObserver(place);
     ro.observe(pill);
     return () => ro.disconnect();
-  }, [pathname, lang]);
+  }, [pathname, locale]);
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main">
         <Link className={styles.skip} href="#main">{t.skipToContent}</Link>
-        <Link className={styles.brand} href="/">
+        <Link className={styles.brand} href={to("/")}>
           <Image className={styles.markLight} src="/images/quinndev-mark-v2.png" alt="" width={28} height={28} loading="eager" />
           <Image className={styles.markDark} src="/images/quinndev-mark-dark-v2.png" alt="" width={28} height={28} loading="eager" />
           <span className={styles.brandText}>
@@ -68,26 +76,31 @@ export function Nav() {
         <div className={styles.pill} ref={pillRef}>
           <span className={styles.indicator} ref={indicatorRef} aria-hidden="true" />
           {items.map((item) => (
-            <Link key={item.href} href={item.href} aria-current={item.active ? "page" : undefined}>
+            <Link key={item.href} href={to(item.href)} aria-current={item.active ? "page" : undefined}>
               {item.label}
             </Link>
           ))}
         </div>
 
         <div className={styles.right}>
-          <Link className={`btn btn-primary btn-sm ${styles.cta}`} href="/contact">
+          <Link className={`btn btn-primary btn-sm ${styles.cta}`} href={to("/contact")}>
             {t.letsTalk}
           </Link>
-          <button
-            type="button"
+          {/* Switching language is a navigation to the same page in the other locale. The cookie
+              makes the proxy send "/" and old links to this language next time; it is written here
+              too because the client router can serve the other page from cache without a request. */}
+          <Link
+            href={localePath(other, pathname)}
+            prefetch={false}
+            onClick={() => { document.cookie = `${LOCALE_COOKIE}=${other}; path=/; max-age=31536000; samesite=lax`; }}
             className="btn btn-secondary btn-sm btn-lang"
-            onClick={toggleLang}
             aria-label={`${t.langLabel}, ${t.switchLang}`}
             title={t.langTitle}
-            lang={lang === "vi" ? "en" : "vi"}
+            hrefLang={other}
+            lang={other}
           >
             {t.langLabel}
-          </button>
+          </Link>
           <button
             type="button"
             className="btn btn-secondary btn-sm btn-icon"

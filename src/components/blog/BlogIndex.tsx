@@ -1,14 +1,24 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import Image from "next/image";
-import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
-import { isTagId, pick, posts, tags, type TagId } from "@/content/portfolio";
+import Link from "next/link";
 import styles from "./BlogIndex.module.css";
 
-/** Tags that at least one post uses, in registry order, so the filter never shows an empty result. */
-const usedTags = (Object.keys(tags) as TagId[]).filter((id) => posts.some((p) => p.tags.includes(id)));
+/** A post card's text, already in the page's language. */
+export interface PostCard {
+  slug: string;
+  /** Locale-prefixed link to the article. */
+  href: string;
+  image: string;
+  date: string;
+  title: string;
+  summary: string;
+  topic: string;
+  read: string;
+  tags: string[];
+}
 
 /*
  * The selected tag lives in the URL (`/blog?tag=<id>`), so a link from an article or a shared
@@ -26,12 +36,11 @@ function subscribe(listener: () => void) {
   };
 }
 
-function readTag(): TagId | null {
-  const value = new URLSearchParams(window.location.search).get("tag");
-  return value && isTagId(value) ? value : null;
+function readTag(): string | null {
+  return new URLSearchParams(window.location.search).get("tag");
 }
 
-function writeTag(tag: TagId | null) {
+function writeTag(tag: string | null) {
   const url = new URL(window.location.href);
   if (tag) url.searchParams.set("tag", tag);
   else url.searchParams.delete("tag");
@@ -39,10 +48,16 @@ function writeTag(tag: TagId | null) {
   listeners.forEach((listener) => listener());
 }
 
-export function BlogIndex() {
-  const { t, lang } = useSite();
+interface Props {
+  posts: PostCard[];
+  /** Tag id to label, for the tags at least one post uses, in registry order. */
+  tags: Record<string, string>;
+}
+
+export function BlogIndex({ posts, tags, t }: Props & { t: Labels<"blogIndexIntro" | "blogIndexTitle" | "filterAll" | "secBlog" | "tagsLabel"> }) {
   // Server snapshot is `null` so the static HTML and the first client render agree.
-  const active = useSyncExternalStore(subscribe, readTag, () => null);
+  const requested = useSyncExternalStore(subscribe, readTag, () => null);
+  const active = requested && requested in tags ? requested : null;
   const visible = active ? posts.filter((p) => p.tags.includes(active)) : posts;
 
   return (
@@ -60,7 +75,7 @@ export function BlogIndex() {
         >
           {t.filterAll}
         </button>
-        {usedTags.map((id) => (
+        {Object.keys(tags).map((id) => (
           <button
             key={id}
             type="button"
@@ -68,26 +83,26 @@ export function BlogIndex() {
             aria-pressed={active === id}
             onClick={() => writeTag(id)}
           >
-            {pick(tags[id], lang)}
+            {tags[id]}
           </button>
         ))}
       </div>
 
       <div className={styles.grid}>
         {visible.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.post}>
+          <Link key={post.slug} href={post.href} className={styles.post}>
             <figure className={styles.media} data-media="">
               <Image src={post.image} alt="" width={900} height={600} sizes="(max-width: 720px) 100vw, (max-width: 1000px) 50vw, 33vw" className={styles.mediaImg} />
             </figure>
             <div className={styles.meta}>
-              <span className={styles.topic}>{pick(post.topic, lang)}</span>
-              <span>{pick(post.read, lang)}</span>
+              <span className={styles.topic}>{post.topic}</span>
+              <span>{post.read}</span>
               <span>{post.date}</span>
             </div>
-            <h2 className={styles.postTitle}>{pick(post.title, lang)}</h2>
-            <p className={styles.summary}>{pick(post.summary, lang)}</p>
+            <h2 className={styles.postTitle}>{post.title}</h2>
+            <p className={styles.summary}>{post.summary}</p>
             <ul className={styles.tags} aria-label={t.tagsLabel}>
-              {post.tags.map((id) => <li key={id} className="tag tag-neutral">{pick(tags[id], lang)}</li>)}
+              {post.tags.map((id) => <li key={id} className="tag tag-neutral">{tags[id]}</li>)}
             </ul>
           </Link>
         ))}

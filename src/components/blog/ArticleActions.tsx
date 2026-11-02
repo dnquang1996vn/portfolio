@@ -1,8 +1,7 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import { useCallback, useEffect, useState } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
-import { pick, type Post } from "@/content/portfolio";
 import type { Engagement } from "@/lib/engagement";
 import styles from "./ArticleActions.module.css";
 
@@ -45,15 +44,14 @@ function ShareIcon() {
 const fmt = (n: number) => new Intl.NumberFormat("en-US").format(n);
 
 interface Props {
-  post: Post;
+  slug: string;
+  /** The post's title in the page's language, for the native share sheet. */
+  title: string;
   /** Counters rendered on the server for this request. */
   initial: Engagement;
 }
 
-export function ArticleActions({ post, initial }: Props) {
-  const { t, lang } = useSite();
-  const slug = post.slug;
-  const title = pick(post.title, lang);
+export function ArticleActions({ slug, title, initial, t }: Props & { t: Labels<"like" | "liked" | "linkCopied" | "share" | "shareFailed" | "unlike" | "views"> }) {
   const [counts, setCounts] = useState<Engagement>(initial);
   const [liked, setLiked] = useState(false);
   const [busy, setBusy] = useState(false);

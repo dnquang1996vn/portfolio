@@ -1,11 +1,9 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import Image from "next/image";
-import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
-import { pick } from "@/content/portfolio";
-import { isReadingType, reading, readingTags, readingTypes, type ReadingType } from "@/content/reading";
+import Link from "next/link";
 import { Stars } from "./Stars";
 import styles from "./ReadingList.module.css";
 
@@ -24,12 +22,11 @@ function subscribe(listener: () => void) {
   };
 }
 
-function readType(): ReadingType | null {
-  const value = new URLSearchParams(window.location.search).get("type");
-  return value && isReadingType(value) ? value : null;
+function readType(): string | null {
+  return new URLSearchParams(window.location.search).get("type");
 }
 
-function writeType(type: ReadingType | null) {
+function writeType(type: string | null) {
   const url = new URL(window.location.href);
   if (type) url.searchParams.set("type", type);
   else url.searchParams.delete("type");
@@ -37,21 +34,34 @@ function writeType(type: ReadingType | null) {
   listeners.forEach((listener) => listener());
 }
 
-const types = (Object.keys(readingTypes) as ReadingType[]).filter((t) => reading.some((r) => r.type === t));
-
-/** "2025-06" → "Jun 2025" / "06/2025". */
-function formatDate(date: string, lang: "en" | "vi") {
-  const [y, m] = date.split("-");
-  if (lang === "vi") return `${m}/${y}`;
-  return new Date(Number(y), Number(m) - 1, 1).toLocaleString("en", { month: "short", year: "numeric" });
+/** One entry, already in the page's language, newest first. */
+export interface ReadingRow {
+  slug: string;
+  /** Locale-prefixed link to the notes page. */
+  href: string;
+  cover: string;
+  type: string;
+  typeLabel: string;
+  author: string;
+  year: string;
+  title: string;
+  blurb: string;
+  verdict: string;
+  rating: number;
+  finished: string;
+  tags: string[];
 }
 
-export function ReadingList() {
-  const { t, lang } = useSite();
-  const active = useSyncExternalStore(subscribe, readType, () => null);
-  const items = [...reading]
-    .filter((r) => !active || r.type === active)
-    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+interface Props {
+  items: ReadingRow[];
+  /** Type id to label, for the types at least one entry has. */
+  types: Record<string, string>;
+}
+
+export function ReadingList({ items: all, types, t }: Props & { t: Labels<"readingAll" | "readingFinished" | "readingIntro" | "readingKicker" | "readingNotes" | "readingOutOf" | "readingRating" | "readingTitle"> }) {
+  const requested = useSyncExternalStore(subscribe, readType, () => null);
+  const active = requested && requested in types ? requested : null;
+  const items = all.filter((r) => !active || r.type === active);
 
   return (
     <section data-screen-label="Reading" className={styles.section}>
@@ -66,9 +76,9 @@ export function ReadingList() {
           aria-pressed={active === null}
           onClick={() => writeType(null)}
         >
-          {t.readingAll} <span className={styles.count}>{reading.length}</span>
+          {t.readingAll} <span className={styles.count}>{all.length}</span>
         </button>
-        {types.map((type) => (
+        {Object.keys(types).map((type) => (
           <button
             key={type}
             type="button"
@@ -76,7 +86,7 @@ export function ReadingList() {
             aria-pressed={active === type}
             onClick={() => writeType(type)}
           >
-            {pick(readingTypes[type], lang)} <span className={styles.count}>{reading.filter((r) => r.type === type).length}</span>
+            {types[type]} <span className={styles.count}>{all.filter((r) => r.type === type).length}</span>
           </button>
         ))}
       </div>
@@ -84,24 +94,24 @@ export function ReadingList() {
       <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.slug}>
-            <Link href={`/reading/${item.slug}`} className={styles.row}>
+            <Link href={item.href} className={styles.row}>
               <figure className={styles.cover} data-media="">
                 <Image src={item.cover} alt="" width={382} height={500} sizes="(max-width: 720px) 88px, 120px" className={styles.coverImg} />
               </figure>
               <div className={styles.text}>
                 <div className={styles.meta}>
-                  <span className={styles.type}>{pick(readingTypes[item.type], lang)}</span>
+                  <span className={styles.type}>{item.typeLabel}</span>
                   <span>{item.author}</span>
                   <span>{item.year}</span>
                 </div>
                 <h2 className={styles.itemTitle}>{item.title}</h2>
-                <p className={styles.blurb}>{pick(item.blurb, lang)}</p>
-                <p className={styles.verdict}>{pick(item.verdict, lang)}</p>
+                <p className={styles.blurb}>{item.blurb}</p>
+                <p className={styles.verdict}>{item.verdict}</p>
                 <div className={styles.foot}>
                   <Stars value={item.rating} label={`${t.readingRating}: ${item.rating} ${t.readingOutOf}`} />
-                  <span className={styles.footMeta}>{t.readingFinished} {formatDate(item.date, lang)}</span>
+                  <span className={styles.footMeta}>{t.readingFinished} {item.finished}</span>
                   <span className={styles.footTags}>
-                    {item.tags.map((id) => <span key={id} className="tag tag-neutral">{pick(readingTags[id], lang)}</span>)}
+                    {item.tags.map((tag) => <span key={tag} className="tag tag-neutral">{tag}</span>)}
                   </span>
                   <span className={styles.notes}>{t.readingNotes} →</span>
                 </div>

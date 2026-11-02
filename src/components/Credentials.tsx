@@ -1,17 +1,16 @@
-"use client";
-
-import { useSite } from "@/components/providers/SiteProvider";
+import { getLocale, getTranslations } from "next-intl/server";
 import { credentials, pick } from "@/content/portfolio";
 import styles from "./Credentials.module.css";
 
-export function Credentials() {
-  const { t, lang } = useSite();
+export async function Credentials() {
+  const t = await getTranslations();
+  const lang = await getLocale();
   return (
     <section data-screen-label="Credentials">
       <div className="section-head">
         <div>
-          <p className="kicker">05 / {t.secCredentials}</p>
-          <h2 className="section-title">{t.credentialsTitle}</h2>
+          <p className="kicker">05 / {t("secCredentials")}</p>
+          <h2 className="section-title">{t("credentialsTitle")}</h2>
         </div>
       </div>
       <ul className={styles.list}>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alternates } from "@/i18n/metadata";
 import { PageHead } from "@/components/PageHead";
 import { ProjectsList } from "@/components/ProjectsList";
 import { Contact } from "@/components/Contact";
@@ -7,6 +8,7 @@ import { PageEffects } from "@/components/PageEffects";
 export const metadata: Metadata = {
   title: "Projects — Quinn Do",
   description: "Welle, Bamboo and a UK property data platform: three products led from brief to production.",
+  alternates: alternates("/projects"),
 };
 
 export default function ProjectsPage() {

@@ -1,16 +1,15 @@
-"use client";
-
-import { useSite } from "@/components/providers/SiteProvider";
+import { getLocale, getTranslations } from "next-intl/server";
 import { contact, pick, profile } from "@/content/portfolio";
 import { ArrowUpRight } from "./Icons";
 import styles from "./AboutProfile.module.css";
 
 /** The bio column of the About page; the identity card lives in ProfileCard. */
-export function AboutProfile() {
-  const { t, lang } = useSite();
+export async function AboutProfile() {
+  const t = await getTranslations();
+  const lang = await getLocale();
   return (
     <section data-screen-label="Profile">
-      <p className="kicker">01 / {t.secProfile}</p>
+      <p className="kicker">01 / {t("secProfile")}</p>
       <div className={styles.bio}>
         {profile.bio.map((p, i) => <p key={i}>{pick(p, lang)}</p>)}
         <ul className={styles.links}>

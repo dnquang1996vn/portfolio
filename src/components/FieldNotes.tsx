@@ -1,15 +1,14 @@
-"use client";
-
-import Link from "next/link";
-import { useSite } from "@/components/providers/SiteProvider";
+import { Link } from "@/i18n/Link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { pick, posts } from "@/content/portfolio";
 import styles from "./FieldNotes.module.css";
 
 /** Three featured notes as editorial columns, the rest as a plain list, then the link to all posts. */
 const FEATURED = 3;
 
-export function FieldNotes() {
-  const { t, lang } = useSite();
+export async function FieldNotes() {
+  const t = await getTranslations();
+  const lang = await getLocale();
   const featured = posts.slice(0, FEATURED);
   // Newest first; `sort` is stable, so posts from the same year keep their authored order.
   const rest = posts.slice(FEATURED).sort((a, b) => Number(b.date) - Number(a.date));
@@ -18,10 +17,10 @@ export function FieldNotes() {
     <section id="blog" data-screen-label="Field notes">
       <div className="section-head">
         <div>
-          <p className="kicker">04 / {t.secNotes}</p>
-          <h2 className="section-title">{t.notesTitle}</h2>
+          <p className="kicker">04 / {t("secNotes")}</p>
+          <h2 className="section-title">{t("notesTitle")}</h2>
         </div>
-        <Link href="/blog" className="link-arrow">{t.allArticles}</Link>
+        <Link href="/blog" className="link-arrow">{t("allArticles")}</Link>
       </div>
 
       <div className={styles.grid}>
@@ -51,7 +50,7 @@ export function FieldNotes() {
       )}
 
       <div className={styles.more}>
-        <Link href="/blog" className="btn btn-secondary">{t.viewAllPosts} ({posts.length})</Link>
+        <Link href="/blog" className="btn btn-secondary">{t("viewAllPosts")} ({posts.length})</Link>
       </div>
     </section>
   );
