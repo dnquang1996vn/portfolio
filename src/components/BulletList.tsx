@@ -1,10 +1,8 @@
-"use client";
-
-import { useSite } from "@/components/providers/SiteProvider";
+import { getLocale } from "next-intl/server";
 import { pick, type Bi } from "@/content/portfolio";
 
-export function BulletList({ items, className, gap }: { items: Bi[]; className?: string; gap?: number }) {
-  const { lang } = useSite();
+export async function BulletList({ items, className, gap }: { items: Bi[]; className?: string; gap?: number }) {
+  const lang = await getLocale();
   return (
     <ul className={`bullets ${className ?? ""}`} style={gap ? { gap } : undefined}>
       {items.map((item, i) => (

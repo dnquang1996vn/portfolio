@@ -1,10 +1,17 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import { useEffect, useRef } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
-import { pick, type Skill } from "@/content/portfolio";
+import type { Skill } from "@/content/portfolio";
 import { Close } from "./Icons";
 import styles from "./SkillDialog.module.css";
+
+/** A skill with its text already in the page's language, so the bilingual content stays on the server. */
+export type SkillView = Omit<Skill, "summary" | "built" | "apply"> & {
+  summary: string;
+  built: string[];
+  apply: string[];
+};
 
 const FIRST_YEAR = 2017;
 const THIS_YEAR = new Date().getFullYear();
@@ -13,8 +20,9 @@ const THIS_YEAR = new Date().getFullYear();
  * Detail sheet for one skill: years of practice on a ruled track, what was built, how it is used.
  * Native <dialog> gives focus trapping, Esc and focus return for free.
  */
-export function SkillDialog({ skill, onClose }: { skill: Skill | null; onClose: () => void }) {
-  const { t, lang } = useSite();
+export type SkillLabels = Labels<"skillDetails" | "close" | "skillApply" | "skillBuilt" | "skillSince" | "skillYear" | "skillYears">;
+
+export function SkillDialog({ skill, onClose, t }: { skill: SkillView | null; onClose: () => void; t: SkillLabels }) {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -51,7 +59,7 @@ export function SkillDialog({ skill, onClose }: { skill: Skill | null; onClose: 
           </div>
 
           <h2 id="skill-dialog-title" className={styles.title}>{skill.title}</h2>
-          <p className={styles.summary}>{pick(skill.summary, lang)}</p>
+          <p className={styles.summary}>{skill.summary}</p>
 
           <div className={styles.years}>
             <p className={styles.yearsLine}>
@@ -70,13 +78,13 @@ export function SkillDialog({ skill, onClose }: { skill: Skill | null; onClose: 
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>{t.skillBuilt}</h3>
             <ul className={`bullets ${styles.bullets}`}>
-              {skill.built.map((b, i) => <li key={i}><span aria-hidden="true" /><span>{pick(b, lang)}</span></li>)}
+              {skill.built.map((b, i) => <li key={i}><span aria-hidden="true" /><span>{b}</span></li>)}
             </ul>
           </section>
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>{t.skillApply}</h3>
             <ul className={`bullets ${styles.bullets}`}>
-              {skill.apply.map((b, i) => <li key={i}><span aria-hidden="true" /><span>{pick(b, lang)}</span></li>)}
+              {skill.apply.map((b, i) => <li key={i}><span aria-hidden="true" /><span>{b}</span></li>)}
             </ul>
           </section>
 

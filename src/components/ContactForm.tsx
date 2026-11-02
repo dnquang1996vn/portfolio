@@ -1,8 +1,8 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import { useId, useState, type FormEvent, type ReactNode } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
-import { contact } from "@/content/portfolio";
+import type { contact as Contact } from "@/content/portfolio";
 import { ArrowUpRight } from "./Icons";
 import styles from "./ContactForm.module.css";
 
@@ -30,8 +30,9 @@ async function send(data: FormData): Promise<boolean> {
   }
 }
 
-export function ContactForm() {
-  const { t } = useSite();
+export type ContactFormLabels = Labels<"contactLeadBody" | "contactLeadTitle" | "contactNote" | "formEmail" | "formError" | "formHelper" | "formInvalidEmail" | "formMessage" | "formName" | "formRequired" | "preferEmail" | "sendAnother" | "sendMessage" | "sending" | "sentBody" | "sentTitle">;
+
+export function ContactForm({ contact, t }: { contact: typeof Contact; t: ContactFormLabels }) {
   const id = useId();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});

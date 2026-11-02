@@ -11,11 +11,12 @@ export async function GET(request: NextRequest) {
   const items = posts
     .map((p) => {
       const article = getArticle(p.slug);
-      const url = `${origin}/blog/${p.slug}`;
+      const url = `${origin}/en/blog/${p.slug}`;
+      // The guid keeps the pre-locale URL so feed readers do not see every post as new.
       return `    <item>
       <title>${escape(pick(p.title, "en"))}</title>
       <link>${url}</link>
-      <guid isPermaLink="true">${url}</guid>
+      <guid isPermaLink="false">${origin}/blog/${p.slug}</guid>
       <description>${escape(article?.en.lede ?? pick(p.summary, "en"))}</description>
       <category>${escape(pick(p.topic, "en"))}</category>
     </item>`;
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Quinn Do — Blog</title>
-    <link>${origin}/blog</link>
+    <link>${origin}/en/blog</link>
     <atom:link href="${origin}/feed.xml" rel="self" type="application/rss+xml" />
     <description>Notes from the codebase: architecture, compliance, performance and estimation, written from production.</description>
     <language>en</language>

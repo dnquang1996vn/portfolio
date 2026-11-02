@@ -1,21 +1,20 @@
-"use client";
-
-import Link from "next/link";
-import { useSite } from "@/components/providers/SiteProvider";
+import { Link } from "@/i18n/Link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { explorations, pick, type ExplorationIcon } from "@/content/portfolio";
 import { Cpu, Layers, Shield } from "./Icons";
 import styles from "./Explorations.module.css";
 
 const ICONS: Record<ExplorationIcon, typeof Shield> = { shield: Shield, cpu: Cpu, layers: Layers };
 
-export function Explorations() {
-  const { t, lang } = useSite();
+export async function Explorations() {
+  const t = await getTranslations();
+  const lang = await getLocale();
   return (
     <section data-band="" data-screen-label="Current focus">
       <div className="section-head">
         <div>
-          <p className="kicker">03 / {t.secFocus}</p>
-          <h2 className="section-title">{t.focusTitle}</h2>
+          <p className="kicker">03 / {t("secFocus")}</p>
+          <h2 className="section-title">{t("focusTitle")}</h2>
         </div>
       </div>
       <div className={styles.grid}>

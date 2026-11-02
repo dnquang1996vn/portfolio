@@ -1,7 +1,7 @@
 "use client";
 
+import type { Labels } from "@/i18n/labels";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { useSite } from "@/components/providers/SiteProvider";
 import styles from "./HeroLamp.module.css";
 
 // All geometry is in photo units: the 4:5 photo box is 320 x 400, so both SVGs share one
@@ -47,8 +47,7 @@ const REST_POSE = solve(REST_TARGET.x, REST_TARGET.y);
  * The cone is a second SVG under the body, screen-blended and clipped to the photo, because
  * blend modes inside one SVG never reach the image behind it.
  */
-export function HeroLamp() {
-  const { t } = useSite();
+export function HeroLamp({ t }: { t: Labels<"lampToggle"> }) {
   const [on, setOn] = useState(true);
   const [pose, setPose] = useState<Pose>(REST_POSE);
   const [dragging, setDragging] = useState(false);
