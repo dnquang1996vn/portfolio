@@ -7,23 +7,26 @@ import { PageTransition } from "@/components/PageTransition";
 import "./globals.css";
 
 // Archivo carries the brand and UI; Newsreader sets the editorial headings; the mono
-// face is for kickers, numbers and labels. All three ship a Vietnamese subset.
+// face is for kickers, numbers and labels. `subsets` only picks what is preloaded: every
+// subset, Vietnamese included, stays in the CSS and loads by unicode-range when a page
+// needs it. Preloading only latin keeps the font requests from crowding out the hero image
+// on a slow first load.
 const archivo = Archivo({
   variable: "--font-archivo",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 const newsreader = Newsreader({
   variable: "--font-newsreader",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   style: ["normal", "italic"],
   display: "swap",
 });
 const mono = JetBrains_Mono({
   variable: "--font-mono-face",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
 });

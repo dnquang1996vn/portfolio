@@ -27,7 +27,7 @@ export function ReadingDetail({ item, more }: Props) {
       <div className={styles.layout}>
         <aside className={styles.aside}>
           <figure className={styles.cover} data-media="">
-            <Image src={item.cover} alt="" width={382} height={500} priority sizes="(max-width: 900px) 160px, 240px" className={styles.coverImg} />
+            <Image src={item.cover} alt="" width={382} height={500} preload sizes="(max-width: 900px) 160px, 240px" className={styles.coverImg} />
           </figure>
           <a href={item.link} target="_blank" rel="noreferrer" className={`btn btn-secondary ${styles.getIt}`}>
             {t.readingGetIt} <ArrowUpRight />

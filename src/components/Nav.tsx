@@ -57,8 +57,8 @@ export function Nav() {
       <nav className={styles.nav} aria-label="Main">
         <Link className={styles.skip} href="#main">{t.skipToContent}</Link>
         <Link className={styles.brand} href="/">
-          <Image className={styles.markLight} src="/images/quinndev-mark-v2.png" alt="" width={28} height={28} priority />
-          <Image className={styles.markDark} src="/images/quinndev-mark-dark-v2.png" alt="" width={28} height={28} priority />
+          <Image className={styles.markLight} src="/images/quinndev-mark-v2.png" alt="" width={28} height={28} loading="eager" />
+          <Image className={styles.markDark} src="/images/quinndev-mark-dark-v2.png" alt="" width={28} height={28} loading="eager" />
           <span className={styles.brandText}>
             <span className={styles.brandName}>Quinn<span className={styles.brandAccent}>Dev</span></span>
             <span className={styles.brandTagline}>{t.brandTagline}</span>
@@ -82,7 +82,7 @@ export function Nav() {
             type="button"
             className="btn btn-secondary btn-sm btn-lang"
             onClick={toggleLang}
-            aria-label={t.switchLang}
+            aria-label={`${t.langLabel}, ${t.switchLang}`}
             title={t.langTitle}
             lang={lang === "vi" ? "en" : "vi"}
           >

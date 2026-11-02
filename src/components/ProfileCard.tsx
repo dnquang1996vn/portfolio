@@ -32,7 +32,7 @@ export function ProfileCard() {
             width={800}
             height={800}
             sizes="(max-width: 960px) 96px, 152px"
-            priority
+            preload
             className={styles.avatar}
           />
         </button>

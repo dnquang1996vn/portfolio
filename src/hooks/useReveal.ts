@@ -4,7 +4,10 @@ import { useEffect } from "react";
 
 // One orchestrated entrance on the hero only. Section-by-section fades read as
 // decoration, so the rest of the page simply is there.
-const SELECTOR = "[data-hero-text] > *, [data-hero-figure]";
+// The hero text is left out: it is already painted from the server HTML, and hiding it
+// again after hydration made the headline the page's LCP only once JS had run. It
+// rises in with the page's CSS entrance (.page-enter) instead.
+const SELECTOR = "[data-hero-figure]";
 const CONTAINERS = "[data-timeline]";
 
 /**

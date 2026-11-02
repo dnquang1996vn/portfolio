@@ -29,7 +29,7 @@
 :global(html[data-theme="dark"]) .markDark { display: block; }
 .brandText { display: grid; gap: 4px; }
 .brandName { font-family: var(--font-heading); font-weight: 800; font-size: 16px; line-height: 1; letter-spacing: -0.03em; }
-.brandAccent { color: var(--color-accent); margin-left: 1px; }
+.brandAccent { color: var(--color-accent-700); margin-left: 1px; }
 .brandTagline {
   font-family: var(--font-mono); font-weight: 500; font-size: 9.5px; line-height: 1;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-neutral-700);
