@@ -230,7 +230,12 @@ html[data-theme="dark"] .grayscale { filter: grayscale(1) contrast(1.08) brightn
 
 /* — motion — */
 @keyframes page-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.page-enter { animation: page-enter .38s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes page-rise { from { transform: translateY(10px); } to { transform: none; } }
+/* First load only rises: content that starts at opacity 0 does not count as painted, so a
+   fade here moved Largest Contentful Paint past hydration. Route changes keep the fade
+   (PageTransition sets html[data-navigated] after the first client navigation). */
+.page-enter { animation: page-rise .38s cubic-bezier(.2,.7,.2,1) both; }
+html[data-navigated] .page-enter { animation-name: page-enter; }
 @keyframes caret-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 [data-caret] { animation: caret-blink 1s steps(1) infinite; }
 [data-reveal] {

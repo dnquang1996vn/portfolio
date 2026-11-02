@@ -107,7 +107,7 @@ export function ArticleView({ post, article, prev, more, engagement }: Props) {
       </header>
 
       <figure className={styles.cover} data-media="">
-        <Image src={post.image} alt="" width={1800} height={1200} priority sizes="(max-width: 1200px) 100vw, 1200px" className={styles.coverImg} />
+        <Image src={post.image} alt="" width={1800} height={1200} preload sizes="(max-width: 1200px) 100vw, 1200px" className={styles.coverImg} />
       </figure>
 
       <div className={styles.layout}>

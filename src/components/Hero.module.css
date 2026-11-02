@@ -14,6 +14,10 @@
   text-wrap: balance;
 }
 .typedGroup { white-space: nowrap; }
+/* Its own block, so each typed letter repaints this word only. As plain inline text it
+   belonged to the h1's text block, and every keystroke re-reported the h1 as a new
+   Largest Contentful Paint, pushing LCP to the first keystroke after hydration. */
+.typedGroup em { display: inline-block; }
 .caret {
   display: inline-block;
   width: 0.05em;

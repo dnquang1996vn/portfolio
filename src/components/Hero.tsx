@@ -50,8 +50,9 @@ export function Hero() {
                 alt="Isometric diorama of Quinn Do at his desk workstation"
                 width={1624}
                 height={1637}
-                priority
-                sizes="(max-width: 860px) 80vw, 340px"
+                loading="eager"
+                fetchPriority="high"
+                sizes="316px"
                 className={styles.polaroidImg}
               />
               <HeroScene />

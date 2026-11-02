@@ -44,7 +44,7 @@ export function FeaturedProject({ project, detailed = false }: Props) {
             src={project.image}
             alt=""
             fill
-            sizes="(max-width: 860px) 100vw, 600px"
+            sizes="(max-width: 860px) calc(100vw - 88px), 500px"
             style={{ objectFit: "cover", objectPosition: project.imagePos }}
           />
         </div>

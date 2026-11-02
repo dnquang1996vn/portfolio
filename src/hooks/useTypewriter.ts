@@ -7,13 +7,18 @@ interface TyperState {
   text: string;
 }
 
-/** Type / hold / delete loop with the design's timings. Restarts when `words` changes. */
+/**
+ * Type / hold / delete loop with the design's timings. Restarts when `words` changes.
+ * It starts with the first word already typed, so the server HTML carries the full
+ * headline: the h1 is the page's LCP element, and typing it in after hydration would
+ * push LCP back to when the first word finished.
+ */
 export function useTypewriter(words: string[]) {
-  const [state, setState] = useState<TyperState>({ words, text: "" });
+  const [state, setState] = useState<TyperState>({ words, text: words[0] ?? "" });
 
   // Reset during render when the word list changes (React's recommended pattern, no setState in effect).
   if (state.words !== words) {
-    setState({ words, text: "" });
+    setState({ words, text: words[0] ?? "" });
   }
 
   useEffect(() => {
@@ -22,9 +27,10 @@ export function useTypewriter(words: string[]) {
       const once = setTimeout(() => setState({ words, text: words[0] }), 0);
       return () => clearTimeout(once);
     }
+    // Begin holding the first word, then delete it and carry on with the loop.
     let w = 0;
-    let i = 0;
-    let del = false;
+    let i = words[0]?.length ?? 0;
+    let del = true;
     let timer: ReturnType<typeof setTimeout>;
 
     const tick = () => {
@@ -42,9 +48,9 @@ export function useTypewriter(words: string[]) {
       }
       timer = setTimeout(tick, wait);
     };
-    timer = setTimeout(tick, 400);
+    timer = setTimeout(tick, 1600);
     return () => clearTimeout(timer);
   }, [words]);
 
-  return state.words === words ? state.text : "";
+  return state.words === words ? state.text : (words[0] ?? "");
 }

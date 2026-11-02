@@ -16,7 +16,7 @@
   color: var(--color-text);
 }
 .brand:hover { color: var(--color-text); }
-.accent { color: var(--color-accent); margin-left: 1px; }
+.accent { color: var(--color-accent-700); margin-left: 1px; }
 .markLight, .markDark { width: 24px; height: 24px; display: block; }
 .markDark { display: none; }
 :global(html[data-theme="dark"]) .markLight { display: none; }

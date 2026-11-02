@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
 /**
  * Remounts the page on each route so it gets one short entrance (CSS: .page-enter) and
@@ -10,7 +10,10 @@ import { useLayoutEffect, type ReactNode } from "react";
  */
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const firstPath = useRef(pathname);
   useLayoutEffect(() => {
+    // From the first client navigation on, pages fade in as well as rise (globals.css).
+    if (pathname !== firstPath.current) document.documentElement.setAttribute("data-navigated", "");
     if (window.location.hash) return;
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
