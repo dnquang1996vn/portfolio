@@ -23,7 +23,15 @@ export async function Hero() {
           <h1 className={styles.title}>
             {t("heroPrefix")}{" "}
             <span className={styles.typedGroup}>
-              <TypedWord words={typedWords[lang]} caretClassName={styles.caret} />,
+              {typedWords[lang].map((word) => (
+                <span key={word} className={styles.typedGhost} aria-hidden="true">
+                  <em data-word={word} />
+                  <span className={styles.caret} />,
+                </span>
+              ))}
+              <span>
+                <TypedWord words={typedWords[lang]} caretClassName={styles.caret} />,
+              </span>
             </span>
             <br />
             {t("heroTitle2")}
