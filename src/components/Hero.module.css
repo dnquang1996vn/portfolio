@@ -13,7 +13,14 @@
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.typedGroup { white-space: nowrap; }
+/* Every word sits invisibly in the same grid cell as the live one, so the group is always
+   as wide as the widest word. Line breaks then never depend on the half-typed text: before,
+   on narrow phones the longest word dropped to the next line and pulled it back up each loop.
+   The ghost words come from a data attribute, so they stay out of the h1's text. */
+.typedGroup { display: inline-grid; white-space: nowrap; }
+.typedGroup > * { grid-area: 1 / 1; }
+.typedGhost { visibility: hidden; }
+.typedGhost em::before { content: attr(data-word); }
 /* Its own block, so each typed letter repaints this word only. As plain inline text it
    belonged to the h1's text block, and every keystroke re-reported the h1 as a new
    Largest Contentful Paint, pushing LCP to the first keystroke after hydration. */
