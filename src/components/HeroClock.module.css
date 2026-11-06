@@ -1,7 +1,8 @@
-/* Live clock face over the painted one. Coordinates are a unit circle scaled onto the dial,
+/* Live clock faces over the painted ones. Coordinates are a unit circle scaled onto each dial,
    so stroke widths are fractions of the radius. --h / --m / --s are negative delays that put
    each hand at the current time; the animations then keep real time on their own. */
 .clock { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.rim { fill: none; stroke: #2a1a10; stroke-opacity: .28; stroke-width: .05; }
 .tick, .tickMajor { stroke: #3a2a20; stroke-linecap: round; }
 .tick { stroke-width: .035; }
 .tickMajor { stroke-width: .06; }
@@ -14,6 +15,18 @@
 .minute { stroke: #2a1a10; stroke-width: .05; animation: spin 3600s linear infinite; animation-delay: var(--m); }
 .second { stroke: #c0392b; stroke-width: .025; animation: spin 60s steps(60, end) infinite; animation-delay: var(--s); }
 .cap { fill: #c0392b; }
+
+/* The alarm dial is under 20 photo units wide, so its lines are drawn heavier
+   (relative to the radius) to stay visible at the same pixel weight. */
+.alarm .rim { stroke: #6b6259; stroke-opacity: .55; stroke-width: .06; }
+.alarm .tick { stroke-width: .04; }
+.alarm .tickMajor { stroke-width: .06; }
+.alarm .numeral { font-size: .22px; fill: #2a2622; }
+.alarm .hour { stroke: #1a1715; stroke-width: .1; }
+.alarm .minute { stroke: #1a1715; stroke-width: .07; }
+.alarm .second { stroke: #b0322a; stroke-width: .04; }
+.alarm .cap { fill: #1a1715; }
+
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
