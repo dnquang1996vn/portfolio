@@ -503,6 +503,8 @@ export interface Post {
   date: string;
   title: Bi;
   summary: Bi;
+  /** The opening paragraph under the title; also the RSS description and the OG description. */
+  lede: Bi;
   topic: Bi;
   read: Bi;
   tags: readonly TagId[];
@@ -517,10 +519,14 @@ const postList = [
     slug: "what-devs-do-when-ai-codes", image: "/images/cover-ai-99.png", date: "2026",
     title: P("What devs do when AI writes 99%", "Dev làm gì khi AI code hết 99% rồi?"),
     summary: P(
-      "AI took the typing, not the responsibility: what got cheaper, what got expensive, and how I work now.",
-      "AI lấy đi phần gõ code, không lấy đi phần chịu trách nhiệm: cái gì rẻ đi, cái gì đắt lên.",
+      "What I changed after merging AI-written payment code I had not really read.",
+      "Những gì mình đổi sau lần merge code thanh toán do AI viết mà không đọc kỹ.",
     ),
-    topic: P("AI-assisted dev", "Lập trình với AI"), read: P("8 min", "8 phút"),
+    lede: P(
+      "I once had AI fix some payment logic, let it merge on its own, and forgot about it. A long time later, a user reported a bug. This post is about that, and what I changed in how I work with AI.",
+      "Có lần mình nhờ AI sửa một đoạn logic thanh toán, để nó tự merge, rồi quên luôn. Rất lâu sau, user báo bug. Bài này kể lại lần đó và những gì mình đổi trong cách làm việc với AI.",
+    ),
+    topic: P("AI-assisted dev", "Lập trình với AI"), read: P("4 min", "4 phút"),
     tags: ["ai", "leadership"],
   },
   {
@@ -530,6 +536,10 @@ const postList = [
       "Unit tests where the knowledge is isolated, component tests where it interacts, one happy path end to end.",
       "Unit test cho logic tách riêng được, component test cho phần có tương tác, và một happy path end to end.",
     ),
+    lede: P(
+      "Coverage numbers never told me whether a feature worked. What did was asking where each piece of knowledge lives, then testing it at the lowest level that can answer. Here is the split I use on the backend, on the frontend, and across the whole thing.",
+      "Coverage bao nhiêu phần trăm chưa bao giờ cho tôi biết feature có chạy đúng không. Cái giúp tôi trả lời được là một câu hỏi khác: logic này nằm ở đâu, và tầng test nào thấp nhất mà vẫn kiểm tra được nó? Bài này là cách tôi chia test ở backend, ở frontend, và cho cả luồng từ đầu đến cuối.",
+    ),
     topic: P("Testing", "Kiểm thử"), read: P("3 min", "3 phút"),
     tags: ["testing", "frontend"],
   },
@@ -537,6 +547,10 @@ const postList = [
     slug: "multi-tenant-white-label-one-codebase", image: "/images/cover-multi-tenant.png", date: "2026",
     title: P("Multi-tenant, white-label, and still one codebase", "Multi-tenant, white-label, và vẫn một codebase"),
     summary: P("How Welle serves SaaS customers and per-client custom logic without forking.", "Cách Welle phục vụ khách SaaS và logic riêng từng khách mà không fork."),
+    lede: P(
+      "Welle runs as a SaaS product for some customers and as a heavily customised white-label deployment for others. Both ship from the same repository, on the same release train. Here is the shape that made that possible, and the two rules that keep it from rotting.",
+      "Welle chạy dưới dạng SaaS cho một số khách hàng, và dưới dạng white-label tùy biến sâu cho những khách khác. Cả hai đều xuất phát từ cùng một repository, cùng một chu kỳ phát hành. Đây là cấu trúc giúp điều đó khả thi, và hai nguyên tắc giữ cho nó không mục rữa theo thời gian.",
+    ),
     topic: P("Architecture", "Kiến trúc"), read: P("8 min", "8 phút"),
     tags: ["architecture"],
   },
@@ -544,6 +558,10 @@ const postList = [
     slug: "ai-soap-notes-under-hipaa", image: "/images/cover-soap-hipaa.png", date: "2026",
     title: P("Shipping AI-assisted SOAP notes under HIPAA", "Đưa SOAP notes có AI hỗ trợ lên production dưới HIPAA"),
     summary: P("Where PHI can and cannot go when an LLM is in the loop.", "PHI được và không được đi đâu khi có LLM trong vòng lặp."),
+    lede: P(
+      "Clinicians on Welle spend less time on documentation because a model drafts the SOAP note from the visit. Making that acceptable under HIPAA was less about the model and more about drawing a very clear line around where protected health information is allowed to travel.",
+      "Bác sĩ trên Welle tốn ít thời gian ghi chép hơn vì một mô hình soạn bản nháp SOAP note từ buổi khám. Để điều đó chấp nhận được dưới HIPAA, việc quan trọng không nằm ở mô hình mà ở việc vẽ một ranh giới rất rõ: thông tin sức khỏe được bảo vệ (PHI) được phép đi đến đâu.",
+    ),
     topic: P("AI and compliance", "AI và tuân thủ"), read: P("6 min", "6 phút"),
     tags: ["ai", "compliance"],
   },
@@ -554,6 +572,10 @@ const postList = [
       "Custom skills, usage policies and the review habits that kept quality up with Claude Code and Cursor.",
       "Skill tùy biến, chính sách sử dụng và thói quen review giữ chất lượng với Claude Code và Cursor.",
     ),
+    lede: P(
+      "We have used Claude Code and Cursor daily for over a year. Some of what we tried made the team faster. Some of it made pull requests longer and reviews worse. This is the honest list of what stayed.",
+      "Chúng tôi dùng Claude Code và Cursor hằng ngày hơn một năm. Một số thứ đã thử giúp đội nhanh hơn. Một số thứ làm pull request dài hơn và review tệ hơn. Đây là danh sách trung thực về những gì còn ở lại.",
+    ),
     topic: P("AI-assisted dev", "Lập trình với AI"), read: P("7 min", "7 phút"),
     tags: ["ai", "tooling"],
   },
@@ -561,6 +583,10 @@ const postList = [
     slug: "data-tables-that-survive-10k-rows", image: "/images/cover-data-tables.png", date: "2025",
     title: P("Data tables that survive 10k rows", "Bảng dữ liệu sống được qua 10k dòng"),
     summary: P("Resize, freeze, group, tree, and still 60fps. What we learned building Bamboo’s grid.", "Resize, freeze, nhóm, cây, vẫn 60fps. Bài học từ grid của Bamboo."),
+    lede: P(
+      "Bamboo’s users live in tables: inventory, orders, traceability events, thousands of rows at a time. The grid we built handles column resize, freeze, reorder, grouping, tree rows and sticky headers, and stays at 60fps. These are the decisions that mattered.",
+      "Người dùng Bamboo sống trong các bảng: kho, đơn hàng, sự kiện truy xuất, hàng nghìn dòng mỗi lần. Grid chúng tôi xây xử lý resize cột, freeze, sắp lại thứ tự, nhóm, dòng dạng cây và header dính, và vẫn giữ 60fps. Đây là những quyết định quan trọng nhất.",
+    ),
     topic: P("Performance", "Hiệu năng"), read: P("9 min", "9 phút"),
     tags: ["performance", "frontend"],
   },
@@ -568,6 +594,10 @@ const postList = [
     slug: "estimating-work-you-have-never-done", image: "/images/cover-estimating.png", date: "2024",
     title: P("Estimating work you have never done before", "Ước lượng việc chưa từng làm"),
     summary: P("A tech lead’s honest method for sizing unknowns without padding everything 3×.", "Cách một tech lead ước lượng điều chưa biết mà không nhân ba mọi thứ."),
+    lede: P(
+      "Most estimation advice assumes you have done something similar before. The hard estimates are for the things you have not: a new regulator integration, a first AI feature, a migration nobody on the team has attempted. Here is the method I use, and why it does not involve multiplying by three.",
+      "Hầu hết lời khuyên về ước lượng giả định bạn đã làm việc tương tự trước đó. Những ước lượng khó là cho việc chưa từng làm: tích hợp một cơ quan quản lý mới, tính năng AI đầu tiên, một cuộc migration chưa ai trong đội thử. Đây là phương pháp tôi dùng, và vì sao nó không liên quan đến việc nhân ba.",
+    ),
     topic: P("Leadership", "Lãnh đạo"), read: P("5 min", "5 phút"),
     tags: ["leadership"],
   },
@@ -575,6 +605,10 @@ const postList = [
     slug: "one-react-app-25-regulators", image: "/images/cover-25-regulators.png", date: "2025",
     title: P("One React app, 25 regulators", "Một app React, 25 cơ quan quản lý"),
     summary: P("Per-state polymorphism in Bamboo’s frontend without a 25-way switch.", "Đa hình theo bang trong frontend Bamboo mà không cần switch 25 nhánh."),
+    lede: P(
+      "Legal cannabis in the US is regulated state by state. Bamboo’s frontend serves operators in more than twenty-five of them, each with its own traceability system, field rules and workflow quirks, from a single React codebase. The trick was refusing to write a switch statement.",
+      "Cannabis hợp pháp ở Mỹ được quản lý theo từng bang. Frontend của Bamboo phục vụ nhà vận hành tại hơn hai mươi lăm bang, mỗi bang có hệ truy xuất, quy tắc trường dữ liệu và những quirk quy trình riêng, từ một codebase React duy nhất. Bí quyết là từ chối viết một câu lệnh switch.",
+    ),
     topic: "Frontend", read: P("5 min", "5 phút"),
     tags: ["frontend", "architecture"],
   },

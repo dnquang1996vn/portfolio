@@ -16,18 +16,22 @@ one sentence.
 - Tech terms stay in English in VI: idempotency, state machine, retry, spec, PR, deploy, hook.
   Translate everyday words, not jargon.
 - Say the concrete thing: the moment it broke, the case that was missing, the rule that came out.
+  The concrete thing comes from Quinn (interview answers or their draft), never invented.
+- Read `voice-samples.md` first and match its rhythm: how long Quinn's sentences run, which
+  English terms they keep, how they open a story.
+- Avoid every pattern in `anti-slop.md`. Uneven is fine; polished-and-generic is not.
 - Name the trade-off. Every post says what it cost or what was deliberately not done.
 - No hype words (powerful, seamless, robust, leverage, game-changer, "mạnh mẽ", "vượt trội").
   No "In today's world" / "Trong thời đại ngày nay".
-- No emoji, no exclamation marks, no bold or links inside text (the renderer prints plain strings).
+- No emoji, no exclamation marks, no bold for emphasis, no links in the body (sources go in the PR body).
 - Jokes are fine when dry and short. Never at a colleague's or client's expense.
 
 ## Shape of a post
 
 1. Open with a real situation, ≤ 150 words (lede + first section). Never open with a definition.
 2. One central point, stated plainly within the first two paragraphs.
-3. At least one code example that "looks right but is wrong". Show it, ask the reader to guess,
-   then reveal what is wrong.
+3. At least one code example that "looks right but is wrong", preferably the bug Quinn
+   actually hit, made generic. Show it, ask the reader to guess, then reveal what is wrong.
 4. One section that answers the obvious objection (for AI posts: "Nhưng AI cũng biết mà?").
 5. A practice section: 3–4 changes the reader can make tomorrow.
 6. End with a question to the reader.
@@ -37,9 +41,9 @@ one sentence.
 | Title | ≤ 8 words EN. Says the subject and a hint of the angle. Sentence case. |
 | Summary | One sentence, ≤ 20 words. Appears on the cards. |
 | Lede | 2–3 sentences. The situation, and why it mattered. |
-| Sections | 5–8 `h2`, following the shape above. Not "Introduction", not "Conclusion". |
+| Sections | 5–8 `##` headings, following the shape above. Not "Introduction", not "Conclusion". |
 | Lists | Each item is a full sentence with a period. 3–4 items. |
-| Table | At most one `table` block, 2–3 columns, cells of a few words. Worth more than three paragraphs of comparison. |
+| Table | At most one GFM table, 2–3 columns, cells of a few words. Worth more than three paragraphs of comparison. |
 | Code | 1–2 blocks, ≤ 12 lines each. The "looks right" sample, optionally its fixed version. |
 | Quote | Only when one sentence carries the whole post. At most one. |
 | Length | 1,500–2,000 EN words for lede + body. VI runs longer when counted by syllables. |
@@ -92,6 +96,8 @@ where they check them. Say in the review summary when a post touches those areas
 
 ## Checklist before the review
 
+- Does every section hold at least one detail that came from Quinn? Mark the ones that do not.
+- Did the `anti-slop.md` check run on both languages?
 - Can the central point be said in one sentence? Write that sentence in the review.
 - Does every section serve it? Cut the one that does not.
 - Any internal detail leaking (names, code, numbers from work)?

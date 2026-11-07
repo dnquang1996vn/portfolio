@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
@@ -12,6 +13,20 @@ const nextConfig: NextConfig = {
   },
 };
 
+// Article bodies live in src/content/posts/<slug>/<lang>.md. Plugins are named by string so
+// Turbopack can pass their (serializable) options to the loader.
+const withMDX = createMDX({
+  extension: /\.(md|mdx)$/,
+  options: {
+    remarkPlugins: ["remark-gfm"],
+    rehypePlugins: [
+      // Highlighted at build time. Both themes are emitted as CSS variables and
+      // ArticleView.module.css picks one from html[data-theme].
+      ["rehype-pretty-code", { theme: { light: "github-light", dark: "github-dark" }, keepBackground: false }],
+    ],
+  },
+});
+
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(withMDX(nextConfig));

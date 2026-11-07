@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { addView, getEngagement, setLike } from "@/lib/engagement";
-import { articles } from "@/content/articles";
+import { posts } from "@/content/portfolio";
 
 type Params = { params: Promise<{ slug: string }> };
 
 function validSlug(slug: string) {
-  return Object.hasOwn(articles, slug);
+  return posts.some((p) => p.slug === slug);
 }
 
 /** GET /api/articles/:slug → current counters. */
