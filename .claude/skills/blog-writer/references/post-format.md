@@ -1,16 +1,18 @@
 # Post format
 
-A post is two TypeScript entries linked by the slug, plus a cover PNG. No markdown, no MDX.
+A post is one metadata entry in TypeScript, one Markdown file per language, and a cover PNG.
 
 | What | Where |
 |---|---|
-| Metadata (title, summary, topic, read time, tags, cover) | `src/content/portfolio.ts` → `postList` |
-| Body in both languages | `src/content/articles.ts` → `articles[slug]` |
+| Metadata (title, summary, lede, topic, read time, tags, cover) | `src/content/portfolio.ts` → `postList` |
+| Body, Vietnamese | `src/content/posts/<slug>/vi.md` |
+| Body, English | `src/content/posts/<slug>/en.md` |
 | Cover | `public/images/cover-<short>.png`, 1800×1200 |
 | Tag labels | `src/content/portfolio.ts` → `tags` registry |
 
-`tsc` fails when a slug exists in `postList` but not in `articles` (the `Record<PostSlug, Article>`
-type), and when a tag id is not in the registry. Run `pnpm exec tsc --noEmit` after editing.
+The Markdown is compiled at build time by `@next/mdx` (see `next.config.ts`) with GitHub
+Flavored Markdown and syntax highlighting. `pnpm exec tsc --noEmit` checks the metadata and the
+tag ids; `pnpm build` fails when a post in `postList` has no Markdown file.
 
 The example below is invented; do not reuse its slug or text.
 
@@ -24,16 +26,22 @@ prev/next links, so the new entry goes **first**, right after `const postList = 
     slug: "retries-that-do-not-pile-up", image: "/images/cover-retries.png", date: "2026",
     title: P("Retries that do not pile up", "Retry mà không chồng chất"),
     summary: P("A budget, some jitter and a breaker, in that order.", "Một ngân sách, một chút jitter và một breaker, theo đúng thứ tự."),
+    lede: P(
+      "Two or three sentences. The situation, and why it mattered.",
+      "Hai ba câu. Chuyện gì đã xảy ra, và vì sao nó quan trọng.",
+    ),
     topic: P("Architecture", "Kiến trúc"), read: P("4 min", "4 phút"),
     tags: ["architecture", "performance"],
   },
 ```
 
-- `slug`: kebab-case, 3–6 words, unique. It is the URL and the key into `articles`.
+- `slug`: kebab-case, 3–6 words, unique. It is the URL and the folder name under `posts/`.
 - `image`: `/images/cover-<short>.png`; `<short>` is 1–3 words from the slug.
 - `date`: current year as a string. Existing posts only carry the year.
-- `title`, `summary`, `topic`: `P(en, vi)`. A plain string when both languages share it
+- `title`, `summary`, `lede`, `topic`: `P(en, vi)`. A plain string when both languages share it
   (`topic: "Frontend"`).
+- `lede`: shown under the title, and used as the RSS and Open Graph description. It is not
+  repeated in the Markdown.
 - `read`: EN word count of lede + body ÷ 200, rounded, minimum 3. `P("4 min", "4 phút")`.
 - `tags`: 1–3 ids from the registry below.
 
@@ -48,6 +56,7 @@ export const tags = {
   frontend: "Frontend",
   leadership: P("Leadership", "Lãnh đạo"),
   tooling: P("Dev tooling", "Công cụ dev"),
+  testing: P("Testing", "Kiểm thử"),
 } as const satisfies Record<string, Bi>;
 ```
 
@@ -55,55 +64,44 @@ Pick from these first. Add a new line only when no existing tag fits and the tag
 apply to a second post; tell the user in the review that a tag was added. Keys are lowercase,
 one word where possible; they appear in `/blog?tag=<key>`.
 
-## 3. Body entry: `articles`
+## 3. Body: `src/content/posts/<slug>/<lang>.md`
 
-Insert right after `export const articles: Record<PostSlug, Article> = {` so the order matches
-the metadata.
+Plain Markdown, no frontmatter, no JSX, no title (the page renders the title and the lede from
+the metadata). Start with the first `##` heading.
 
-```ts
-  "retries-that-do-not-pile-up": {
-    en: {
-      lede: "Two or three sentences. What the reader gets, in plain words.",
-      body: [
-        { type: "h2", text: "The problem" },
-        { type: "p", text: "Short paragraph." },
-        { type: "p", text: "Another short paragraph." },
-        { type: "ul", items: ["One line.", "One line.", "One line."] },
-        { type: "h2", text: "What I would do again" },
-        { type: "p", text: "Closing paragraph." },
-      ],
-    },
-    vi: {
-      lede: "Hai ba câu. Người đọc nhận được gì, nói thẳng.",
-      body: [
-        { type: "h2", text: "Vấn đề" },
-        { type: "p", text: "Đoạn ngắn." },
-      ],
-    },
-  },
-```
+````md
+## Retries that made the outage worse
 
-Block types: `p`, `h2`, `ul` (items), `ol` (items), `quote`, `code` (`lang`, `code`),
-`table` (`head`, `rows`). A table row has as many cells as `head`; an empty string leaves a cell
-blank. Keep tables to 2–3 columns and short cells so they fit a phone:
+Short paragraph. Another sentence.
+
+| Before | After |
+| --- | --- |
+| Retry at once | Retry with jitter |
+| No limit | A budget per minute |
 
 ```ts
-{ type: "table", head: ["Got cheaper", "Got more expensive"], rows: [
-  ["Writing CRUD and boilerplate", "Turning a vague ticket into a correct spec"],
-  ["Finishing one small task fast", "Running safely in production"],
-] },
+const delay = Math.min(cap, base * 2 ** attempt) * (0.5 + Math.random());
+if (budget.spent() > budget.limit) throw new GiveUp(reason);
 ```
-Text is a plain string: no markdown, no links, no HTML. Typographic quotes and `→` are fine.
 
-A code sample longer than one line goes in a `const` above `export const articles`, named
-`<thing>Code`, and is referenced from both languages:
+- A list item, as a full sentence.
+- Another one.
 
-```ts
-const retryCode = `const delay = Math.min(cap, base * 2 ** attempt) * (0.5 + Math.random());
-if (budget.spent() > budget.limit) throw new GiveUp(reason);`;
-// ...
-{ type: "code", lang: "ts", code: retryCode },
-```
+> One sentence that carries the whole post, at most once.
+````
+
+| Element | Renders as |
+|---|---|
+| `##`, `###` | Section heading, sub-heading. No `#`: the page already has the title. |
+| Paragraph | Body text. |
+| `-` / `1.` lists | Accent bullets / accent numbers. |
+| `> quote` | Large pull quote with an accent bar. |
+| Fenced code with a language (`ts`, `tsx`, `js`, `sql`, `bash`, `json`, `css`...) | Highlighted block with the language label and a copy button. Always give the language. |
+| GFM table | Table with an accent header, scrolls sideways on a phone. 2–3 columns. |
+| `` `inline code` `` | Inline code chip. |
+
+Not used in posts: bold for emphasis, links (sources go in the PR body), images, raw HTML.
+Typographic quotes and `→` are fine.
 
 ## 4. Cover
 
