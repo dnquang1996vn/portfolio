@@ -83,7 +83,16 @@ the metadata.
   },
 ```
 
-Block types: `p`, `h2`, `ul` (items), `ol` (items), `quote`, `code` (`lang`, `code`).
+Block types: `p`, `h2`, `ul` (items), `ol` (items), `quote`, `code` (`lang`, `code`),
+`table` (`head`, `rows`). A table row has as many cells as `head`; an empty string leaves a cell
+blank. Keep tables to 2–3 columns and short cells so they fit a phone:
+
+```ts
+{ type: "table", head: ["Got cheaper", "Got more expensive"], rows: [
+  ["Writing CRUD and boilerplate", "Turning a vague ticket into a correct spec"],
+  ["Finishing one small task fast", "Running safely in production"],
+] },
+```
 Text is a plain string: no markdown, no links, no HTML. Typographic quotes and `→` are fine.
 
 A code sample longer than one line goes in a `const` above `export const articles`, named

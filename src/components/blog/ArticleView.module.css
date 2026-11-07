@@ -62,6 +62,27 @@
   color: var(--color-accent-700);
 }
 html[data-rounded] .code { border-radius: 12px; }
+.tableWrap { margin: 0 0 24px; max-width: 100%; overflow-x: auto; }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px; line-height: 23px;
+}
+.table th {
+  padding: 0 16px 10px 0;
+  text-align: left; vertical-align: bottom;
+  font-family: var(--font-heading); font-weight: 800;
+  font-size: 12px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-accent-700);
+  border-bottom: 2px solid var(--color-divider-strong);
+}
+.table td {
+  padding: 10px 16px 10px 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-neutral-800);
+}
+.table th:last-child, .table td:last-child { padding-right: 0; }
 /* — sidebar + body — */
 .layout {
   display: grid;

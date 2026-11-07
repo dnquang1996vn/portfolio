@@ -11,7 +11,9 @@ export type Block =
   | { type: "ul"; items: string[] }
   | { type: "ol"; items: string[] }
   | { type: "quote"; text: string }
-  | { type: "code"; lang: string; code: string };
+  | { type: "code"; lang: string; code: string }
+  /** A small comparison table. Every row has as many cells as `head`. */
+  | { type: "table"; head: string[]; rows: string[][] };
 
 export interface ArticleBody {
   lede: string;
@@ -52,8 +54,162 @@ const regulatorCode = `export interface RegulatorStrategy {
 const strategies: Record<RegulatorId, RegulatorStrategy> = { metrc, biotrack, ccrs };
 export const useRegulator = () => strategies[useTenant().regulator];`;
 
+const webhookCode = `app.post("/webhooks/payment", async (req, res) => {
+  const event = req.body;
+  if (event.type === "payment.succeeded") {
+    const order = await db.orders.find(event.data.orderId);
+    await db.orders.update(order.id, { status: "paid" });
+    await mailer.sendReceipt(order.email);
+  }
+  res.sendStatus(200);
+});`;
+
+const webhookFixedCode = `app.post("/webhooks/payment", async (req, res) => {
+  const event = verifySignature(req); // rejects a forged body
+  if (event.type === "payment.succeeded") {
+    await db.transaction(async (tx) => {
+      if (!(await tx.events.insertIfAbsent(event.id))) return; // a retry
+      await tx.orders.transition(event.data.orderId, "pending", "paid");
+      await tx.outbox.add("send-receipt", { orderId: event.data.orderId });
+    });
+  }
+  res.sendStatus(200);
+});`;
+
 /** Keyed by post slug. The type makes `tsc` fail when a post in portfolio.ts has no body here. */
 export const articles: Record<PostSlug, Article> = {
+  "what-devs-do-when-ai-codes": {
+    vi: {
+      lede:
+        "Có lần mình merge một PR mà chưa đọc hết test. AI viết code và test trong vài phút, pipeline xanh, mình bấm merge. Bài này là điều mình rút ra từ lần đó: AI lấy đi phần gõ code, nhưng không lấy đi phần chịu trách nhiệm.",
+      body: [
+        { type: "h2", text: "Lần mình merge những test mình chưa đọc" },
+        { type: "p", text: "Mình copy nội dung ticket cho agent, nó viết test, viết code, rồi tự sửa tới khi hết đỏ. Một lúc sau mình có pipeline xanh và một diff dài." },
+        { type: "p", text: "Mình đọc code, thấy ổn. Lướt tên các test, nghe cũng hợp lý. Mình không hỏi test còn thiếu case nào, vì mình chưa hiểu luồng đó đủ để biết mà hỏi. Rồi mình merge." },
+        { type: "p", text: "Tuần đó không có gì hỏng. Cái làm mình khó chịu là nếu reviewer hỏi vì sao code đúng, mình không trả lời được nếu không mở lại đoạn chat. Mình đã ship một thứ mà mình không thực sự nắm." },
+        { type: "h2", text: "AI viết 99% code, không phải 99% công việc" },
+        { type: "p", text: "Gõ code chưa bao giờ là phần khó nhất. Phần khó là định nghĩa thế nào là đúng, rồi chứng minh code làm đúng như vậy. AI biến phần đầu thành gần như miễn phí, còn phần sau vẫn nằm nguyên chỗ cũ." },
+        { type: "p", text: "Kẻ bảng ra thì công việc của mình giờ trông thế này:" },
+        { type: "table", head: ["Rẻ đi", "Đắt lên"], rows: [
+          ["Viết CRUD và boilerplate", "Biến ticket mơ hồ thành spec đúng"],
+          ["Nhớ chính xác API và cú pháp", "Chọn giữa các trade-off"],
+          ["Tự tay viết file test", "Thiết kế cách verify"],
+          ["Làm xong nhanh từng task nhỏ", "Vận hành an toàn trên production"],
+          ["", "Hiểu domain nghiệp vụ"],
+        ] },
+        { type: "p", text: "Còn một thứ không đổi: hệ thống hỏng lúc nửa đêm thì vẫn phải có người đứng ra trả lời." },
+        { type: "p", text: "Cột đắt lên chính là việc architect và tech lead vẫn làm xưa nay. Khác ở chỗ giờ nó đến rất sớm trong sự nghiệp, không đợi tới năm thứ mười." },
+        { type: "p", text: "Có một điều mình nhận ra hơi muộn: đọc code mình không viết chậm hơn tự viết nó. AI gen ra gấp mấy lần lượng code, còn sự chú ý của mình thì vẫn chỉ có bấy nhiêu. Nếu không đổi cách làm, phần review sẽ mỏng dần mà mình không hề để ý. Nên thứ phải đổi là cách làm, chứ không phải cố gắng hơn." },
+        { type: "h2", text: "Bốn lỗi trong chín dòng" },
+        { type: "p", text: "Đây là một webhook thanh toán kiểu AI viết trong vài giây. Đọc trôi, qua được test happy path, và đúng là kiểu code mình từng merge. Trước khi đọc tiếp, thử dừng lại một phút và tìm xem nó sai ở đâu." },
+        { type: "code", lang: "ts", code: webhookCode },
+        { type: "p", text: "Có ít nhất bốn vấn đề. Không cái nào là lỗi gõ, và cái nào cũng chỉ lộ ra nếu biết webhook chạy thế nào ngoài đời:" },
+        { type: "ol", items: [
+          "Không verify chữ ký. Ai biết URL cũng gửi được một event giả và đánh dấu đơn là đã thanh toán.",
+          "Không idempotent. Provider retry khi timeout, nên một event có thể đến hai lần và khách nhận hai email hoá đơn.",
+          "Không chặn chuyển trạng thái. Event có thể đến sai thứ tự, và một event thành công đến muộn sẽ ghi đè lên đơn đã hoàn tiền.",
+          "Làm việc chậm trước khi trả lời. Nếu gửi email bị treo, provider timeout rồi retry, khiến lỗi thứ hai càng tệ.",
+        ] },
+        { type: "p", text: "Bản sửa không dài hơn bao nhiêu:" },
+        { type: "code", lang: "ts", code: webhookFixedCode },
+        { type: "p", text: "Verify chữ ký trước khi tin vào body. Lưu event id trong cùng transaction với việc đổi trạng thái, để retry không chạy hai lần. Chỉ cho chuyển từ pending sang paid, nên event đến muộn không ghi đè được đơn đã hoàn tiền. Email đi qua outbox và gửi sau, provider nhận 200 ngay." },
+        { type: "p", text: "Điều làm mình chột dạ là test AI viết kèm bản đầu cũng pass hết. Test và code ra đời từ cùng một cách hiểu, nên chúng có chung điểm mù. Không test nào gửi một event hai lần, vì lúc viết spec không ai nghĩ tới chuyện đó. Đó chính là loại test mình đã merge mà không đọc kỹ." },
+        { type: "h2", text: "“Nhưng AI cũng biết mà?”" },
+        { type: "p", text: "Đó là câu đầu tiên mình tự vặn lại. Hỏi model về các bẫy của webhook, nó kể đủ cả bốn. Nhưng nó không tự nêu ra, còn mình thì không hỏi, vì mình không biết chúng tồn tại. Không ai prompt được cho một rủi ro mình chưa từng nghe tới." },
+        { type: "p", text: "Cách hay gặp là viết skill hoặc checklist để agent lúc nào cũng tự check. Mình có viết, và nó giúp thật. Nhưng checklist chỉ tốt bằng người viết ra nó: phải có người biết webhook sẽ retry thì mới có dòng “kiểm tra idempotency”." },
+        { type: "p", text: "Còn để AI review code AI viết thì sao? Mình cũng dùng, và nó bắt được kha khá lỗi vặt. Nhưng prompt review vẫn do mình viết. Nếu mình chưa từng nghe tới event đến sai thứ tự, prompt đó cũng sẽ không có dòng nào về nó." },
+        { type: "p", text: "Và cuối cùng vẫn cần một người ký duyệt. Khi luồng thanh toán hỏng, reviewer, khách hàng và kênh on-call đều hỏi người, không hỏi model. Nếu không giải thích được vì sao code đúng, mình không review gì cả, mình chỉ đang chuyển tiếp." },
+        { type: "h2", text: "Mình đã đổi cách làm thế nào" },
+        { type: "p", text: "Có một thời gian mình chạy ba agent cho ba ticket cùng lúc. Cảm giác rất nhanh, nhưng thực ra mình đang review hời hợt ba thứ thay vì review kỹ một thứ. Nên mình dời sự chú ý lên chỗ mà sai sót còn rẻ để sửa:" },
+        { type: "ul", items: [
+          "Duyệt spec và scenario trước khi có dòng code nào. Thiếu một case ở bước này tốn một câu; sau khi có diff thì tốn cả một lần viết lại.",
+          "Implement theo lát mỏng. Mỗi lát bắt đầu bằng một test fail mà mình đã đọc, và agent không được sửa test đã duyệt để cho nó pass.",
+          "Một task deep tại một thời điểm. Agent chỉ chạy song song bên trong task đó, hoặc với việc vặt ít rủi ro.",
+          "Để agent chờ mình, không phải ngược lại. Mình gom câu hỏi của nó và xem theo khung giờ, thay vì bị ngắt vài phút một lần.",
+        ] },
+        { type: "p", text: "Với cái webhook ở trên, duyệt spec chỉ cần ba câu hỏi. Cùng một event đến hai lần thì sao? Event đến sau khi đã hoàn tiền thì sao? Ngoài provider ra, ai còn gọi được URL này? Không câu nào cần code để trả lời, và mỗi câu là một bug không bao giờ được viết ra." },
+        { type: "p", text: "Mình cũng chia task theo rủi ro. Đổi text, thêm một field hiển thị, chỉnh style thì để agent chạy gần như tự động. Thứ gì chạm tới tiền, quyền truy cập hay trạng thái dữ liệu thì có gate: duyệt spec trước, đọc test trước, rồi mới cho implement." },
+        { type: "p", text: "Cái giá là có thật: mỗi ngày mình mở ít PR hơn so với những tuần chạy ba agent. Đổi lại, PR nào mình cũng giải thích được, và số PR bị QA trả về lẽ ra phải ít đi." },
+        { type: "h2", text: "Học gì, và học thế nào" },
+        { type: "p", text: "Nền tảng vẫn còn nguyên: data modeling và state machine, consistency, idempotency, retry và các failure mode, security và privacy, chiến lược test, và domain nghiệp vụ mình đang làm. Thứ thay đổi là mục tiêu khi học." },
+        { type: "quote", text: "Hiểu đủ để biết phải hỏi gì, và đủ để nhận ra khi câu trả lời sai." },
+        { type: "p", text: "Bài tập mình thích nhất là dùng AI làm đối thủ. Mình mô tả một design, bảo nó tìm cách phá, rồi tự kiểm chứng từng kịch bản lỗi chứ không tin nguyên danh sách. Phần nào đã hiểu, mình viết thành checklist để lần sau agent tự check." },
+        { type: "p", text: "Mình cũng học theo vòng lặp quanh từng task, thay vì tách riêng giờ học. Trước task, học vừa đủ để viết spec. Trong lúc làm, đào cho ra từng ô đang đánh dấu chưa rõ trong danh sách scenario. Xong task, ghi lại thứ năm sau vẫn còn đúng, phần còn lại thì bỏ." },
+        { type: "p", text: "Một cách khác mình đang thử là nhận hẳn một vùng của hệ thống, ví dụ một luồng đăng ký có nhiều trạng thái. Mình tự vẽ state diagram, entry point, side effect và các failure mode trước, rồi mới nhờ AI so với code thật. Chỗ nào hai bản lệch nhau thường là chỗ có bug, hoặc chỗ mình hiểu sai." },
+        { type: "p", text: "Cái bẫy cần tránh là teo kỹ năng. Nếu chỉ duyệt mà không bao giờ tự làm phần khó, một thời gian sau mình sẽ không còn đủ sức đánh giá output nữa. Bẫy còn lại là chạy theo số lượng: merge thật nhiều PR mà hiểu thật ít, cuối cùng mất cả động lực lẫn kiến thức." },
+        { type: "h2", text: "Phi công, không phải hành khách" },
+        { type: "p", text: "Trên máy bay, autopilot giữ lái trong những chặng dài. Không ai coi phi công kém đi vì thế, vì việc của họ là nhận ra lúc autopilot sai và cầm lái lại. Đó là việc mình muốn làm với AI." },
+        { type: "p", text: "AI khuếch đại chính người dùng nó. Người hiểu hệ thống sâu sẽ thành người rất mạnh, người hiểu nông sẽ thành người sai một cách rất tự tin. Mình muốn thuộc nhóm đầu." },
+        { type: "p", text: "Mình dùng vài dấu hiệu để biết mình có đang đi đúng hướng không. Người khác hỏi mình nên làm thế nào, chứ không chỉ nhờ làm giúp. Mình giải thích được trade-off cho cả dev lẫn PO. Bug lọt tới QA ít đi, và ít đi là nhờ spec với test, không phải nhờ may. Và mình vẫn debug được code AI viết mà không cần hỏi lại AI." },
+        { type: "p", text: "Còn bạn thì sao: đã bao giờ merge code AI viết mà không hiểu hết chưa? Mình thì có, và bài này bắt đầu từ đó." },
+      ],
+    },
+    en: {
+      lede:
+        "Not long ago I merged a pull request whose tests I had not fully read. The AI wrote the code and the tests in minutes, the pipeline was green, and I clicked merge. This post is what that moment taught me: AI took the typing, but not the responsibility.",
+      body: [
+        { type: "h2", text: "The day I merged tests I had not read" },
+        { type: "p", text: "I pasted a ticket into the agent, it wrote the tests, then the code, then fixed whatever was red. Soon I had a green pipeline and a long diff." },
+        { type: "p", text: "I read the code and it looked fine. I skimmed the test names and they sounded right. I did not ask what the tests were missing, because I did not know that flow well enough to ask. I merged it." },
+        { type: "p", text: "Nothing broke that week. If a reviewer had asked why the code was correct, I could not have answered without reopening the chat. I had shipped something I did not own." },
+        { type: "h2", text: "99% of the code is not 99% of the work" },
+        { type: "p", text: "Typing was never the hardest part. The hard part is deciding what correct means, then proving the code does it. AI made the first part almost free and left the second exactly where it was." },
+        { type: "p", text: "Drawn as a table, my work now looks like this:" },
+        { type: "table", head: ["Got cheaper", "Got more expensive"], rows: [
+          ["Writing CRUD and boilerplate", "Turning a vague ticket into a correct spec"],
+          ["Remembering an API’s exact shape", "Choosing between trade-offs"],
+          ["Writing the test file by hand", "Designing how to verify"],
+          ["Finishing one small task fast", "Running safely in production"],
+          ["", "Knowing the business domain"],
+        ] },
+        { type: "p", text: "One thing did not change: when it breaks at night, a person still has to answer." },
+        { type: "p", text: "The expensive column is what architects and tech leads have always done. The difference is that it now arrives early in a career, not after ten years." },
+        { type: "p", text: "One thing I noticed late: reading code I did not write is slower than writing it. The AI produces several times more code, and my attention stays the same size. Without a change in how I work, review quietly gets thinner. So the fix has to be in the process, not in trying harder." },
+        { type: "h2", text: "Four bugs in nine lines" },
+        { type: "p", text: "Here is a payment webhook of the kind an assistant writes in seconds. It reads well, it passes a happy-path test, and it is the shape I would have merged. Before reading on, take a minute and try to find what is wrong with it." },
+        { type: "code", lang: "ts", code: webhookCode },
+        { type: "p", text: "There are at least four problems. None is a typo, and each one only shows if you know how webhooks behave in the wild:" },
+        { type: "ol", items: [
+          "No signature check. Anyone who finds the URL can post a fake event and mark an order as paid.",
+          "Not idempotent. Providers retry on timeouts, so the same event can arrive twice and the customer gets two receipts.",
+          "No state guard. Events can arrive out of order, so a late success can overwrite an order that was already refunded.",
+          "Slow work before the reply. If the email call hangs, the provider times out and retries, which makes the second bug worse.",
+        ] },
+        { type: "p", text: "The fixed version is barely longer:" },
+        { type: "code", lang: "ts", code: webhookFixedCode },
+        { type: "p", text: "The signature is checked before the body is trusted. The event id is stored in the same transaction as the status change, so a retry does nothing. The order only moves from pending to paid, so a late event cannot overwrite a refund. The email goes through an outbox and is sent later, so the provider gets its 200 at once." },
+        { type: "p", text: "What unsettled me is that the tests the AI wrote for the first version passed too. The tests and the code came from the same understanding, so they shared the same blind spots. No test sent an event twice, because nobody thought of it when the spec was written. Those were exactly the tests I had merged without reading closely." },
+        { type: "h2", text: "“But the AI knows this too”" },
+        { type: "p", text: "That was my first objection. Ask a model about webhook pitfalls and it will list all four. But it did not raise them on its own, and I did not ask, because I did not know they existed. You cannot prompt for a risk you have never heard of." },
+        { type: "p", text: "The usual answer is a skill or a checklist, so the agent always checks. I write those, and they help. But a checklist is only as good as its author: someone has to know webhooks retry before they write “check idempotency”." },
+        { type: "p", text: "What about letting an AI review the AI’s code? I do that too, and it catches a fair share of small mistakes. But I still write the review prompt. If I have never heard of out-of-order events, that prompt will not mention them either." },
+        { type: "p", text: "And somebody still signs off. When the payment flow breaks, the reviewer, the client and the on-call channel ask a person, not a model. If I cannot explain why the code is right, I am not reviewing it, I am forwarding it." },
+        { type: "h2", text: "What I changed in how I work" },
+        { type: "p", text: "For a while I ran three agents on three tickets at once. It felt fast, but I was reviewing three things shallowly instead of one thing properly. So I moved my attention to where mistakes are still cheap to fix:" },
+        { type: "ul", items: [
+          "I review the spec and the scenarios before any code exists. A missing case costs one sentence there and a rewrite after the diff.",
+          "I implement in thin slices. Each slice starts with a failing test I have read, and the agent may not edit an approved test to make it pass.",
+          "I keep one deep task at a time. Agents run in parallel only inside that task, or on small chores with little risk.",
+          "I let the agent wait for me. I batch its questions and go through them at set times instead of being interrupted every few minutes.",
+        ] },
+        { type: "p", text: "For the webhook above, a spec review would have been three questions. What happens if the same event arrives twice? What if it arrives after a refund? Who else can call this URL? None of them needs a line of code to answer, and each one is a bug that never gets written." },
+        { type: "p", text: "I also sort tasks by risk. A copy change, a new display field or a style fix runs almost on its own. Anything that touches money, access or the state of data gets a gate: I approve the spec first, read the tests first, and only then let it implement." },
+        { type: "p", text: "The cost is real: I open fewer pull requests a day than in the three-agent weeks. In exchange, I can explain every one of them, and fewer should come back from QA." },
+        { type: "h2", text: "What to learn, and how" },
+        { type: "p", text: "The fundamentals did not go away: data modeling and state machines, consistency, idempotency, retries and failure modes, security and privacy, testing strategy, and the business domain you work in. What changed is the goal of learning them." },
+        { type: "quote", text: "Learn enough to know what to ask, and enough to notice when the answer is wrong." },
+        { type: "p", text: "My favourite exercise is to use the AI as an opponent. I describe a design, ask it to break it, then check each failure scenario myself instead of trusting the list. Whatever I now understand, I turn into a checklist so the agent checks it next time." },
+        { type: "p", text: "I also learn in a loop around each task instead of in a separate study block. Before the task, just enough to write the spec. During it, I chase every cell in the scenario list I marked as unknown. After it, I write down what will still be true next year and throw away the rest." },
+        { type: "p", text: "Another thing I am trying is to own one area of the system, say a sign-up flow with many states. I draw the state diagram, entry points, side effects and failure modes myself first, then ask the AI to compare my drawing with the real code. Where the two disagree, there is usually a bug, or a gap in my understanding." },
+        { type: "p", text: "The trap to avoid is skills wasting away. If I only ever approve and never do the hard part myself, sooner or later I will not be able to judge the output at all. The other trap is chasing volume: many merged pull requests and little understanding leave me with neither the motivation nor the knowledge." },
+        { type: "h2", text: "Pilot, not passenger" },
+        { type: "p", text: "On a plane, the autopilot flies long stretches of the trip. Nobody thinks less of the pilot for it, because the job is noticing when the autopilot is wrong and taking the controls. That is the job I want with AI." },
+        { type: "p", text: "AI amplifies whoever uses it. It turns someone who understands the system deeply into someone very strong, and someone who understands it shallowly into someone confidently wrong. I would rather be the first." },
+        { type: "p", text: "I use a few signs to check I am heading the right way. People ask me how something should be done, not just whether I can do it. I can explain a trade-off to a developer and to a product owner. Fewer bugs reach QA, and when they drop it is because of the spec and the tests, not luck. And I can still debug code the AI wrote without asking the AI." },
+        { type: "p", text: "So, a question for you. Have you ever merged code an AI wrote without fully understanding it? I have, and that is where this post started." },
+      ],
+    },
+  },
   "making-sure-a-feature-works": {
     en: {
       lede:

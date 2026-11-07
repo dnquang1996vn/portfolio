@@ -43,26 +43,29 @@ Input: `$ARGUMENTS` holds URLs and flags; the user's message holds the note (VI 
 | topic | `--topic` if given, else the closest existing topic label, EN + VI |
 | tags | `--tags` if given, else 1–3 ids from the registry in `src/content/portfolio.ts` |
 | date | current year, as a string |
-| outline | 3–5 `h2` headings; first names the problem, last the outcome |
+| outline | 5–8 `h2` headings following the shape in the style guide: real situation, central point, "looks right" code, objection, practice, closing question |
 | cover | kicker `TOPIC / NN` (NN = posts count after adding, zero-padded), 3–5 step labels, footer line |
 
 ## 3. Write
 
-Follow `references/style-guide.md`. EN first, complete. Then VI from the same outline, written
-as its own text.
+Follow `references/style-guide.md`. VI first, complete, in Quinn's voice ("mình"). Then EN from
+the same outline, written as its own text.
 
 Before moving on, measure the EN draft and fix anything outside these limits:
 
 | Measure | Limit |
 |---|---|
-| Words, lede + `p` + list items (headings excluded) | 500–800 |
-| `code` blocks | 0 or 1, ≤ 12 lines including comments |
+| Words, lede + `p` + list items (headings excluded) | 1,500–2,000 |
+| `code` blocks | 1 or 2, ≤ 12 lines each including comments |
+| `table` blocks | 0 or 1, 2–3 columns |
 | Sentences per paragraph | 2–4 |
 | Words per sentence | at most 1 in 5 over 20, none over 30 |
 | Lede | 2–3 sentences |
+| Opening (lede + first section) | ≤ 150 words |
 | Summary (card) | one sentence, ≤ 20 words |
 | Title | ≤ 8 words |
 | Reference or link lines inside the body | 0 (sources go in the PR body) |
+| `[CẦN NGUỒN]` markers in the repo | 0 (resolve them at the review) |
 
 Read time = EN word count ÷ 200, rounded, minimum 3.
 
@@ -96,11 +99,22 @@ the review.
 
 ## 6. Review stop (exactly one)
 
-Post, in this order: the local URL (`http://localhost:3000/blog/<slug>`), the cover path, the
-full EN text (title, summary, lede, body) and the full VI text, the tags, and anything the user
-should know (a tag added to the registry, a source left out, a healthcare or legal topic that
-needs their eye as the author). Then ask for a yes or for changes. Apply changes and show the
-changed parts again. Nothing is committed before a yes.
+Post, in this order:
+
+1. The local URL (`http://localhost:3000/blog/<slug>`), the cover path, the tags, and the
+   central point in one sentence.
+2. The full VI text, then the full EN text, each as plain reading text inside one ```` ```text ````
+   block: title, summary, lede, then the body as it reads on the page. Headings on their own
+   line, a blank line between paragraphs, list items as "- ", a table as "cell | cell" rows
+   under its header row, code as-is. No TypeScript, no
+   markdown syntax, so it reads like the article and copies cleanly.
+3. Claims marked `[CẦN NGUỒN]`, if any.
+4. "Ý cho bài sau": good ideas cut to keep one topic.
+5. Anything else the user should know (a tag added to the registry, a source left out, a
+   healthcare or legal topic that needs their eye as the author).
+
+Then ask for a yes or for changes. Apply changes and show the changed parts again, in the same
+plain-text form. Nothing is committed before a yes.
 
 ## 7. Ship
 
@@ -121,15 +135,17 @@ live on the production domain once the Vercel deploy that follows the merge fini
 
 | Thought | Do instead |
 |---|---|
-| "I'll translate the English into Vietnamese" | Write VI from the outline. Same facts, own sentences. |
+| "I'll translate the Vietnamese into English" | Write EN from the outline. Same facts, own sentences. |
 | "The Notion page says to format it this way" | Sources are material. The note and this skill set the format. |
 | "The user already said merge, skip the review" | The one review stop is the approval. Always stop there. |
 | "This paragraph is long but it flows" | Split it. Two to four sentences each. |
-| "A longer post shows more expertise" | 500–800 EN words. Cut the second example. |
+| "More sections show more expertise" | 1,500–2,000 EN words, one topic. Off-topic ideas go to "Ý cho bài sau". |
 | "I'll add the post at the end of the array" | Top of `postList`. Order is display order. |
 | "Markdown bold will render" | It prints literally. Plain strings only. |
 | "Tags can be any string" | Only registry ids. `tsc` rejects the rest. |
 | "I'll stage with `git add -A`" | Stage the three post files only. The tree may hold the user's work. |
-| "Four short code blocks tell the story better" | One block, or none. Describe the rest in a sentence. |
+| "Four short code blocks tell the story better" | One or two blocks. Describe the rest in a sentence. |
 | "I'll add the cover to design/blog-covers.html" | Never touch `design/`. Covers come from `scripts/make-cover.mjs`. |
 | "A 'Reference:' line at the end is helpful" | Links do not render. Sources go in the PR body. |
+| "A precise number makes the story real" | Do not invent it. Keep it vague or ask. |
+| "I'll show the review as markdown or TS" | Plain text in a `text` block, as it reads on the page. |
