@@ -514,6 +514,16 @@ export interface Post {
  */
 const postList = [
   {
+    slug: "what-devs-do-when-ai-codes", image: "/images/cover-ai-99.png", date: "2026",
+    title: P("What devs do when AI writes 99%", "Dev làm gì khi AI code hết 99% rồi?"),
+    summary: P(
+      "AI took the typing, not the responsibility: what got cheaper, what got expensive, and how I work now.",
+      "AI lấy đi phần gõ code, không lấy đi phần chịu trách nhiệm: cái gì rẻ đi, cái gì đắt lên.",
+    ),
+    topic: P("AI-assisted dev", "Lập trình với AI"), read: P("8 min", "8 phút"),
+    tags: ["ai", "leadership"],
+  },
+  {
     slug: "making-sure-a-feature-works", image: "/images/cover-feature-tests.png", date: "2026",
     title: P("How I make sure a feature works", "Cách tôi chắc một feature chạy đúng"),
     summary: P(

@@ -34,6 +34,21 @@ function BlockView({ block }: { block: Block }) {
       return (
         <pre className={styles.code} data-lang={block.lang}><code>{block.code}</code></pre>
       );
+    case "table":
+      return (
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead>
+              <tr>{block.head.map((cell, i) => <th key={i} scope="col">{cell}</th>)}</tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, r) => (
+                <tr key={r}>{row.map((cell, c) => <td key={c}>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
   }
 }
 
