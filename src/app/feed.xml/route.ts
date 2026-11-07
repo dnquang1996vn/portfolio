@@ -1,6 +1,5 @@
 import type { NextRequest } from "next/server";
 import { pick, posts } from "@/content/portfolio";
-import { getArticle } from "@/content/articles";
 
 const escape = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -10,14 +9,13 @@ export async function GET(request: NextRequest) {
   const origin = request.nextUrl.origin;
   const items = posts
     .map((p) => {
-      const article = getArticle(p.slug);
       const url = `${origin}/en/blog/${p.slug}`;
       // The guid keeps the pre-locale URL so feed readers do not see every post as new.
       return `    <item>
       <title>${escape(pick(p.title, "en"))}</title>
       <link>${url}</link>
       <guid isPermaLink="false">${origin}/blog/${p.slug}</guid>
-      <description>${escape(article?.en.lede ?? pick(p.summary, "en"))}</description>
+      <description>${escape(pick(p.lede, "en"))}</description>
       <category>${escape(pick(p.topic, "en"))}</category>
     </item>`;
     })

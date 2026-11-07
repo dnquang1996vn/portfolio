@@ -2,59 +2,23 @@ import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/Link";
 import { contact, pick, tags, type Post } from "@/content/portfolio";
-import type { Article, Block } from "@/content/articles";
+import type { ComponentProps } from "react";
+import type { ArticleBody } from "@/content/articles";
 import { ArrowUpRight, Rss } from "@/components/Icons";
 import { getLabels } from "@/i18n/labels";
+import { CodeBlock } from "./CodeBlock";
 import { ShareRow } from "./ShareRow";
 import styles from "./ArticleView.module.css";
 
-function BlockView({ block }: { block: Block }) {
-  switch (block.type) {
-    case "h2":
-      return <h2 className={styles.h2}>{block.text}</h2>;
-    case "p":
-      return <p className={styles.p}>{block.text}</p>;
-    case "ul":
-      return (
-        <ul className={`bullets ${styles.list}`}>
-          {block.items.map((item, i) => (
-            <li key={i}><span aria-hidden="true" /><span>{item}</span></li>
-          ))}
-        </ul>
-      );
-    case "ol":
-      return (
-        <ol className={styles.ol}>
-          {block.items.map((item, i) => <li key={i}>{item}</li>)}
-        </ol>
-      );
-    case "quote":
-      return <blockquote className={styles.quote}>{block.text}</blockquote>;
-    case "code":
-      return (
-        <pre className={styles.code} data-lang={block.lang}><code>{block.code}</code></pre>
-      );
-    case "table":
-      return (
-        <div className={styles.tableWrap}>
-          <table className={styles.table}>
-            <thead>
-              <tr>{block.head.map((cell, i) => <th key={i} scope="col">{cell}</th>)}</tr>
-            </thead>
-            <tbody>
-              {block.rows.map((row, r) => (
-                <tr key={r}>{row.map((cell, c) => <td key={c}>{cell}</td>)}</tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
-  }
+/** Gives a GFM table a scroll container so a wide one never widens the page on a phone. */
+function Table(props: ComponentProps<"table">) {
+  return <div className={styles.tableWrap}><table {...props} /></div>;
 }
 
 interface Props {
   post: Post;
-  article: Article;
+  /** The Markdown body in the current language. */
+  Body: ArticleBody;
   prev: Post | null;
   /** Up to three other posts for the "keep reading" list. */
   more: readonly Post[];
@@ -62,11 +26,11 @@ interface Props {
   engagement: React.ReactNode;
 }
 
-export async function ArticleView({ post, article, prev, more, engagement }: Props) {
+export async function ArticleView({ post, Body, prev, more, engagement }: Props) {
   const t = await getTranslations();
   const lang = await getLocale();
-  const content = article[lang];
   const title = pick(post.title, lang);
+  const codeLabels = await getLabels(["copyCode", "codeCopied"]);
   // "@nhật-quang-đỗ": the LinkedIn slug, decoded, without the trailing id LinkedIn appends.
   const handle = "@" + decodeURIComponent(contact.linkedin)
     .replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, "")
@@ -83,7 +47,7 @@ export async function ArticleView({ post, article, prev, more, engagement }: Pro
           <span>{t("published")} {post.date}</span>
         </div>
         <h1 className={styles.title}>{title}</h1>
-        <p className={styles.lede}>{content.lede}</p>
+        <p className={styles.lede}>{pick(post.lede, lang)}</p>
         {engagement}
       </header>
 
@@ -125,7 +89,7 @@ export async function ArticleView({ post, article, prev, more, engagement }: Pro
         </aside>
 
         <div className={styles.body}>
-          {content.body.map((block, i) => <BlockView key={`${lang}-${i}`} block={block} />)}
+          <Body components={{ pre: (props) => <CodeBlock {...props} t={codeLabels} />, table: Table }} />
         </div>
       </div>
 
