@@ -53,3 +53,4 @@ skills-lock.json
 .claude/skills/*
 !.claude/skills/blog-writer/
 !.claude/skills/reading-note/
+!.claude/skills/wording-check/

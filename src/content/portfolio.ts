@@ -28,11 +28,11 @@ export const stats: Stat[] = [
   {
     value: 9, decimals: 0, suffix: "+",
     label: P("Years shipping web", "Năm làm sản phẩm web"),
-    detail: P("Frontend specialist to tech lead, 2017 → today.", "Từ chuyên gia frontend đến tech lead, 2017 → nay."),
+    detail: P("Frontend specialist to tech lead, 2017 → today.", "Từ frontend developer lên tech lead, 2017 → nay."),
   },
   {
     value: 180, decimals: 0, suffix: "+",
-    label: P("Biomarkers in production", "Chỉ số sinh học đang vận hành"),
+    label: P("Biomarkers in production", "Chỉ số sinh học trên production"),
     detail: P(
       "Lab panels, telehealth and an AI health coach on one HIPAA platform.",
       "Xét nghiệm, khám từ xa và AI health coach trên một nền tảng chuẩn HIPAA.",
@@ -79,8 +79,8 @@ export const jobs: Job[] = [
     logoFit: "cover",
     brand: "#e8621a",
     headline: P(
-      "From frontend hire to the engineer the company hands its hardest platform to.",
-      "Từ frontend developer đến người được giao nền tảng khó nhất của công ty.",
+      "Joined as a frontend developer in 2020. Now tech lead on the company's healthcare platform.",
+      "Vào làm frontend developer năm 2020. Giờ là tech lead cho nền tảng y tế của công ty.",
     ),
     points: [
       P(
@@ -92,8 +92,8 @@ export const jobs: Job[] = [
         "Đưa AI vào sản phẩm thật: chatbot bệnh nhân, SOAP notes do AI soạn, gợi ý chăm sóc cá nhân hóa.",
       ),
       P(
-        "Turned requirement churn into a feature: codebases built to absorb change, not fight it.",
-        "Biến yêu cầu thay đổi liên tục thành lợi thế: codebase được thiết kế để hấp thụ thay đổi.",
+        "Requirements changed often, so I designed the codebases to take most changes as configuration or one new module.",
+        "Yêu cầu đổi liên tục, nên tôi thiết kế codebase để phần lớn thay đổi chỉ là cấu hình hoặc thêm một module.",
       ),
       P(
         "Three company awards in five years: MVP 2025, Most Proactive 2022, Shining Star 2021.",
@@ -113,8 +113,8 @@ export const jobs: Job[] = [
     logoFit: "cover",
     brand: "#5b2a8f",
     headline: P(
-      "Turned raw UK property data into a marketplace people actually browse.",
-      "Biến dữ liệu bất động sản Anh thô thành một marketplace người dùng thực sự dùng.",
+      "Built a UK property-data marketplace with the London team.",
+      "Xây marketplace dữ liệu bất động sản Anh cùng team London.",
     ),
     points: [
       P(
@@ -122,8 +122,8 @@ export const jobs: Job[] = [
         "Phụ trách tính năng, ước lượng, review và release trên nền tảng Laravel + Vue.",
       ),
       P(
-        "Worked directly with the London team, from requirements to production, no translation layer.",
-        "Làm việc trực tiếp với đội London, từ yêu cầu đến production, không qua trung gian.",
+        "Worked directly with the London team, from requirements to production, with no go-between.",
+        "Làm việc trực tiếp với team London, từ yêu cầu đến production, không qua trung gian.",
       ),
     ],
   },
@@ -140,16 +140,16 @@ export const jobs: Job[] = [
     brand: "#d7262f",
     headline: P(
       "Hired as a third-year intern. Left on the team that wrote the standards.",
-      "Vào làm thực tập sinh năm ba. Rời đi từ đội viết chuẩn code cho cả công ty.",
+      "Vào từ thực tập sinh năm ba. Lúc rời đi, đang ở team chuẩn hóa code cho cả công ty.",
     ),
     points: [
       P(
         "Intern → part-time → full-time engineer, all before graduation.",
-        "Thực tập → bán thời gian → kỹ sư chính thức, tất cả trước khi tốt nghiệp.",
+        "Thực tập → bán thời gian → kỹ sư chính thức, đều trước khi tốt nghiệp.",
       ),
       P(
         "Picked for the prototype team: reference projects every other team coded against.",
-        "Được chọn vào đội prototype: các dự án mẫu làm chuẩn cho những đội khác.",
+        "Được chọn vào team prototype: các dự án mẫu làm chuẩn cho những team khác.",
       ),
     ],
   },
@@ -179,12 +179,12 @@ export const skills: Skill[] = [
     since: 2017,
     summary: P(
       "Nine years of React, from the first component to leading the frontend of two platforms.",
-      "Chín năm React, từ component đầu tiên đến dẫn frontend cho hai nền tảng.",
+      "Chín năm React, từ component đầu tiên đến lead frontend cho hai nền tảng.",
     ),
     built: [
-      P("Led the frontend of Bamboo: one React app, regulators in 25+ US states.", "Dẫn frontend Bamboo: một app React, cơ quan quản lý ở 25+ bang Mỹ."),
+      P("Led the frontend of Bamboo: one React app, regulators in 25+ US states.", "Lead frontend Bamboo: một app React, cơ quan quản lý ở 25+ bang Mỹ."),
       P("Built Welle's care portal and storefront in React + TypeScript, themed per tenant.", "Xây care portal và storefront của Welle bằng React + TypeScript, theme theo tenant."),
-      P("Shipped a data grid that stays fast at 10k rows: resize, freeze, group, tree view.", "Ra mắt bảng dữ liệu vẫn nhanh ở 10k dòng: resize, freeze, nhóm, dạng cây."),
+      P("Shipped a data grid that stays fast at 10k rows: resize, freeze, group, tree view.", "Làm bảng dữ liệu vẫn mượt ở 10k dòng: resize, freeze, nhóm, dạng cây."),
     ],
     apply: [
       P("Test components with real providers and router; unit-test only extracted logic.", "Test component với provider và router thật; unit test chỉ cho logic đã tách."),
@@ -205,12 +205,12 @@ export const skills: Skill[] = [
     ),
     built: [
       P("Designed Welle's API on NestJS and Express: tenant context resolved once per request.", "Thiết kế API của Welle trên NestJS và Express: tenant context resolve một lần mỗi request."),
-      P("Delivered a Laravel + Vue property marketplace with the London team, requirements to release.", "Giao marketplace bất động sản Laravel + Vue cùng đội London, từ yêu cầu đến release."),
-      P("Served SaaS tenants and per-client logic from one codebase, white-label included.", "Phục vụ khách SaaS và logic riêng từng khách từ một codebase, kèm white-label."),
+      P("Delivered a Laravel + Vue property marketplace with the London team, requirements to release.", "Làm marketplace bất động sản Laravel + Vue cùng team London, từ yêu cầu đến release."),
+      P("Served SaaS tenants and per-client logic from one codebase, white-label included.", "Một codebase chạy cho cả khách SaaS lẫn logic riêng từng khách, kèm white-label."),
     ],
     apply: [
       P("Keep rules as injectable units; test the HTTP boundary against a real database.", "Giữ nghiệp vụ là các unit inject được; test biên HTTP với database thật."),
-      P("Check contracts with other teams' systems instead of depending on their uptime.", "Kiểm tra contract với hệ thống đội khác thay vì phụ thuộc uptime của họ."),
+      P("Check contracts with other teams' systems instead of depending on their uptime.", "Kiểm tra contract với hệ thống team khác thay vì phụ thuộc uptime của họ."),
     ],
   },
   {
@@ -223,16 +223,16 @@ export const skills: Skill[] = [
     since: 2023,
     summary: P(
       "AI inside a HIPAA product, with the PHI boundary drawn before the first prompt.",
-      "AI trong sản phẩm chuẩn HIPAA, ranh giới PHI vẽ trước prompt đầu tiên.",
+      "AI trong sản phẩm chuẩn HIPAA, xác định ranh giới PHI trước khi viết prompt đầu tiên.",
     ),
     built: [
-      P("Shipped a patient chatbot grounded on each member's records and care plan.", "Ra mắt chatbot bệnh nhân dựa trên hồ sơ và kế hoạch chăm sóc của từng người."),
-      P("Put AI-drafted SOAP notes in production: PHI redacted before the model, restored inside our boundary.", "Đưa SOAP notes do AI soạn lên production: ẩn PHI trước model, khôi phục trong ranh giới của mình."),
+      P("Shipped a patient chatbot grounded on each member's records and care plan.", "Làm chatbot cho bệnh nhân, trả lời dựa trên hồ sơ và kế hoạch chăm sóc của từng người."),
+      P("Put AI-drafted SOAP notes in production: PHI redacted before the model, restored inside our boundary.", "Đưa SOAP notes do AI soạn lên production: ẩn PHI trước model, khôi phục lại bên trong hệ thống của mình."),
       P("Generated personalized care recommendations from 180+ biomarkers.", "Tạo gợi ý chăm sóc cá nhân hóa từ 180+ chỉ số sinh học."),
     ],
     apply: [
-      P("The model drafts, the clinician signs; no clinical text ships without review.", "Model soạn, bác sĩ ký; không văn bản lâm sàng nào ra mà chưa qua duyệt."),
-      P("Draw the PHI boundary first, pick the model second.", "Vẽ ranh giới PHI trước, chọn model sau."),
+      P("The model drafts, the clinician signs; no clinical text ships without review.", "Model soạn, bác sĩ ký; văn bản lâm sàng nào cũng phải qua duyệt mới được dùng."),
+      P("Draw the PHI boundary first, pick the model second.", "Xác định ranh giới PHI trước, chọn model sau."),
     ],
   },
   {
@@ -245,11 +245,11 @@ export const skills: Skill[] = [
     since: 2024,
     summary: P(
       "Claude Code and Cursor in the team's daily workflow, with rules for what they may touch.",
-      "Claude Code và Cursor trong quy trình hằng ngày của đội, có quy tắc về thứ chúng được chạm.",
+      "Claude Code và Cursor trong quy trình hằng ngày của team, kèm quy tắc về những gì chúng được đụng vào.",
     ),
     built: [
-      P("Wrote the team's usage policy: which repos and data an agent may touch.", "Viết chính sách dùng cho đội: agent được chạm repo và dữ liệu nào."),
-      P("Built custom skills for tickets, reviews and release notes, so output is consistent across people.", "Xây custom skill cho ticket, review và release note, để output nhất quán giữa mọi người."),
+      P("Wrote the team's usage policy: which repos and data an agent may touch.", "Viết chính sách dùng cho team: agent được đụng vào repo và dữ liệu nào."),
+      P("Built custom skills for tickets, reviews and release notes, so output is consistent across people.", "Viết custom skill cho ticket, review và release note, để ai làm output cũng giống nhau."),
       P("Set review rules for AI-written diffs: provenance, sandbox, CI backstops.", "Đặt luật review cho diff do AI viết: nguồn gốc, sandbox, CI chặn hậu."),
     ],
     apply: [
@@ -266,17 +266,17 @@ export const skills: Skill[] = [
     tags: ["Labs", "Telehealth", "Email / SMS", "HIPAA & PHI", "State pricing & legal (US)"],
     since: 2020,
     summary: P(
-      "Healthcare and cannabis commerce: two industries where the rules are the product.",
-      "Y tế và thương mại cannabis: hai ngành mà luật lệ chính là sản phẩm.",
+      "Healthcare and cannabis commerce, where most of the hard requirements come from regulators.",
+      "Y tế và thương mại cannabis, hai ngành mà phần lớn yêu cầu khó đến từ cơ quan quản lý.",
     ),
     built: [
-      P("Enforced HIPAA and PHI protection across Welle: at rest, in transit, in logs.", "Bảo vệ HIPAA và PHI xuyên suốt Welle: lưu trữ, truyền tải, log."),
+      P("Enforced HIPAA and PHI protection across Welle: at rest, in transit, in logs.", "Áp dụng HIPAA và bảo vệ PHI trên toàn Welle: lưu trữ, truyền tải, log."),
       P("Integrated labs, telehealth, email and SMS, and Stripe payments.", "Tích hợp xét nghiệm, khám từ xa, email và SMS, thanh toán Stripe."),
-      P("Encoded state pricing and legal rules for cannabis commerce in 25+ US states.", "Mã hóa giá và quy định pháp lý theo bang cho thương mại cannabis ở 25+ bang Mỹ."),
+      P("Encoded state pricing and legal rules for cannabis commerce in 25+ US states.", "Đưa giá và quy định pháp lý theo từng bang vào hệ thống, cho thương mại cannabis ở 25+ bang Mỹ."),
     ],
     apply: [
-      P("Put compliance in the architecture, not in a checklist.", "Đặt tuân thủ vào kiến trúc, không phải checklist."),
-      P("One strategy interface per regulator or vendor: a new state is a file, not a rewrite.", "Mỗi cơ quan quản lý hay vendor một strategy interface: thêm bang là thêm file, không viết lại."),
+      P("Build compliance into the architecture, so it does not depend on someone remembering a checklist.", "Đưa tuân thủ vào kiến trúc, để không phụ thuộc vào việc ai đó nhớ checklist."),
+      P("One strategy interface per regulator or vendor: adding a state means adding a file.", "Mỗi cơ quan quản lý hay vendor một strategy interface: thêm bang là thêm một file."),
     ],
   },
   {
@@ -289,7 +289,7 @@ export const skills: Skill[] = [
     since: 2019,
     summary: P(
       "Enough infrastructure to keep deploys boring: containers, pipelines and gating tests.",
-      "Đủ hạ tầng để deploy luôn nhàm chán: container, pipeline và test gác cổng.",
+      "Đủ kiến thức hạ tầng để deploy không còn gì hồi hộp: container, pipeline và test gác cổng.",
     ),
     built: [
       P("Containerized Welle's services with Docker, identical locally and in CI.", "Đóng gói service của Welle bằng Docker, giống nhau ở local và CI."),
@@ -298,7 +298,7 @@ export const skills: Skill[] = [
     ],
     apply: [
       P("One happy-path end-to-end test per feature; everything else lower and cheaper.", "Mỗi tính năng một test end-to-end đường chính; phần còn lại test ở tầng thấp hơn, rẻ hơn."),
-      P("Automate the boring parts, keep a human on the release button.", "Tự động hóa phần nhàm chán, giữ người ở nút release."),
+      P("Automate the boring parts, keep a human on the release button.", "Tự động hóa phần nhàm chán, nhưng nút release vẫn do người bấm."),
     ],
   },
 ];
@@ -331,7 +331,7 @@ export const projects: Project[] = [
     num: "01",
     short: "Welle.",
     kicker: P("Healthcare, multi-tenant SaaS", "Y tế, SaaS đa tenant"),
-    subtitle: P("Preventive care for US patients.\nOne HIPAA-compliant platform.", "Chăm sóc dự phòng cho bệnh nhân Mỹ.\nMột nền tảng chuẩn HIPAA."),
+    subtitle: P("Preventive care for US patients.\nOne HIPAA-compliant platform.", "Chăm sóc dự phòng cho người Mỹ.\nMột nền tảng chuẩn HIPAA."),
     period: P("Tech lead, Webprovise", "Tech lead, Webprovise"),
     frameLabel: "WELLE / WELLEHEALTH.COM",
     frameCaption: P("One codebase. Many tenants.", "Một codebase. Nhiều tenant."),
@@ -363,7 +363,7 @@ export const projects: Project[] = [
         "Integrated labs, telehealth, email and SMS providers; implemented state-by-state pricing and legal compliance.",
         "Tích hợp phòng lab, khám từ xa, email và SMS; triển khai giá và tuân thủ pháp lý theo từng bang.",
       ),
-      P("Enforced HIPAA and PHI data protection end to end.", "Bảo vệ dữ liệu HIPAA và PHI xuyên suốt hệ thống."),
+      P("Enforced HIPAA and PHI data protection end to end.", "Áp dụng HIPAA và bảo vệ dữ liệu PHI trên toàn hệ thống."),
     ],
   },
   {
@@ -392,11 +392,11 @@ export const projects: Project[] = [
     points: [
       P(
         "Led the frontend of a microservice system with one design language across Portal, Trace and Sales.",
-        "Dẫn dắt frontend của hệ microservice với một ngôn ngữ thiết kế chung cho Portal, Trace và Sales.",
+        "Lead frontend của hệ microservice với một ngôn ngữ thiết kế chung cho Portal, Trace và Sales.",
       ),
       P(
         "Built reusable, performance-tuned components: data tables with column resize, freeze, reorder, grouping, trees, sticky headers and filters.",
-        "Xây component tái sử dụng, tối ưu hiệu năng: bảng dữ liệu với resize, freeze, sắp xếp cột, nhóm, cây, header dính và bộ lọc.",
+        "Xây component tái sử dụng, tối ưu hiệu năng: bảng dữ liệu với resize, freeze, sắp xếp cột, nhóm, cây, sticky header và bộ lọc.",
       ),
       P(
         "Per-state polymorphism: one codebase adapting to each regulator’s compliance rules with fully tracked traceability data.",
@@ -421,21 +421,21 @@ export const projects: Project[] = [
     imagePos: "50% 0%",
     tagline: P(
       "Booking, property data lookup, subscriptions and an admin portal for the sales team, a Laravel and Vue marketplace built with the London team.",
-      "Đặt lịch, tra cứu dữ liệu bất động sản, gói thuê bao và cổng quản trị cho đội bán hàng, một marketplace Laravel và Vue xây cùng đội London.",
+      "Đặt lịch, tra cứu dữ liệu bất động sản, gói thuê bao và cổng quản trị cho team bán hàng, một marketplace Laravel và Vue xây cùng team London.",
     ),
     overview: P(
       "UK property-services marketplace connecting users with real-estate and home-moving services: booking, property data lookup, subscription or direct purchase, plus an admin portal for the sales team.",
-      "Marketplace dịch vụ bất động sản tại Anh: đặt lịch, tra cứu dữ liệu, mua theo gói hoặc trực tiếp, kèm cổng quản trị cho đội bán hàng.",
+      "Marketplace dịch vụ bất động sản tại Anh: đặt lịch, tra cứu dữ liệu, mua theo gói hoặc trực tiếp, kèm cổng quản trị cho team bán hàng.",
     ),
     stack: ["Laravel", "Vue.js"],
     points: [
       P(
-        "Turned large datasets into intuitive, visually engaging service views that drive engagement.",
-        "Biến tập dữ liệu lớn thành giao diện dịch vụ trực quan, hấp dẫn và giữ chân người dùng.",
+        "Built the pages that turn large property datasets into services a user can browse and book.",
+        "Làm các trang biến tập dữ liệu bất động sản lớn thành dịch vụ mà người dùng xem và đặt được.",
       ),
       P(
         "Built Excel export, map views, and filter-based property search and ordering.",
-        "Xây xuất Excel, bản đồ, tìm kiếm và đặt hàng bất động sản theo bộ lọc.",
+        "Làm tính năng xuất Excel, bản đồ, tìm kiếm và đặt hàng bất động sản theo bộ lọc.",
       ),
     ],
   },
@@ -549,43 +549,43 @@ const postList = [
     summary: P("How Welle serves SaaS customers and per-client custom logic without forking.", "Cách Welle phục vụ khách SaaS và logic riêng từng khách mà không fork."),
     lede: P(
       "Welle runs as a SaaS product for some customers and as a heavily customised white-label deployment for others. Both ship from the same repository, on the same release train. Here is the shape that made that possible, and the two rules that keep it from rotting.",
-      "Welle chạy dưới dạng SaaS cho một số khách hàng, và dưới dạng white-label tùy biến sâu cho những khách khác. Cả hai đều xuất phát từ cùng một repository, cùng một chu kỳ phát hành. Đây là cấu trúc giúp điều đó khả thi, và hai nguyên tắc giữ cho nó không mục rữa theo thời gian.",
+      "Welle chạy dưới dạng SaaS cho một số khách hàng, và dưới dạng white-label tùy biến sâu cho những khách khác. Cả hai đều ra từ cùng một repository, cùng một lịch release. Bài này kể cấu trúc giúp làm được vậy, và hai nguyên tắc giữ cho nó không nát dần.",
     ),
     topic: P("Architecture", "Kiến trúc"), read: P("8 min", "8 phút"),
     tags: ["architecture"],
   },
   {
     slug: "ai-soap-notes-under-hipaa", image: "/images/cover-soap-hipaa.png", date: "2026",
-    title: P("Shipping AI-assisted SOAP notes under HIPAA", "Đưa SOAP notes có AI hỗ trợ lên production dưới HIPAA"),
-    summary: P("Where PHI can and cannot go when an LLM is in the loop.", "PHI được và không được đi đâu khi có LLM trong vòng lặp."),
+    title: P("Shipping AI-assisted SOAP notes under HIPAA", "Đưa SOAP notes có AI hỗ trợ lên production theo chuẩn HIPAA"),
+    summary: P("Where PHI can and cannot go when an LLM is in the loop.", "Khi có LLM tham gia, PHI được đi tới đâu và không được đi tới đâu."),
     lede: P(
-      "Clinicians on Welle spend less time on documentation because a model drafts the SOAP note from the visit. Making that acceptable under HIPAA was less about the model and more about drawing a very clear line around where protected health information is allowed to travel.",
-      "Bác sĩ trên Welle tốn ít thời gian ghi chép hơn vì một mô hình soạn bản nháp SOAP note từ buổi khám. Để điều đó chấp nhận được dưới HIPAA, việc quan trọng không nằm ở mô hình mà ở việc vẽ một ranh giới rất rõ: thông tin sức khỏe được bảo vệ (PHI) được phép đi đến đâu.",
+      "Clinicians on Welle spend less time on documentation because a model drafts the SOAP note from the visit. Most of the work to make that acceptable under HIPAA went into one thing: deciding exactly where protected health information is allowed to travel.",
+      "Bác sĩ trên Welle tốn ít thời gian ghi chép hơn vì một mô hình soạn bản nháp SOAP note từ buổi khám. Để làm được vậy mà vẫn đúng HIPAA, phần lớn công sức dồn vào một việc: xác định thật rõ thông tin sức khỏe được bảo vệ (PHI) được phép đi tới đâu.",
     ),
     topic: P("AI and compliance", "AI và tuân thủ"), read: P("6 min", "6 phút"),
     tags: ["ai", "compliance"],
   },
   {
     slug: "agentic-workflows-small-team", image: "/images/cover-agentic-workflows.png", date: "2025",
-    title: P("Agentic workflows for a small team: what actually stuck", "Quy trình agentic cho đội nhỏ: điều gì thực sự ở lại"),
+    title: P("Agentic workflows for a small team: what stuck", "Quy trình agentic cho team nhỏ: cái gì trụ lại"),
     summary: P(
       "Custom skills, usage policies and the review habits that kept quality up with Claude Code and Cursor.",
-      "Skill tùy biến, chính sách sử dụng và thói quen review giữ chất lượng với Claude Code và Cursor.",
+      "Custom skill, chính sách sử dụng và thói quen review giúp giữ chất lượng khi dùng Claude Code và Cursor.",
     ),
     lede: P(
-      "We have used Claude Code and Cursor daily for over a year. Some of what we tried made the team faster. Some of it made pull requests longer and reviews worse. This is the honest list of what stayed.",
-      "Chúng tôi dùng Claude Code và Cursor hằng ngày hơn một năm. Một số thứ đã thử giúp đội nhanh hơn. Một số thứ làm pull request dài hơn và review tệ hơn. Đây là danh sách trung thực về những gì còn ở lại.",
+      "We have used Claude Code and Cursor daily for over a year. Some of what we tried made the team faster. Some of it made pull requests longer and reviews worse. This is the list of what stayed.",
+      "Chúng tôi dùng Claude Code và Cursor hằng ngày hơn một năm. Một số thứ đã thử giúp team nhanh hơn. Một số thứ làm pull request dài hơn và review tệ hơn. Đây là những gì còn dùng đến giờ.",
     ),
     topic: P("AI-assisted dev", "Lập trình với AI"), read: P("7 min", "7 phút"),
     tags: ["ai", "tooling"],
   },
   {
     slug: "data-tables-that-survive-10k-rows", image: "/images/cover-data-tables.png", date: "2025",
-    title: P("Data tables that survive 10k rows", "Bảng dữ liệu sống được qua 10k dòng"),
+    title: P("Data tables that survive 10k rows", "Bảng dữ liệu chịu được 10k dòng"),
     summary: P("Resize, freeze, group, tree, and still 60fps. What we learned building Bamboo’s grid.", "Resize, freeze, nhóm, cây, vẫn 60fps. Bài học từ grid của Bamboo."),
     lede: P(
       "Bamboo’s users live in tables: inventory, orders, traceability events, thousands of rows at a time. The grid we built handles column resize, freeze, reorder, grouping, tree rows and sticky headers, and stays at 60fps. These are the decisions that mattered.",
-      "Người dùng Bamboo sống trong các bảng: kho, đơn hàng, sự kiện truy xuất, hàng nghìn dòng mỗi lần. Grid chúng tôi xây xử lý resize cột, freeze, sắp lại thứ tự, nhóm, dòng dạng cây và header dính, và vẫn giữ 60fps. Đây là những quyết định quan trọng nhất.",
+      "Người dùng Bamboo làm việc trong bảng cả ngày: kho, đơn hàng, sự kiện truy xuất, hàng nghìn dòng mỗi lần. Grid chúng tôi xây xử lý resize cột, freeze, sắp lại thứ tự, nhóm, dòng dạng cây và header dính, và vẫn giữ 60fps. Đây là những quyết định quan trọng nhất.",
     ),
     topic: P("Performance", "Hiệu năng"), read: P("9 min", "9 phút"),
     tags: ["performance", "frontend"],
@@ -593,10 +593,10 @@ const postList = [
   {
     slug: "estimating-work-you-have-never-done", image: "/images/cover-estimating.png", date: "2024",
     title: P("Estimating work you have never done before", "Ước lượng việc chưa từng làm"),
-    summary: P("A tech lead’s honest method for sizing unknowns without padding everything 3×.", "Cách một tech lead ước lượng điều chưa biết mà không nhân ba mọi thứ."),
+    summary: P("How I size work nobody on the team has done, without padding everything 3×.", "Cách tôi ước lượng việc chưa ai trong team từng làm mà không nhân ba mọi thứ."),
     lede: P(
       "Most estimation advice assumes you have done something similar before. The hard estimates are for the things you have not: a new regulator integration, a first AI feature, a migration nobody on the team has attempted. Here is the method I use, and why it does not involve multiplying by three.",
-      "Hầu hết lời khuyên về ước lượng giả định bạn đã làm việc tương tự trước đó. Những ước lượng khó là cho việc chưa từng làm: tích hợp một cơ quan quản lý mới, tính năng AI đầu tiên, một cuộc migration chưa ai trong đội thử. Đây là phương pháp tôi dùng, và vì sao nó không liên quan đến việc nhân ba.",
+      "Phần lớn lời khuyên về ước lượng đều ngầm cho rằng bạn đã làm việc tương tự rồi. Cái khó là ước lượng những việc chưa từng làm: tích hợp một cơ quan quản lý mới, tính năng AI đầu tiên, một lần migration chưa ai trong team làm. Đây là cách tôi làm, và vì sao tôi không nhân ba.",
     ),
     topic: P("Leadership", "Lãnh đạo"), read: P("5 min", "5 phút"),
     tags: ["leadership"],
@@ -607,7 +607,7 @@ const postList = [
     summary: P("Per-state polymorphism in Bamboo’s frontend without a 25-way switch.", "Đa hình theo bang trong frontend Bamboo mà không cần switch 25 nhánh."),
     lede: P(
       "Legal cannabis in the US is regulated state by state. Bamboo’s frontend serves operators in more than twenty-five of them, each with its own traceability system, field rules and workflow quirks, from a single React codebase. The trick was refusing to write a switch statement.",
-      "Cannabis hợp pháp ở Mỹ được quản lý theo từng bang. Frontend của Bamboo phục vụ nhà vận hành tại hơn hai mươi lăm bang, mỗi bang có hệ truy xuất, quy tắc trường dữ liệu và những quirk quy trình riêng, từ một codebase React duy nhất. Bí quyết là từ chối viết một câu lệnh switch.",
+      "Cannabis hợp pháp ở Mỹ được quản lý theo từng bang. Frontend của Bamboo phục vụ nhà vận hành tại hơn hai mươi lăm bang, mỗi bang có hệ truy xuất, quy tắc trường dữ liệu và những quirk quy trình riêng, từ một codebase React duy nhất. Mấu chốt là nhất quyết không viết câu switch.",
     ),
     topic: "Frontend", read: P("5 min", "5 phút"),
     tags: ["frontend", "architecture"],
@@ -625,22 +625,22 @@ export const principles: Principle[] = [
   {
     title: P("Start with the real requirement.", "Bắt đầu từ yêu cầu thật."),
     body: P(
-      "Specs are drafts. I sit with the product owner, work out what the business actually needs, then design for the next three changes, not just this one.",
-      "Spec chỉ là bản nháp. Tôi ngồi cùng product owner, tìm ra doanh nghiệp thực sự cần gì, rồi thiết kế cho ba lần thay đổi tiếp theo, không chỉ lần này.",
+      "Specs are drafts. I sit with the product owner, work out what the business needs, then design for the next three changes.",
+      "Spec chỉ là bản nháp. Tôi ngồi cùng product owner, tìm hiểu bên kinh doanh cần gì, rồi thiết kế cho cả ba lần thay đổi tiếp theo.",
     ),
   },
   {
     title: P("Build codebases that absorb change.", "Xây codebase chịu được thay đổi."),
     body: P(
       "Multi-tenant, white-label, per-state rules: the variation lives in the architecture, so features never have to fork.",
-      "Multi-tenant, white-label, luật theo từng bang: phần biến thiên nằm trong kiến trúc, để tính năng không bao giờ phải fork.",
+      "Multi-tenant, white-label, luật theo từng bang: phần khác biệt nằm trong kiến trúc, để tính năng không bao giờ phải fork.",
     ),
   },
   {
-    title: P("Ship AI where it earns its place.", "Đưa AI vào đúng chỗ nó xứng đáng."),
+    title: P("Ship AI where it earns its place.", "Dùng AI ở chỗ nó thật sự có ích."),
     body: P(
       "Patient chatbots, AI-drafted SOAP notes, care recommendations, in production, under HIPAA, with the PHI boundaries drawn first.",
-      "Chatbot cho bệnh nhân, SOAP notes do AI soạn, gợi ý chăm sóc, chạy thật, dưới HIPAA, với ranh giới PHI được vẽ trước.",
+      "Chatbot cho bệnh nhân, SOAP notes do AI soạn, gợi ý chăm sóc, chạy trên production, theo HIPAA, ranh giới PHI xác định từ đầu.",
     ),
   },
 ];
@@ -652,15 +652,15 @@ export const explorations: Exploration[] = [
   {
     icon: "shield",
     title: P("AI inside regulated products", "AI trong sản phẩm có quy định chặt"),
-    body: P("Where an LLM can and cannot go when PHI is in the loop.", "LLM được và không được đi đâu khi có PHI trong vòng lặp."),
+    body: P("Where an LLM can and cannot go when PHI is in the loop.", "Khi có PHI, LLM được dùng ở đâu và không được dùng ở đâu."),
     href: "/blog/ai-soap-notes-under-hipaa",
   },
   {
     icon: "cpu",
-    title: P("Agentic workflows for small teams", "Quy trình agentic cho đội nhỏ"),
+    title: P("Agentic workflows for small teams", "Quy trình agentic cho team nhỏ"),
     body: P(
       "Custom skills, usage policies and review habits that keep quality up with Claude Code and Cursor.",
-      "Skill tùy biến, chính sách sử dụng và thói quen review giữ chất lượng với Claude Code và Cursor.",
+      "Custom skill, chính sách sử dụng và thói quen review giúp giữ chất lượng khi dùng Claude Code và Cursor.",
     ),
     href: "/blog/agentic-workflows-small-team",
   },
@@ -676,16 +676,16 @@ export const explorations: Exploration[] = [
 export const profile = {
   bio: [
     P(
-      "I'm Do Nhat Quang, Quinn to most people, a senior full-stack developer and tech lead in Hanoi. For nine years I've built web platforms for companies in the US, the UK and Japan, moving from frontend specialist to the engineer a company hands its hardest platform to.",
-      "Tôi là Đỗ Nhật Quang, mọi người gọi là Quinn, senior full-stack developer kiêm tech lead ở Hà Nội. Chín năm qua tôi xây nền tảng web cho các công ty Mỹ, Anh và Nhật, đi từ chuyên gia frontend đến người được giao nền tảng khó nhất của công ty.",
+      "I'm Do Nhat Quang, Quinn to most people, a senior full-stack developer and tech lead in Hanoi. For nine years I've built web platforms for companies in the US, the UK and Japan. I started as a frontend developer and became a tech lead along the way.",
+      "Tôi là Đỗ Nhật Quang, mọi người gọi là Quinn, senior full-stack developer kiêm tech lead ở Hà Nội. Chín năm qua tôi xây nền tảng web cho các công ty Mỹ, Anh và Nhật. Tôi bắt đầu từ frontend, rồi dần chuyển sang làm tech lead.",
     ),
     P(
       "At Webprovise I lead engineering on Welle, a HIPAA-compliant healthcare platform: 180+ biomarkers, telehealth, an AI health coach, and a multi-tenant, white-label architecture that serves SaaS customers and per-client logic from one codebase. Before that I led the frontend of Bamboo, a cannabis commerce platform that satisfies regulators in 25+ US states.",
-      "Tại Webprovise tôi dẫn dắt kỹ thuật cho Welle, nền tảng y tế chuẩn HIPAA: 180+ chỉ số sinh học, khám từ xa, AI health coach, và kiến trúc multi-tenant, white-label phục vụ khách SaaS lẫn logic riêng từng khách từ một codebase. Trước đó tôi dẫn frontend của Bamboo, nền tảng thương mại cannabis đáp ứng cơ quan quản lý ở 25+ bang của Mỹ.",
+      "Ở Webprovise, tôi là tech lead của Welle, một nền tảng y tế theo chuẩn HIPAA: 180+ chỉ số sinh học, khám từ xa, AI health coach, và kiến trúc multi-tenant, white-label phục vụ khách SaaS lẫn logic riêng từng khách từ một codebase. Trước đó tôi lead frontend của Bamboo, nền tảng thương mại cannabis phải tuân theo cơ quan quản lý ở 25+ bang của Mỹ.",
     ),
     P(
-      "I care about requirements more than tickets, about codebases that absorb change, and about putting AI into production where it earns its place, with the PHI boundaries drawn first.",
-      "Tôi quan tâm đến yêu cầu hơn là ticket, đến codebase chịu được thay đổi, và đến việc đưa AI vào production ở đúng chỗ nó xứng đáng, với ranh giới PHI được vẽ trước.",
+      "Most of my time goes to three things: working out what a requirement means before it becomes tickets, keeping the codebase easy to change, and deciding where AI belongs in a product that handles patient data.",
+      "Phần lớn thời gian của tôi dành cho ba việc: hiểu cho ra yêu cầu thật trước khi nó thành ticket, giữ codebase dễ sửa, và quyết định AI nên nằm ở đâu trong một sản phẩm có dữ liệu bệnh nhân.",
     ),
   ] as Bi[],
   facts: [

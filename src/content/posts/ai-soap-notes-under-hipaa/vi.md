@@ -26,4 +26,4 @@ Bản nháp chỉ là bản nháp. Nó được lưu ở trạng thái chưa ký
 
 ## Những gì chúng tôi cố tình không làm
 
-Không fine-tune trên dữ liệu bệnh nhân. Không truy xuất hồ sơ của bệnh nhân khác để “cải thiện” ghi chú. Không tự động lưu hồ sơ, kể cả với loại khám rủi ro thấp. Mỗi điều trong số đó sẽ làm câu chuyện tuân thủ dài thêm một đoạn và câu chuyện niềm tin ngắn đi một đoạn. Tính năng được bác sĩ ưa dùng chính vì nó nhàm chán đúng ở những chỗ cần nhàm chán.
+Không fine-tune trên dữ liệu bệnh nhân. Không truy xuất hồ sơ của bệnh nhân khác để “cải thiện” ghi chú. Không tự động lưu hồ sơ, kể cả với loại khám rủi ro thấp. Mỗi điều đó sẽ khiến phần tuân thủ khó giải thích hơn và tính năng khó tin hơn. Bác sĩ thích dùng tính năng này, và tôi nghĩ lý do là nó không làm gì bất ngờ.

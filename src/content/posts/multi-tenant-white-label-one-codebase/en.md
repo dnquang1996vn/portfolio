@@ -28,8 +28,8 @@ For the genuinely custom pieces, we use a small set of named extension points: a
 
 - Extension points are few and named. If a new client needs a sixth, we ask whether the fifth should have been more general.
 - Overrides may not import from each other. Client A must never depend on Client B’s code.
-- Every override has a test that runs against the default fixtures. If the core contract changes, the client build breaks loudly in CI, not quietly in production.
+- Every override has a test that runs against the default fixtures. If the core contract changes, the client build fails in CI before it reaches production.
 
 ## What it bought us
 
-Features built for one client ship to all of them behind a flag. Security fixes land once. The white-label client that started as an exception is now just the tenant with the most configuration. The discipline cost a few weeks up front. The forks would have cost a team.
+Features built for one client ship to all of them behind a flag. Security fixes land once. The white-label client that started as an exception is now just the tenant with the most configuration. Setting it up cost us a few weeks at the start.

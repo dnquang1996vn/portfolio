@@ -23,4 +23,4 @@ We wrote a one-page policy and pinned it. Nothing in it is clever. It is the bor
 
 ## The net effect
 
-Less time on boilerplate and migrations, more time on the parts that need judgement: data models, security boundaries, the conversation with the stakeholder about what they actually meant. The team did not get bigger. Its attention got better spent.
+Less time on boilerplate and migrations, more time on the parts that need judgement: data models, security boundaries, the conversation with the stakeholder about what they actually meant. The team is the same size as before.

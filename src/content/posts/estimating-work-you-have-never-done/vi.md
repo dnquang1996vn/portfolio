@@ -1,25 +1,25 @@
 ## Tách phần chưa biết khỏi phần đã biết
 
-Mọi nhiệm vụ đáng sợ phần lớn là việc bình thường bao quanh một lõi nhỏ thực sự bất định. Xây tích hợp với cơ quan quản lý bang là form, validation, lưu trữ, retry và UI, tất cả đều đã làm, cộng một phần thực sự chưa biết: API của cơ quan đó hành xử thế nào. Ước lượng phần bình thường như thường lệ. Cô lập phần chưa biết.
+Việc nào nghe đáng sợ thì phần lớn vẫn là việc bình thường, bọc quanh một phần nhỏ thật sự chưa biết. Tích hợp với cơ quan quản lý của một bang gồm form, validation, lưu trữ, retry và UI, toàn thứ đã làm rồi, cộng thêm một phần chưa biết: API của cơ quan đó chạy thực tế ra sao. Phần bình thường thì ước lượng như mọi khi. Phần chưa biết thì tách riêng ra.
 
 ## Mua thông tin trước khi mua con số
 
-Với lõi chưa biết, đừng ước lượng vội. Đóng khung thời gian một spike, thường nửa ngày đến hai ngày, với một câu hỏi cần trả lời. Có xác thực và gửi được một bản ghi không? Mô hình có cho đầu ra dùng được trên dữ liệu thật của mình không? Đầu ra của spike không phải code. Nó là một ước lượng bạn có thể bảo vệ.
+Với phần chưa biết, khoan ước lượng. Tôi làm một spike có giới hạn thời gian, thường từ nửa ngày đến hai ngày, để trả lời đúng một câu hỏi. Có xác thực và gửi được một bản ghi không? Model có cho ra kết quả dùng được trên dữ liệu thật của mình không? Thứ tôi cần sau spike là một ước lượng bảo vệ được, hơn là code.
 
-> Ước lượng đưa ra trước spike là một phỏng đoán gắn thêm con số. Cũng ước lượng ấy sau spike là một kế hoạch.
+> Ước lượng đưa ra trước spike là một lời đoán có gắn con số. Vẫn ước lượng đó sau spike thì là một kế hoạch.
 
-## Đưa ra khoảng và gọi tên rủi ro
+## Đưa ra một khoảng và nói rõ rủi ro
 
-Một con số duy nhất che giấu mọi thứ hữu ích. “Hai đến bốn tuần, và khác biệt nằm ở việc sandbox của họ có giống production hay không” cho stakeholder biết điều gì có thể sai và điều gì sẽ giải quyết nó. Khoảng cũng chấm dứt trò chơi mà con số lạc quan trở thành cam kết.
+Một con số duy nhất giấu hết những thông tin có ích. Nói “hai đến bốn tuần, chênh lệch nằm ở chỗ sandbox của họ có giống production hay không” thì stakeholder biết cái gì có thể hỏng và cái gì sẽ gỡ được nó. Đưa ra một khoảng cũng tránh được chuyện con số lạc quan bị coi luôn là cam kết.
 
-- Mức thấp giả định kết quả spike đúng và không có gì khác gây bất ngờ.
-- Mức cao giả định một rủi ro đã được gọi tên xảy ra. Nếu bạn không gọi tên được, bạn chưa làm xong spike.
-- Vượt quá mức cao là một cuộc trò chuyện mới, không phải một ước lượng bị trượt.
+- Mức thấp giả định kết quả spike đúng và không có gì bất ngờ thêm.
+- Mức cao giả định một rủi ro đã nêu tên xảy ra. Chưa nêu được tên rủi ro đó thì spike chưa xong.
+- Vượt quá mức cao thì phải ngồi lại bàn, không tính là trễ ước lượng.
 
-## Vì sao không đơn giản là cộng đệm
+## Sao không cộng đệm cho xong
 
-Nhân mọi thứ với một hệ số che giấu những điều chưa biết khỏi những người cần thấy chúng, và dạy stakeholder chiết khấu mọi con số bạn đưa ra. Nó cũng đệm cả phần việc bạn hiểu rất rõ, vốn là phần lớn. Đệm mua sự thoải mái. Spike mua kiến thức. Chỉ một trong hai giúp ước lượng lần sau tốt hơn.
+Nhân mọi thứ với một hệ số thì người cần thấy những chỗ chưa biết lại không thấy, và stakeholder quen dần với việc tự trừ hao mọi con số bạn đưa. Nó còn đệm luôn cả phần việc bạn nắm rất rõ, mà phần đó là phần lớn. Spike tốn một hai ngày và giúp lần ước lượng sau chính xác hơn. Cộng đệm thì không.
 
-## Ước lượng lại một cách chủ đích
+## Chủ động ước lượng lại
 
-Khi điều chưa biết trở thành đã biết, hãy nói ra và cập nhật khoảng, bằng văn bản, cho đúng những người đã nhận bản đầu. Không ai khó chịu với một ước lượng thu hẹp lại. Họ khó chịu với một ước lượng sai âm thầm suốt sáu tuần.
+Khi phần chưa biết đã rõ, nói ra và cập nhật lại khoảng, bằng văn bản, cho đúng những người đã nhận con số ban đầu. Không ai khó chịu khi một ước lượng hẹp dần lại. Người ta khó chịu khi nó sai suốt sáu tuần mà không ai nói gì.
