@@ -1,6 +1,6 @@
 ## The shape of the variation
 
-Three traceability regulators dominate: Metrc, BioTrack and CCRS. Each has its own identifiers, its own required fields on a transfer, its own rules about what can be edited after submission. On top of that, individual states layer their own constraints even when they share a regulator. The variation is real, but it is not random. It clusters.
+Three traceability regulators dominate: Metrc, BioTrack and CCRS. Each has its own identifiers, its own required fields on a transfer, its own rules about what can be edited after submission. On top of that, individual states layer their own constraints even when they share a regulator. The variation is real, but it comes in clusters.
 
 ## Rules as data, behaviour as strategy
 
@@ -29,4 +29,4 @@ Form fields subscribe to the rule set for their own path. A field renders itself
 
 ## What it avoided
 
-There is no twenty-five-way switch anywhere in the codebase, and no per-state component folder. When a new state opened, the frontend work was measured in hours. That is the difference between polymorphism and conditionals: one grows linearly with the interface, the other grows with the number of customers.
+There is no twenty-five-way switch anywhere in the codebase, and no per-state component folder. When a new state opened, the frontend work was measured in hours.

@@ -1,26 +1,26 @@
-## Những gì ở lại
+## Những thứ còn dùng
 
-1. Skill tùy biến cho quy ước riêng của đội. Một skill biết chúng tôi tổ chức module NestJS thế nào, đặt tên migration thế nào và viết mô tả Jira thế nào sẽ xóa sổ cả một lớp nhận xét review kiểu “vui lòng theo đúng pattern”.
-2. Agent cho những việc rõ đặc tả và nhàm chán. Đổi tên xuyên codebase, thêm một trường từ đầu đến cuối, viết bản nháp test đầu tiên cho một hàm sẵn có. Bất cứ việc gì mà đặc tả gọn trong ba câu và kết quả dễ kiểm chứng.
-3. Lên kế hoạch trước với mọi việc không tầm thường. Yêu cầu kế hoạch, đọc, sửa, rồi mới cho nó xây. Mười phút cho kế hoạch tiết kiệm một giờ gỡ một ngã rẽ sai đầy tự tin.
-4. Review diff như thể một người mới viết. Vì thực chất đúng là vậy: nhanh, đọc nhiều, và không nhớ gì về sự cố tháng trước.
+1. Skill riêng cho quy ước của team. Một skill biết chúng tôi tổ chức module NestJS thế nào, đặt tên migration ra sao và viết mô tả Jira kiểu gì là hết hẳn một loạt comment review kiểu “làm theo pattern giùm”.
+2. Agent cho những việc đã rõ spec và nhàm chán. Đổi tên trên cả codebase, thêm một trường từ đầu đến cuối, viết bản nháp test đầu tiên cho một hàm có sẵn. Tức là việc nào spec gói gọn trong ba câu và kết quả dễ kiểm tra.
+3. Việc nào không đơn giản thì lên plan trước. Bảo nó viết plan, đọc, sửa, rồi mới cho làm. Mười phút đọc plan đỡ được một giờ gỡ những chỗ nó làm sai mà rất tự tin.
+4. Review diff như thể người viết là nhân viên mới. Mà đúng là vậy thật: làm nhanh, đọc nhiều, và không biết gì về sự cố tháng trước.
 
-## Những gì không ở lại
+## Những thứ đã bỏ
 
-- Để agent tự mở pull request không giám sát. Số lượng tăng, chất lượng tín hiệu giảm, reviewer bắt đầu đọc lướt. Chúng tôi quay về một người chủ cho mỗi PR, chịu trách nhiệm cho từng dòng trong đó.
-- Prompt cả tính năng từ một ticket một dòng. Kết quả trông hoàn chỉnh và lần nào cũng giấu ba giả định sai.
-- Test do agent viết là bộ test duy nhất. Chúng xác nhận code làm đúng những gì code đang làm. Con người vẫn phải quyết định nó nên làm gì.
+- Để agent tự mở pull request mà không ai theo dõi. PR nhiều lên, thứ đáng đọc ít đi, reviewer bắt đầu đọc lướt. Chúng tôi quay về cách cũ: mỗi PR có một người đứng tên, chịu trách nhiệm cho từng dòng trong đó.
+- Prompt cả một tính năng từ ticket có một dòng. Kết quả trông hoàn chỉnh, và lần nào cũng giấu ba giả định sai.
+- Chỉ dựa vào test do agent viết. Loại test này chỉ xác nhận code đang làm đúng cái nó đang làm. Còn nó nên làm gì thì vẫn phải có người quyết.
 
-## Chính sách sử dụng giúp mọi thứ an toàn
+## Một trang chính sách để dùng cho an toàn
 
-Chúng tôi viết một chính sách dài một trang và ghim lại. Không có gì thông minh trong đó. Chính những quy tắc nhàm chán ấy cho phép giao một codebase y tế cho công cụ mà không mất ngủ.
+Chúng tôi viết một trang chính sách rồi ghim lại. Trong đó không có gì cao siêu. Nhưng nhờ mấy quy tắc nhàm chán ấy mà chúng tôi dám giao một codebase y tế cho công cụ mà vẫn ngủ ngon.
 
-> Không thông tin đăng nhập production, không dữ liệu khách hàng, không PHI trong bất kỳ prompt hay context nào. Nếu bạn không dán nó vào một cuộc chat công khai, đừng dán nó vào agent.
+> Không đưa credential production, dữ liệu khách hàng hay PHI vào bất kỳ prompt hay context nào. Thứ gì bạn không dám dán vào một kênh chat công khai thì cũng đừng dán vào agent.
 
-- Agent làm việc trên nhánh, không bao giờ trên main. Mọi thay đổi đi qua đường review bình thường.
-- Code sinh ra chịu cùng cửa kiểm lint, type và test như code của người. Không có ngoại lệ “tại AI làm”.
-- Người merge là người chịu trách nhiệm. Công cụ không gánh lỗi.
+- Agent làm trên nhánh riêng, không bao giờ trên main. Thay đổi nào cũng đi qua quy trình review bình thường.
+- Code do AI sinh ra phải qua đúng các bước lint, type và test như code người viết. Không có ngoại lệ kiểu “tại AI làm”.
+- Ai merge thì người đó chịu trách nhiệm. Công cụ không gánh lỗi thay.
 
-## Hiệu quả thực
+## Tóm lại thay đổi gì
 
-Ít thời gian hơn cho boilerplate và migration, nhiều thời gian hơn cho những phần cần phán đoán: mô hình dữ liệu, ranh giới bảo mật, cuộc trò chuyện với stakeholder về điều họ thực sự muốn nói. Đội không lớn hơn. Sự chú ý của đội được dùng đúng chỗ hơn.
+Chúng tôi bớt thời gian cho boilerplate và migration, và có thêm thời gian cho những phần cần cân nhắc: data model, ranh giới bảo mật, và việc ngồi hỏi lại stakeholder xem ý họ thật ra là gì. Team vẫn bấy nhiêu người.

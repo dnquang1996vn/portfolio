@@ -4,7 +4,7 @@ Every scary task is mostly ordinary work wrapped around a small core of real unc
 
 ## Buy information before you buy a number
 
-For the unknown core, do not estimate yet. Time-box a spike, usually half a day to two days, with one question to answer. Can we authenticate and submit one record? Does the model give usable output on our real data? The output of a spike is not code. It is an estimate you can defend.
+For the unknown core, do not estimate yet. Time-box a spike, usually half a day to two days, with one question to answer. Can we authenticate and submit one record? Does the model give usable output on our real data? What I want out of a spike is an estimate I can defend, more than the code.
 
 > An estimate given before the spike is a guess with a number attached. The same estimate after the spike is a plan.
 
@@ -18,7 +18,7 @@ A single number hides everything useful. “Two to four weeks, and the differenc
 
 ## Why not just pad it
 
-Padding everything by a factor hides the unknowns from the people who need to see them and trains stakeholders to discount every number you give. It also pads the work you understand perfectly well, which is most of it. Padding buys comfort. Spikes buy knowledge. Only one of those makes the next estimate better.
+Padding everything by a factor hides the unknowns from the people who need to see them and trains stakeholders to discount every number you give. It also pads the work you understand perfectly well, which is most of it. A spike costs a couple of days and makes the next estimate better. Padding does not.
 
 ## Re-estimate on purpose
 

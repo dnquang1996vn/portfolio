@@ -26,4 +26,4 @@ A draft is a draft. It is stored as unsigned, shown with the source transcript b
 
 ## What we deliberately did not do
 
-No fine-tuning on patient data. No retrieval over other patients’ charts to “improve” a note. No autonomous filing, even for low-risk visit types. Each of those would have made the compliance story a paragraph longer and the trust story a paragraph shorter. The feature is popular with clinicians precisely because it is boring where it needs to be.
+No fine-tuning on patient data. No retrieval over other patients’ charts to “improve” a note. No autonomous filing, even for low-risk visit types. Each of those would have made compliance harder to explain and the feature harder to trust. The feature is popular with clinicians, and I think that is because it does nothing surprising.

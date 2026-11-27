@@ -41,10 +41,10 @@ const siteUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "quinnde
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Quinn Do — Senior full-stack developer and tech lead",
-  description: "Nine years. Three industries. One habit: own it end to end. Portfolio of Do Nhat Quang, Senior Full-Stack Developer and Tech Lead in Hanoi.",
+  description: "Portfolio of Do Nhat Quang (Quinn), senior full-stack developer and tech lead in Hanoi. Nine years of web platforms in healthcare, cannabis commerce and property data.",
   openGraph: {
     title: "Quinn Do — Senior full-stack developer and tech lead",
-    description: "Nine years. Three industries. One habit: own it end to end.",
+    description: "Senior full-stack developer and tech lead in Hanoi. Nine years of web platforms for US, UK and Japanese companies.",
     type: "website",
   },
 };
