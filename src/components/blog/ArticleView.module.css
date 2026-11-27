@@ -47,6 +47,16 @@
   content: ""; position: absolute; left: 0; top: 10px;
   width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent);
 }
+/* Source citations: GFM footnotes. The number links down to the reference list and the list links back. */
+.body sup { line-height: 0; }
+.body sup a { color: var(--color-accent-700); font-weight: 600; text-decoration: none; padding: 0 1px; }
+.body sup a::before { content: "["; }
+.body sup a::after { content: "]"; }
+.body sup a:hover { text-decoration: underline; }
+.body [data-footnote-ref], .body [data-footnotes] li { scroll-margin-top: 96px; }
+.body [data-footnotes] li:target { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.body [data-footnotes] li p { margin: 0; }
+.body [data-footnote-backref] { text-decoration: none; margin-left: 4px; }
 .body ol { margin: 0 0 24px; padding-left: 1.4em; display: grid; gap: 10px; font-size: 16px; line-height: 26px; }
 .body ol > li::marker { font-family: var(--font-heading); font-weight: 800; color: var(--color-accent); }
 .body li > ul, .body li > ol { margin: 10px 0 0; }

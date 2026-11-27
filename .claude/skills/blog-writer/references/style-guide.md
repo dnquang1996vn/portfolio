@@ -23,7 +23,7 @@ one sentence.
 - Name the trade-off. Every post says what it cost or what was deliberately not done.
 - No hype words (powerful, seamless, robust, leverage, game-changer, "mạnh mẽ", "vượt trội").
   No "In today's world" / "Trong thời đại ngày nay".
-- No emoji, no exclamation marks, no bold for emphasis, no links in the body (sources go in the PR body).
+- No emoji, no exclamation marks, no bold for emphasis, no links in the body text. A claim taken from a source gets a footnote (`[^key]`); the links go in a last section, "Nguồn tham khảo" / "References" (see `post-format.md`).
 - Jokes are fine when dry and short. Never at a colleague's or client's expense.
 
 ## Shape of a post

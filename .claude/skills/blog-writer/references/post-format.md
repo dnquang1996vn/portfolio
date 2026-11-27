@@ -100,7 +100,9 @@ if (budget.spent() > budget.limit) throw new GiveUp(reason);
 | GFM table | Table with an accent header, scrolls sideways on a phone. 2–3 columns. |
 | `` `inline code` `` | Inline code chip. |
 
-Not used in posts: bold for emphasis, links (sources go in the PR body), images, raw HTML.
+Not used in posts: bold for emphasis, links in the body text, images, raw HTML. Sources are GFM footnotes: write `[^key]` after the claim, end the file with a `## Nguồn tham khảo` / `## References`
+heading, and put the definitions under it, one per line: `[^key]: Author, [Title](url), year.` The page numbers them in
+order of first use, links each number down to the list and adds a link back. Code samples stay in English in both languages.
 Typographic quotes and `→` are fine.
 
 ## 4. Cover
