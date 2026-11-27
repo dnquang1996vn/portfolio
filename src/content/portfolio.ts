@@ -531,17 +531,17 @@ const postList = [
   },
   {
     slug: "making-sure-a-feature-works", image: "/images/cover-feature-tests.png", date: "2026",
-    title: P("How I make sure a feature works", "Cách tôi chắc một feature chạy đúng"),
+    title: P("Keeping AI-written features under control", "Để AI code feature mà vẫn kiểm soát được"),
     summary: P(
-      "Unit tests where the knowledge is isolated, component tests where it interacts, one happy path end to end.",
-      "Unit test cho logic tách riêng được, component test cho phần có tương tác, và một happy path end to end.",
+      "Thin unit and end-to-end layers, thick component tests, and a page in the app that shows every state.",
+      "Unit và end to end mỏng, component test dày, và một trang trong app bày sẵn mọi state.",
     ),
     lede: P(
-      "Coverage numbers never told me whether a feature worked. What did was asking where each piece of knowledge lives, then testing it at the lowest level that can answer. Here is the split I use on the backend, on the frontend, and across the whole thing.",
-      "Coverage bao nhiêu phần trăm chưa bao giờ cho tôi biết feature có chạy đúng không. Cái giúp tôi trả lời được là một câu hỏi khác: logic này nằm ở đâu, và tầng test nào thấp nhất mà vẫn kiểm tra được nó? Bài này là cách tôi chia test ở backend, ở frontend, và cho cả luồng từ đầu đến cuối.",
+      "I let an AI agent build a whole large feature from Figma. The main flow was right, but it got many small things wrong, and feeding them back one by one took very long. This is the process I set up so the agent can code, review and test on its own, and I can review faster.",
+      "Mình giao cho AI code trọn 1 feature to theo Figma. Phần chính thì đúng, nhưng lỗi lặt vặt cả đống, ngồi feedback từng cái để sửa rất lâu. Bài này kể lại quy trình mình dựng để AI tự code, tự test được, còn mình thì review nhanh hơn.",
     ),
-    topic: P("Testing", "Kiểm thử"), read: P("3 min", "3 phút"),
-    tags: ["testing", "frontend"],
+    topic: P("Testing", "Kiểm thử"), read: P("8 min", "8 phút"),
+    tags: ["testing", "ai", "frontend"],
   },
   {
     slug: "multi-tenant-white-label-one-codebase", image: "/images/cover-multi-tenant.png", date: "2026",

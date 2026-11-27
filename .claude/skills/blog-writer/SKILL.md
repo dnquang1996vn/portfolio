@@ -207,6 +207,6 @@ live on the production domain once the Vercel deploy that follows the merge fini
 | "Tags can be any string" | Only registry ids. `tsc` rejects the rest. |
 | "I'll stage with `git add -A`" | Stage the post's files only. The tree may hold the user's work. |
 | "I'll add the cover to design/blog-covers.html" | Never touch `design/`. Covers come from `scripts/make-cover.mjs`. |
-| "A link to the source is helpful" | Sources go in the PR body, not the post. |
+| "A link to the source is helpful" | Cite it as a footnote `[^key]`; the link goes in the reference list at the end, never inline. |
 | "A precise number makes the story real" | Do not invent it. Ask, or mark it. |
 | "I'll show the review as markdown" | Plain text in a `text` block, as it reads on the page. |
